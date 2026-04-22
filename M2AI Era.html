@@ -1,0 +1,241 @@
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #faf8f4;
+    margin: 0;
+  }
+
+  .outer-wrap {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    position: relative;
+    background: #faf8f4;
+    overflow: hidden;
+  }
+
+  .h-rule { display: none; }
+
+
+  /* ── Section ── */
+  .section {
+    position: relative; z-index: 1;
+    width: 100%; max-width: 1188px;
+    margin: 0 auto; padding: 80px 0 0;
+    display: flex; flex-direction: column; align-items: center;
+  }
+
+  /* ── Cards: two flex rows ── */
+  .cards-grid { width: 100%; display: flex; flex-direction: column; }
+
+  .cards-row {
+    display: flex;
+    height: 180px;
+    border-bottom: 1px solid #e8e4de;
+  }
+  .cards-row:last-of-type { border-bottom: none; }
+
+  /* ── Card base ── */
+  .pcard {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 28px 24px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    border-right: 1px solid #e8e4de;
+    cursor: default;
+    overflow: hidden;
+    background: transparent;
+    transition:
+      flex-grow 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      background-color 0.28s ease;
+  }
+  .pcard:last-child { border-right: none; }
+  .pcard:hover { background: rgba(255,255,255,0.52); }
+
+  /* ── Sibling compression: 同行其他卡片均匀缩小 ── */
+  .cards-row:has(.pcard:hover) .pcard:not(:hover) {
+    flex-grow: 0.55;
+  }
+  .cards-row:has(.pcard:hover) .pcard:hover {
+    flex-grow: 1.12;
+  }
+
+  /* ── Icon ── */
+  .pcard-icon {
+    width: 32px; height: 32px;
+    background: rgba(250,248,244,0.9);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-bottom: 10px;
+    opacity: 0.6;
+    transition: opacity 0.35s ease;
+  }
+  .pcard:hover .pcard-icon { opacity: 1; }
+
+  /* ── Title: fixed 16px, color changes on hover ── */
+  .pcard h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #b0a89e;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    transition: color 0.35s ease;
+  }
+  .pcard:hover h3 {
+    color: #5a5855;
+  }
+
+  /* ── Description: absolute bottom, opacity only ── */
+  .pcard p {
+    position: absolute;
+    bottom: 28px;
+    left: 24px;
+    right: 24px;
+    font-size: 16px;
+    color: #8c8884;
+    line-height: 1.5;
+    opacity: 0;
+    transition: opacity 0.4s ease 0.1s;
+  }
+  .pcard:hover p {
+    opacity: 1;
+  }
+
+  /* ── CTA ── */
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 14px; font-weight: 600; color: #5a5855;
+    background: rgba(255,255,255,0.8);
+    backdrop-filter: blur(4px);
+    border: 1px solid #e8e4de;
+    border-radius: 100px; padding: 12px 28px;
+    margin-top: 48px;
+    cursor: pointer; text-decoration: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .btn-outline:hover {
+    border-color: rgba(240,134,63,0.4);
+    box-shadow: 0 2px 12px rgba(240,134,63,0.12);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1268px) { .section { padding: 80px 40px; } }
+  @media (max-width: 1100px) {
+    .section { padding: 72px 32px; }
+    .pcard { padding: 24px 20px; }
+    .icon-box { width: 260px; height: 114px; }
+    .face-m2ai { font-size: 30px; }
+  }
+  @media (max-width: 860px) {
+    .section { padding: 60px 24px; }
+    /* switch to 2-column wrap */
+    .cards-row { flex-wrap: wrap; height: auto; }
+    .pcard { flex: 1 1 45%; min-width: 45%; min-height: 220px; }
+    /* disable compression animation on small screens */
+    .cards-row:has(.pcard:hover) .pcard:not(:hover) { flex-grow: 1; }
+    .cards-row:has(.pcard:hover) .pcard:hover { flex-grow: 1; }
+    .icon-box { width: 220px; height: 96px; }
+    .face-m2ai { font-size: 24px; }
+    /* 去除所有描边 */
+    .cards-row { border-bottom: none; }
+    .pcard { border-right: none; }
+    /* 小屏：描述文字回到正常流，常态显示 */
+    .pcard p {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      right: auto;
+      opacity: 1;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+    .pcard h3 { color: #5a5855; }
+  }
+  @media (max-width: 480px) {
+    .section { padding: 48px 20px; }
+    .pcard { flex: 1 1 100%; border-right: none; }
+  }
+</style>
+
+<div class="outer-wrap">
+
+
+  <div class="section">
+    <div class="cards-grid">
+
+      <!-- Row 1 -->
+      <div class="cards-row">
+        <div class="pcard">
+          <div class="pcard-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2v14M2 9h14" stroke="#ff6900" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h3>Real-Time Sync</h3>
+          <p>Keep your brand data synchronized across all AI systems instantly as changes happen.</p>
+        </div>
+        <div class="pcard">
+          <div class="pcard-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2.5" y="2.5" width="13" height="13" rx="2.5" stroke="#ff6900" stroke-width="1.8"/><path d="M6 9l2 2 4-4" stroke="#ff6900" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h3>Brand Control</h3>
+          <p>Maintain full control over how your brand is represented and described by AI agents.</p>
+        </div>
+        <div class="pcard">
+          <div class="pcard-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 12l4-4 3 3 4-6 3 3" stroke="#ff6900" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Analytics Dashboard</h3>
+          <p>Deep insights into how AI agents discover and interact with your brand content.</p>
+        </div>
+        <div class="pcard">
+          <div class="pcard-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="#ff6900" stroke-width="1.8"/><path d="M9 5.5v3.5l2.5 1.5" stroke="#ff6900" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h3>Continuous Optimization</h3>
+          <p>AI-driven recommendations to continuously improve your discoverability score.</p>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="cards-row">
+        <div class="pcard">
+          <div class="pcard-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 5h12M3 9h8M3 13h5" stroke="#ff6900" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h3>API Access</h3>
+          <p>Full programmatic access to integrate Agentic Page data into your existing workflows.</p>
+        </div>
+        <div class="pcard">
+          <div class="pcard-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="6.5" cy="7" r="2.5" stroke="#ff6900" stroke-width="1.8"/><circle cx="12" cy="7" r="2.5" stroke="#ff6900" stroke-width="1.8"/><path d="M2 16c0-2 1.8-3.5 4.5-3.5M9 16c0-2 1.3-3.5 3-3.5" stroke="#ff6900" stroke-width="1.8"/></svg></div>
+          <h3>Team Collaboration</h3>
+          <p>Collaborate across marketing, product, and engineering teams with role-based access.</p>
+        </div>
+        <div class="pcard">
+          <div class="pcard-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 1.5l1.5 4.5H16L12 9l1.5 4.5L9 11 5 13.5 6.5 9 2 6h5.5L9 1.5z" stroke="#ff6900" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+          <h3>Enterprise Security</h3>
+          <p>SOC 2 compliant infrastructure with end-to-end encryption and full audit logs.</p>
+        </div>
+        <div class="pcard">
+          <div class="pcard-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2.5" y="5.5" width="13" height="8" rx="1.5" stroke="#ff6900" stroke-width="1.8"/><path d="M6 5.5V4.5a3 3 0 0 1 6 0v1" stroke="#ff6900" stroke-width="1.8"/></svg></div>
+          <h3>Multi-Platform</h3>
+          <p>Works with ChatGPT, Claude, Gemini, Perplexity, and every major AI system.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="h-rule"></div>
+</div>
+
+<script>
+  function notifyHeight() {
+    var wrap = document.querySelector('.outer-wrap');
+    var h = wrap ? wrap.getBoundingClientRect().height : document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'm2ai-height', height: Math.ceil(h) }, '*');
+  }
+  window.addEventListener('load', function() { setTimeout(notifyHeight, 50); });
+  window.addEventListener('resize', function() { setTimeout(notifyHeight, 50); });
+</script>
+

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us – DeepLumen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', Arial, Helvetica, sans-serif;
+      font-size: 16px; font-weight: 400; line-height: 24px;
+      background: #faf8f4; color: #5a5855; overflow-x: hidden;
+    }
+
+    /* ── PAGE FRAME ── */
+    .page-frame {
+      position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 1440px; height: 100vh;
+      border-left: 1px solid #e8e4de; border-right: 1px solid #e8e4de;
+      pointer-events: none; z-index: 9999;
+    }
+    .banner-mask {
+      position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 1440px; height: 40px;
+      border-left: 2px solid #faf8f4; border-right: 2px solid #faf8f4;
+      pointer-events: none; z-index: 10000;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 10002;
+      background: rgba(250,248,244,0.90);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(232,228,222,0.8);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 80px; max-width: 1440px; margin: 0 auto;
+    }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; margin-left: -6px; }
+    .nav-logo-img { height: 40px; width: auto; display: block; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .btn-demo-nav {
+      font-size: 14px; font-weight: 600; color: #5a5855;
+      background: transparent; border: 1px solid #eaeaea;
+      border-radius: 100px; padding: 10px 20px; cursor: pointer; text-decoration: none;
+    }
+    .btn-login-nav {
+      font-size: 14px; font-weight: 600; color: #fff;
+      background: linear-gradient(180deg, #ec7070, #f0863f);
+      border: none; border-radius: 100px; padding: 10px 20px; cursor: pointer; text-decoration: none;
+    }
+    .nav-burger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .nav-burger span { display: block; width: 22px; height: 2px; background: #5a5855; border-radius: 2px; }
+    .nav-mobile-menu {
+      display: none; flex-direction: column; gap: 8px;
+      padding: 12px 20px 16px; background: rgba(250,248,244,0.98); border-top: 1px solid #f0ede8;
+    }
+    .nav-mobile-menu.is-open { display: flex; }
+
+    /* ── HERO ── */
+    .about-hero {
+      padding-top: 72px;
+      min-height: calc((100vh - 72px) * 0.9);
+      background: #faf8f4;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      --mx: -400px; --my: -400px;
+    }
+    .about-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80'%3E%3Ctext font-family='monospace' font-size='11' fill='%235a5855'%3E%3Ctspan x='4' y='16'%3E.    +    .    +    .%3C/tspan%3E%3Ctspan x='4' y='36'%3E  +    .    +    .  %3C/tspan%3E%3Ctspan x='4' y='56'%3E+    .    +    .    +%3C/tspan%3E%3Ctspan x='4' y='76'%3E  .    +    .    +  %3C/tspan%3E%3C/text%3E%3C/svg%3E");
+      background-size: 120px 80px;
+      opacity: 0.055;
+      pointer-events: none; z-index: 0;
+      transition: opacity 0.4s ease;
+    }
+    .about-hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80'%3E%3Ctext font-family='monospace' font-size='11' fill='%235a5855'%3E%3Ctspan x='4' y='16'%3E.    +    .    +    .%3C/tspan%3E%3Ctspan x='4' y='36'%3E  +    .    +    .  %3C/tspan%3E%3Ctspan x='4' y='56'%3E+    .    +    .    +%3C/tspan%3E%3Ctspan x='4' y='76'%3E  .    +    .    +  %3C/tspan%3E%3C/text%3E%3C/svg%3E");
+      background-size: 120px 80px;
+      opacity: 0.10;
+      -webkit-mask-image: radial-gradient(circle 400px at var(--mx, -400px) var(--my, -400px), black 0%, transparent 100%);
+      mask-image: radial-gradient(circle 400px at var(--mx, -400px) var(--my, -400px), black 0%, transparent 100%);
+      pointer-events: none; z-index: 0;
+    }
+    .about-hero-inner {
+      max-width: 1440px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; min-height: calc((100vh - 72px) * 0.9);
+      position: relative; z-index: 1;
+    }
+
+    /* Left: logo + wordmark */
+    .about-left {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 80px 60px 80px 80px;
+      gap: 20px;
+    }
+    .about-logo-icon { width: 300px; height: auto; }
+    .about-wordmark {
+      font-size: 42px; font-weight: 800; color: #1a1714;
+      letter-spacing: -1.2px;
+    }
+    .about-tagline {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 14px; color: #8c8884; font-weight: 400; letter-spacing: 0.02em;
+    }
+    .tagline-line { width: 36px; height: 1px; background: #c8c2bb; }
+
+    /* Right: title + text */
+    .about-right {
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 80px 80px 80px 60px;
+      gap: 24px;
+    }
+    .about-title {
+      font-size: 36px; font-weight: 700; line-height: 1.2; letter-spacing: -0.3px;
+      background: linear-gradient(135deg, #ec7070, #f0863f);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .about-body {
+      font-size: 16px; color: #5a5855; line-height: 1.85; max-width: 540px;
+    }
+    .about-body strong { color: #2c2924; font-weight: 700; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeSlideLeft {
+      from { opacity: 0; transform: translateX(-40px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeSlideRight {
+      from { opacity: 0; transform: translateX(40px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.88); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .about-left {
+      animation: fadeSlideLeft 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .about-logo-icon {
+      animation: scaleIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+    }
+    .about-right {
+      animation: fadeSlideRight 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+    }
+
+    /* Subtle hover on logo */
+    .about-logo-icon {
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      cursor: default;
+    }
+    .about-logo-icon:hover { transform: scale(1.03); }
+
+    /* ── FOOTER ── */
+    footer { background: linear-gradient(180deg, #1e2939, #101828); color: #fff; padding: 0; position: relative; z-index: 10001; }
+    .footer-inner { max-width: 1440px; width: 100%; margin: 0 auto; padding: 54px 80px 0; }
+    .footer-top { display: flex; justify-content: space-between; gap: 32px; padding-bottom: 32px; }
+    .footer-brand { display: flex; flex-direction: column; gap: 16px; max-width: 460px; }
+    .footer-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; margin-left: -6px; }
+    .footer-desc { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.75; }
+    .footer-desc strong { color: rgba(255,255,255,0.8); font-weight: 600; }
+    .footer-socials { display: flex; gap: 10px; }
+    .social-icon {
+      width: 34px; height: 34px; background: rgba(255,255,255,0.08);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; text-decoration: none; transition: background 0.2s;
+    }
+    .social-icon:hover { background: rgba(255,255,255,0.16); }
+    .footer-cols { display: flex; gap: 72px; }
+    .footer-col { display: flex; flex-direction: column; gap: 12px; }
+    .footer-col-title { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+    .footer-col a { font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.15s; }
+    .footer-col a:hover { color: #fff; }
+    .footer-col-body { display: flex; flex-direction: column; gap: 12px; }
+    .footer-col-toggle { display: none; }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 32px;
+    }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,0.35); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,0.35); text-decoration: none; }
+    .footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1280px) {
+      .nav-inner { padding: 16px 40px; }
+      .about-left { padding: 60px 48px 60px 60px; }
+      .about-right { padding: 60px 60px 60px 48px; }
+      .footer-inner { padding: 54px 40px 0; }
+    }
+    @media (max-width: 1024px) {
+      .about-hero-inner { grid-template-columns: 1fr; min-height: unset; }
+      .about-left {
+        border-right: none; border-bottom: 1px solid #f0ede8;
+        padding: 60px 40px 48px; flex-direction: row; gap: 32px; justify-content: center;
+      }
+      .about-logo-icon { height: 72px; }
+      .about-wordmark { font-size: 34px; }
+      .about-right { padding: 48px 40px 80px; }
+      .page-frame, .banner-mask { display: none; }
+    }
+    @media (max-width: 768px) {
+      .nav-inner { padding: 14px 20px; }
+      .nav-actions { display: none; }
+      .nav-burger { display: flex; }
+      .about-hero { min-height: unset; }
+      .about-left { flex-direction: column; padding: 48px 24px 36px; gap: 16px; }
+      .about-logo-icon { height: 64px; }
+      .about-wordmark { font-size: 30px; }
+      .about-right { padding: 36px 24px 60px; gap: 18px; }
+      .about-title { font-size: 28px; }
+      .about-body { font-size: 16px; }
+      .footer-inner { padding: 40px 24px 0; }
+      .footer-top { flex-direction: column; gap: 28px; }
+      .footer-cols { gap: 32px; flex-wrap: wrap; }
+      .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .about-left { padding: 36px 16px 28px; }
+      .about-right { padding: 28px 16px 48px; }
+      .about-title { font-size: 24px; }
+      .about-body { font-size: 15px; }
+      .nav-logo-img { height: 32px; }
+      .footer-inner { padding: 32px 16px 0; }
+      .footer-cols { flex-direction: column; gap: 20px; }
+      .footer-col-toggle { display: inline-block; margin-left: 8px; transition: transform 0.3s; }
+      .footer-col-body { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.35s ease, opacity 0.3s ease; }
+      .footer-col.is-open .footer-col-body { max-height: 200px; opacity: 1; }
+      .footer-col.is-open .footer-col-toggle { transform: rotate(45deg); }
+      .footer-col-title { cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-frame"></div>
+<div class="banner-mask"></div>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="logo/logocis001.svg" alt="deeplumen" class="nav-logo-img" />
+    </a>
+    <div class="nav-actions">
+      <a href="Book a Demo.html" class="btn-demo-nav">Book a Demo</a>
+      <a href="https://www.deeplumen.com/auth/login" class="btn-login-nav">Log in</a>
+    </div>
+    <button class="nav-burger" aria-label="Menu"
+      onclick="document.getElementById('nav-mobile-menu').classList.toggle('is-open')">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="Book a Demo.html" class="btn-demo-nav" style="width:100%;text-align:center;">Book a Demo</a>
+    <a href="https://www.deeplumen.com/auth/login" class="btn-login-nav" style="width:100%;text-align:center;">Log in</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="about-hero">
+  <div class="about-hero-inner">
+
+    <!-- Left: logo block -->
+    <div class="about-left">
+      <img src="logo/logocislogen-1.svg" alt="deeplumen" class="about-logo-icon" />
+    </div>
+
+    <!-- Right: content -->
+    <div class="about-right">
+      <div class="about-title">About Us</div>
+      <p class="about-body">
+        Deeplumen is an AI-first technology company focused on the intersection of AI agents and global commerce. As the pioneers of the <strong>M2AI (Marketing to AI)</strong> framework, Deeplumen builds the protocols, infrastructure, and connectors that allow brands to thrive in an era where machines represent the consumer.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">
+          <img src="logo/logosvg.svg" alt="deeplumen" style="height:40px;width:auto;display:block;">
+        </a>
+        <p class="footer-desc" style="display:none;">Deeplumen is an AI-first technology company focused on the intersection of AI agents and global commerce. As the pioneers of the <strong>M2AI (Marketing to AI)</strong> framework, Deeplumen builds the protocols, infrastructure, and connectors that allow brands to thrive in an era where machines represent the consumer.</p>
+        <div class="footer-socials">
+          <a href="https://x.com/Deeplumen0922" target="_blank" class="social-icon" aria-label="X / Twitter">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M9.16 6.77 14.08 1H12.9L8.62 6.01 5.22 1H1.5l5.17 7.52L1.5 15h1.18l4.52-5.25L10.78 15H14.5L9.16 6.77ZM7.79 9.09l-.52-.75L3.1 1.87h1.8l3.37 4.82.52.75 4.37 6.24h-1.8L7.79 9.09Z" fill="rgba(255,255,255,0.6)"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/company/deeplumen/posts/?feedView=all" target="_blank" class="social-icon" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.5 5.5H5V14H2.5V5.5ZM3.75 4.5A1.25 1.25 0 1 1 3.75 2 1.25 1.25 0 0 1 3.75 4.5Z" fill="rgba(255,255,255,0.6)"/><path d="M6.5 5.5H9V6.7C9.4 6 10.3 5.3 11.6 5.3 14.4 5.3 14.5 7.1 14.5 9.5V14H12V10C12 9 11.9 7.8 10.4 7.8 8.9 7.8 8.5 8.8 8.5 9.8V14H6.5V5.5Z" fill="rgba(255,255,255,0.6)"/></svg>
+          </a>
+          <a href="https://www.reddit.com/user/Deeplumen_AI/" target="_blank" class="social-icon" aria-label="Reddit">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8.5" r="5.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.3"/><circle cx="5.8" cy="9" r="0.9" fill="rgba(255,255,255,0.6)"/><circle cx="10.2" cy="9" r="0.9" fill="rgba(255,255,255,0.6)"/><path d="M5.8 11c.6.7 4.4.7 4.4 0" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round"/><path d="M5.5 8c.4-.9 1.4-1.5 2.5-1.5s2.1.6 2.5 1.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round"/><path d="M8 6.5V4.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round"/><circle cx="8.5" cy="3.8" r="0.9" fill="rgba(255,255,255,0.6)"/><path d="M10.5 7.5c.8-.3 1.5.2 1.5.9" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-linecap="round"/><path d="M5.5 7.5c-.8-.3-1.5.2-1.5.9" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">Company<span class="footer-col-toggle" aria-hidden="true">+</span></div>
+          <div class="footer-col-body">
+            <a href="About Us_page.html">About Us</a>
+            <a href="https://www.prnewswire.com/news-releases/deeplumen-unveils-ucp-for-java-infrastructure-powering-the-future-of-agentic-commerce-302664496.html" target="_blank">Press</a>
+            <a href="Contact_page.html">Contact</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Resources<span class="footer-col-toggle" aria-hidden="true">+</span></div>
+          <div class="footer-col-body">
+            <a href="#">API Docs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Deeplumen. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── ASCII texture mouse area ── */
+  (function() {
+    var hero = document.querySelector('.about-hero');
+    if (!hero) return;
+    hero.addEventListener('mousemove', function(e) {
+      var rect = this.getBoundingClientRect();
+      this.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+      this.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+    });
+    hero.addEventListener('mouseleave', function() {
+      this.style.setProperty('--mx', '-400px');
+      this.style.setProperty('--my', '-400px');
+    });
+  })();
+
+  document.querySelectorAll('.footer-col-title').forEach(function(t) {
+    t.addEventListener('click', function() {
+      if (window.innerWidth > 480) return;
+      this.closest('.footer-col').classList.toggle('is-open');
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeepLumen – AI-Powered Agentic Marketing Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', 'Inter Fallback', Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      background: #faf8f4;
+      color: #5a5855;
+      overflow-x: hidden;
+    }
+    .page-wrapper {
+      width: calc(100% - 40px);
+      max-width: 1440px;
+      margin: 0 auto;
+      overflow: hidden;
+      background: #faf8f4;
+    }
+
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10002;
+      background: rgba(250,248,244,0.90);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid transparent;
+      transition: border-bottom-color 0.3s ease;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 80px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      margin-left: -6px;
+    }
+    .nav-logo-mark { display: none; }
+    .nav-logo-text { display: none; }
+    .nav-logo-img { height: 40px; width: auto; display: block; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .btn-demo-nav {
+      font-size: 14px; font-weight: 600; color: #5a5855;
+      background: transparent;
+      border: 1px solid #eaeaea; border-radius: 100px; padding: 10px 20px;
+      cursor: pointer; text-decoration: none;
+    }
+    .btn-login-nav {
+      font-size: 14px; font-weight: 600; color: #fff;
+      background: linear-gradient(180deg, #ec7070, #f0863f);
+      border: none; border-radius: 100px; padding: 10px 20px;
+      cursor: pointer; text-decoration: none;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding-top: 80px;
+      padding-bottom: 0;
+      background: #faf8f4;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-content {
+      padding: 60px 125px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 860px;
+    }
+    .hero-h1-dark {
+      font-size: 44px; font-weight: 600; color: #5a5855;
+      line-height: 1.15; letter-spacing: -0.5px;
+    }
+    .hero-h1-gradient {
+      font-size: 44px; font-weight: 600; line-height: 1.15;
+      background: linear-gradient(180deg, #ec7070, #f0863f);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub {
+      font-size: 16px; font-weight: 400; color: #8c8884;
+      line-height: 1.7; max-width: 799px;
+    }
+    .hero-action-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .hero-buttons { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .btn-primary {
+      font-size: 14px; font-weight: 600; color: #fff;
+      background: linear-gradient(180deg, #ec7070, #f0863f);
+      border: none; border-radius: 100px; padding: 11px 24px;
+      cursor: pointer; text-decoration: none;
+      box-shadow: 0 4px 16px rgba(240,134,63,0.3);
+    }
+    .btn-ghost {
+      font-size: 14px; font-weight: 600; color: #5a5855;
+      background: transparent;
+      border: 1px solid #eaeaea;
+      border-radius: 100px; padding: 11px 24px;
+      cursor: pointer; text-decoration: none;
+    }
+
+    /* CLI box */
+    .cli-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 600px;
+      flex-shrink: 0;
+      background: #fff;
+      border: 1px solid #ebebeb;
+      border-radius: 12px;
+      padding: 10px 10px 10px 14px;
+    }
+    .cli-btn {
+      flex-shrink: 0;
+      font-size: 13px; font-weight: 600; color: #5a5855;
+      background: #f0ede8;
+      border: none; border-radius: 8px; padding: 9px 16px;
+      cursor: pointer; white-space: nowrap;
+    }
+    .cli-command {
+      flex: 1;
+      font-size: 11px; color: #8c8884;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      letter-spacing: -0.2px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .cli-copy {
+      flex-shrink: 0;
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      background: #f5f3ef; border-radius: 6px; cursor: pointer;
+    }
+
+    /* ── AI AGENT PANEL MOCKUP ── */
+    .hero-panel-wrap {
+      position: relative;
+      margin-top: 40px;
+      padding-bottom: 0;
+      transition: opacity 0.1s linear;
+      will-change: opacity;
+      padding-left: 125px;
+      padding-right: 16px;
+    }
+    .hero-panel-wrap iframe {
+      width: 1200px;
+      max-width: 100%;
+      height: 650px;
+      border: none;
+      display: block;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    /* Fade-out gradient at bottom */
+    .hero-panel-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 200px;
+      background: linear-gradient(to bottom, transparent, #faf8f4);
+      pointer-events: none;
+    }
+
+    /* Panel columns */
+    .panel-col {
+      flex: 1;
+      border-right: 1px solid #f0ede8;
+      padding: 20px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .panel-col:last-child { border-right: none; }
+    .panel-col-header {
+      font-size: 12px; font-weight: 600; color: #5a5855;
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+
+    /* Left col – Chat */
+    .chat-brand-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+    .chat-brand-icon {
+      width: 22px; height: 22px;
+      background: linear-gradient(135deg, #ff8904, #f54900);
+      border-radius: 5px;
+    }
+    .chat-brand-name { font-size: 13px; font-weight: 600; color: #5a5855; }
+    .chat-model-badge {
+      font-size: 10px; color: #8c8884;
+      background: #f5f3ef; border-radius: 4px;
+      padding: 2px 6px;
+    }
+    .chat-input {
+      background: #faf8f4; border: 1px solid #ebebeb; border-radius: 8px;
+      padding: 10px 12px; font-size: 12px; color: #8c8884;
+    }
+    .chat-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chat-chip {
+      font-size: 11px; color: #5a5855;
+      background: #fff; border: 1px solid #ebebeb;
+      border-radius: 100px; padding: 4px 10px;
+      cursor: pointer;
+    }
+
+    /* Middle col – Thinking Steps */
+    .thinking-steps { display: flex; flex-direction: column; gap: 8px; }
+    .thinking-step {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .step-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+    .step-dot.done { background: linear-gradient(135deg, #ec7070, #f0863f); }
+    .step-dot.active { background: #5a5855; }
+    .step-dot.pending { background: #e0ddd9; }
+    .step-label { font-size: 12px; color: #5a5855; font-weight: 500; }
+    .step-sub { font-size: 10px; color: #8c8884; margin-top: 1px; }
+
+    /* Right col – Data */
+    .data-perspective { margin-bottom: 8px; }
+    .dp-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+    .dp-label { font-size: 11px; color: #5a5855; font-weight: 500; }
+    .dp-tokens { font-size: 11px; color: #8c8884; }
+    .dp-bar-bg { height: 5px; background: #f0ede8; border-radius: 3px; overflow: hidden; }
+    .dp-bar-fill { height: 100%; background: linear-gradient(90deg, #ec7070, #f0863f); border-radius: 3px; }
+    .progress-section { margin-top: 8px; }
+    .progress-title { font-size: 10px; font-weight: 600; color: #8c8884; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+    .progress-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 5px; }
+    .progress-label { font-size: 11px; color: #5a5855; width: 90px; flex-shrink: 0; }
+    .progress-bar { flex: 1; height: 4px; background: #f0ede8; border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #ec7070, #f0863f); border-radius: 2px; }
+    .progress-pct { font-size: 10px; color: #8c8884; width: 30px; text-align: right; flex-shrink: 0; }
+    .stats-row { display: flex; gap: 0; border-top: 1px solid #f0ede8; margin-top: 10px; padding-top: 10px; }
+    .stat-item { flex: 1; text-align: center; }
+    .stat-item:not(:last-child) { border-right: 1px solid #f0ede8; }
+    .stat-val { font-size: 13px; font-weight: 600; color: #5a5855; }
+    .stat-lbl { font-size: 10px; color: #8c8884; margin-top: 2px; }
+
+    /* ── Page frame (fixed vertical lines) ── */
+    .page-frame {
+      position: fixed;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100%; max-width: 1440px;
+      height: 100vh;
+      border-left: 1px solid #e8e4de;
+      border-right: 1px solid #e8e4de;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    /* ── Banner mask: covers page-frame border in hero area ── */
+    .banner-mask {
+      position: fixed;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100%; max-width: 1440px;
+      height: 40px;
+      border-left: 2px solid #faf8f4;
+      border-right: 2px solid #faf8f4;
+      pointer-events: none;
+      z-index: 10000;
+    }
+    /* ── Section dividers ── */
+    .sec-divider {
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+      position: relative;
+      z-index: 1;
+    }
+    .sec-divider::before {
+      content: '';
+      display: block;
+      width: 100%;
+      max-width: 1440px;
+      height: 1px;
+      background: rgba(213,207,197,0.7);
+    }
+
+    /* ── SECTION 2 – AGENTIC COMMERCE ── */
+    .section-agentic {
+      padding: 120px 125px;
+      background: #faf8f4;
+    }
+    .agentic-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 80px;
+      max-width: 1190px;
+    }
+    .agentic-left {
+      display: flex; flex-direction: column; gap: 20px;
+      flex: 0 0 480px;
+    }
+    .badge-orange-outline {
+      display: inline-flex; align-items: center;
+      border: 1px solid #ff6900; border-radius: 9999px;
+      padding: 5px 14px; width: fit-content;
+    }
+    .badge-orange-outline span { font-size: 12px; font-weight: 500; color: #ff6900; letter-spacing: 0.05em; }
+    .agentic-title-dark { font-size: 44px; font-weight: 600; color: #5a5855; line-height: 1.15; letter-spacing: -0.3px; }
+    .agentic-title-gradient {
+      font-size: 44px; font-weight: 600; line-height: 1.15;
+      background: linear-gradient(180deg, #ec7070, #f0863f);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .agentic-sub { font-family: 'Inter', 'Inter Fallback', Arial, Helvetica, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; color: #8c8884; max-width: 799px; }
+    .agentic-list { display: flex; flex-direction: column; margin-top: 8px; }
+    .agentic-list-item {
+      padding: 16px 0;
+      cursor: default;
+    }
+    .agentic-list-item-title {
+      font-size: 16px; font-weight: 600; color: #5a5855;
+      transition: color 0.2s;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .agentic-list-item-title::after {
+      content: '';
+      width: 16px; height: 16px; flex-shrink: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%238c8884' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: center;
+      transition: transform 0.3s ease, opacity 0.2s;
+      opacity: 0.6;
+    }
+    .agentic-list-item-desc {
+      font-family: 'Inter', 'Inter Fallback', Arial, Helvetica, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; color: #8c8884; max-width: 799px;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease, margin-top 0.3s ease;
+      margin-top: 0;
+    }
+    .agentic-list-item.is-open .agentic-list-item-title {
+      color: #3a3633;
+    }
+    .agentic-list-item.is-open .agentic-list-item-title::after {
+      transform: rotate(180deg);
+      opacity: 1;
+    }
+    .agentic-list-item.is-open .agentic-list-item-desc {
+      max-height: 80px;
+      opacity: 1;
+      margin-top: 8px;
+    }
+    .agentic-progress-bar {
+      height: 4px;
+      background: #f0ede8;
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 12px;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+    }
+    .agentic-list-item.is-open .agentic-progress-bar {
+      max-height: 4px;
+      opacity: 1;
+    }
+    .agentic-progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #ec7070, #f0863f);
+      transition: none;
+    }
+    .agentic-right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .agentic-right iframe {
+      width: 580px;
+      height: 400px;
+      flex-shrink: 0;
+      border: none;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+
+    /* ── SECTION 3 – OUR PRODUCTS ── */
+    .section-products {
+      padding: 100px 125px;
+      background: #faf8f4;
+    }
+    .products-inner {
+      display: flex; flex-direction: row; align-items: center;
+      justify-content: space-between; gap: 80px;
+      max-width: 1190px; width: 100%;
+    }
+    .products-left {
+      flex: 1;
+      display: flex; align-items: center; justify-content: flex-start;
+    }
+    .products-left iframe {
+      width: 580px; height: 400px;
+      border: none; display: block;
+    }
+    .products-right {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 24px;
+      text-align: right;
+    }
+    .badge-peach {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(255,247,237,0.8);
+      border: 1px solid rgba(255,214,167,0.4);
+      border-radius: 9999px; padding: 8px 20px;
+    }
+    .badge-peach span { font-size: 13px; font-weight: 600; color: #f54900; }
+    .h2-dark { font-size: 44px; font-weight: 600; color: #5a5855; line-height: 1.2; letter-spacing: -0.3px; }
+    .h2-orange-gradient {
+      font-size: 44px; font-weight: 600; line-height: 1.2;
+      background: linear-gradient(90deg, #ff8904, #ff6900, #f54900);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .h2-red-gradient {
+      font-size: 44px; font-weight: 600; line-height: 1.2;
+      background: linear-gradient(180deg, #ec7070, #f0863f);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .products-sub { font-family: 'Inter', 'Inter Fallback', Arial, Helvetica, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; color: #8c8884; max-width: 799px; }
+    .products-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .products-tag {
+      display: inline-flex; align-items: center;
+      padding: 7px 16px;
+      border: 1px solid #e8e4de; border-radius: 99px;
+      font-family: 'Inter', 'Inter Fallback', Arial, Helvetica, sans-serif;
+      font-size: 13px; font-weight: 500; color: #5a5855;
+      background: #fff;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .products-tag:hover {
+      border-color: #f0863f; color: #f0863f;
+      box-shadow: 0 2px 10px rgba(240,134,63,0.15);
+    }
+    .products-tag svg { flex-shrink: 0; }
+
+    /* ── VIDEO PLAYER ── */
+    .demo-player-wrap {
+      position: relative;
+      width: 100%;
+    }
+    #particle-canvas {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .demo-player-outer {
+      position: relative;
+      z-index: 1;
+    }
+    .demo-player-wrap::after {
+      content: '';
+      position: absolute;
+      left: 4%; right: 4%;
+      top: 24px; bottom: -28px;
+      z-index: -1;
+      border-radius: 20px;
+      background: rgba(22, 15, 8, 0.22);
+      filter: url(#demo-noise-shadow);
+    }
+    .demo-player-outer {
+      width: 1440px;
+      max-width: 100%;
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid #e8e4de;
+    }
+    /* 视频画面区域 */
+    .demo-video-area {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #1a1814;
+      overflow: hidden;
+    }
+    .demo-video-area video {
+      width: 100%; height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    /* 胶囊形磨砂玻璃播放按钮 */
+    .demo-play-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      background: rgba(255,255,255,0.22);
+      backdrop-filter: blur(21.7px);
+      -webkit-backdrop-filter: blur(21.7px);
+      border-radius: 47.5px;
+      border: none;
+      padding: 14px 15px;
+      box-shadow: inset 0px 15px 32px rgba(255,255,255,0.14),
+                  inset 0px 0px 17px rgba(255,255,255,0.20);
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s;
+      z-index: 2;
+    }
+    .demo-play-btn:hover { transform: translate(-50%, -50%) scale(1.04); }
+    .demo-play-circle {
+      width: 66px; height: 66px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #ec7070 0%, #f0863f 100%);
+      border: 1px solid rgba(255,184,106,0.20);
+      box-shadow: 0px 0px 9.3px rgba(249,115,22,0.93);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .demo-play-label {
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.44px;
+      line-height: 28px;
+      white-space: nowrap;
+      padding: 0 10px;
+    }
+    .demo-player-outer.playing .demo-play-btn { display: none; }
+    /* 点击遮罩层 */
+    .demo-click-overlay {
+      position: absolute;
+      inset: 0;
+      cursor: pointer;
+      z-index: 1;
+    }
+    /* ── 控制栏（视频下方）── */
+    .demo-controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 24px;
+      background: #faf8f4;
+      border-top: 1px solid #f0ede8;
+    }
+    .demo-pause-btn {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #ec7070, #f0863f);
+      border: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: opacity 0.2s;
+      box-shadow: 0 2px 8px rgba(240,134,63,0.30);
+    }
+    .demo-pause-btn:hover { opacity: 0.82; }
+    .demo-progress-wrap {
+      flex: 1;
+      height: 4px;
+      background: #e8e4de;
+      border-radius: 99px;
+      cursor: pointer;
+      position: relative;
+      transition: height 0.15s;
+    }
+    .demo-progress-wrap:hover { height: 6px; }
+    .demo-progress-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, #ec7070, #f0863f);
+      width: 0%;
+      pointer-events: none;
+      transition: width 0.1s linear;
+    }
+    .demo-time {
+      font-size: 12px;
+      color: #8c8884;
+      white-space: nowrap;
+      font-family: 'Inter', sans-serif;
+      flex-shrink: 0;
+    }
+    .demo-mute-btn {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: #f0ede8;
+      border: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .demo-mute-btn:hover { background: #e8e4de; }
+    .demo-volume-wrap {
+      width: 72px; height: 4px;
+      background: #e8e4de;
+      border-radius: 99px;
+      cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .demo-volume-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, #ec7070, #f0863f);
+      width: 100%;
+      pointer-events: none;
+    }
+
+    /* ── SECTION 4 – DEMO ── */
+    .section-demo {
+      padding: 100px 80px;
+      display: flex; align-items: center; justify-content: center;
+      background: #faf8f4;
+    }
+    .demo-inner {
+      display: flex; flex-direction: column; align-items: center; gap: 32px;
+      max-width: 1188px; width: 100%;
+    }
+    .demo-title-row { display: flex; align-items: center; gap: 14px; }
+    .h1-60-dark { font-size: 44px; font-weight: 600; color: #5a5855; line-height: 2; }
+    .h1-60-gradient {
+      font-size: 44px; font-weight: 600; line-height: 1.2;
+      background: linear-gradient(90deg, #ff8904, #ff6900, #f54900);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .demo-watch { font-size: 14px; color: #8c8884; }
+    .demo-frame {
+      width: 100%;
+      background: #fff; border: 1px solid #f0ede8;
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    .demo-screenshot {
+      width: 100%; min-height: 480px;
+      background: #fff;
+      padding: 32px; position: relative;
+    }
+    .demo-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+    .demo-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dd-red { background: #ff5f57; } .dd-yellow { background: #febc2e; } .dd-green { background: #28c840; }
+    .demo-url {
+      flex: 1; height: 26px; background: #f5f3ef;
+      border: 1px solid #ebebeb; border-radius: 6px;
+      display: flex; align-items: center; padding: 0 12px;
+      font-size: 12px; color: #8c8884;
+    }
+    .demo-content {
+      background: #faf8f4; border-radius: 12px;
+      padding: 28px; border: 1px solid #f0ede8;
+    }
+    .demo-content-head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .demo-content-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: linear-gradient(135deg, #ff8904, #f54900);
+    }
+    .demo-content-title { font-size: 17px; font-weight: 700; color: #5a5855; }
+    .demo-content-sub { font-size: 12px; color: #8c8884; }
+    .demo-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+    .demo-stat {
+      background: #fff;
+      border: 1px solid #f0ede8; border-radius: 10px;
+      padding: 14px; text-align: center;
+    }
+    .demo-stat-num { font-size: 22px; font-weight: 700; color: #ff6900; }
+    .demo-stat-lbl { font-size: 11px; color: #8c8884; margin-top: 4px; }
+    .demo-lines { display: flex; flex-direction: column; gap: 10px; }
+    .demo-line { height: 10px; background: #f0ede8; border-radius: 5px; }
+    .demo-play {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      background: rgba(255,255,255,0.85); backdrop-filter: blur(20px);
+      border-radius: 40px; padding: 12px 16px;
+      display: flex; align-items: center; gap: 10px;
+      border: 1px solid rgba(234,234,234,0.8);
+    }
+    .play-circle {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(180deg, #ec7070, #f0863f);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .play-main { font-size: 13px; font-weight: 600; color: #5a5855; }
+    .play-sub { font-size: 11px; color: #8c8884; }
+
+    /* ── SECTION 5a – DTC & B2B ── */
+    .section-targets {
+      padding: 0;
+      display: flex; flex-direction: column; align-items: center;
+      background: #faf8f4;
+    }
+    .targets-inner {
+      display: flex; flex-direction: column; align-items: center; gap: 32px;
+      max-width: 1280px; width: 100%;
+      padding: 80px 80px 60px;
+    }
+    .targets-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 1100px; }
+    .target-card {
+      background: #fff;
+      border: 1px solid #f0ede8; border-radius: 16px;
+      padding: 40px 28px 28px; position: relative; min-height: 280px;
+    }
+    .target-icon {
+      position: absolute; top: 28px; left: 28px;
+      width: 48px; height: 48px; border-radius: 10px;
+      background: linear-gradient(135deg, #ff8904, #f54900);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .target-card h2 { font-size: 26px; font-weight: 700; color: #5a5855; margin-bottom: 10px; margin-top: 20px; }
+    .target-card h4 { font-size: 16px; font-weight: 600; color: #5a5855; margin-bottom: 10px; }
+    .target-card p { font-family: 'Inter', 'Inter Fallback', Arial, Helvetica, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; color: #8c8884; max-width: 799px; }
+
+    /* ── SECTION 5b – CASE STUDY ── */
+    .section-casestudy {
+      padding: 60px 80px;
+      display: flex; align-items: center; justify-content: center;
+      background: #faf8f4;
+    }
+    .casestudy-inner {
+      display: flex; flex-direction: column; align-items: center; gap: 28px;
+      max-width: 1188px; width: 100%;
+    }
+    .casestudy-inner h2 { font-size: 44px; font-weight: 600; color: #5a5855; line-height: 1.15; }
+    .casestudy-desc { max-width: 1000px; text-align: center; }
+    .casestudy-desc p { font-size: 16px; color: #8c8884; line-height: 1.55; max-width: 799px; }
+    .casestudy-panels { display: flex; align-items: stretch; gap: 38px; }
+    .cs-panel {
+      border-radius: 16px; overflow: hidden;
+    }
+    .cs-panel.cs-chart {
+      background: transparent;
+    }
+    .cs-metrics { width: 575px; padding: 28px; display: flex; flex-direction: column; gap: 24px; }
+    .metric { display: flex; flex-direction: column; gap: 4px; padding-left: 18px; border-left: 3px solid #f0863f; cursor: default; transition: border-left-color 0.3s ease; }
+    .metric.is-open { border-left-color: #ec7070; }
+    .m-value { font-size: 46px; font-weight: 700; line-height: 1; background: linear-gradient(135deg, #ec7070, #f0863f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .metric-reveal { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.42s cubic-bezier(0.4,0,0.2,1); }
+    .metric.is-open .metric-reveal { grid-template-rows: 1fr; }
+    .metric-reveal-inner { overflow: hidden; display: flex; flex-direction: column; gap: 4px; padding-top: 2px; }
+    .m-title { font-size: 16px; font-weight: 700; color: #2c2924; }
+    .m-desc { font-size: 14px; color: #8c8884; line-height: 1.55; opacity: 0; transform: translateY(5px); transition: opacity 0.3s ease 0.08s, transform 0.3s ease 0.08s; }
+    .metric.is-open .m-desc { opacity: 1; transform: translateY(0); }
+    .cs-chart { width: 575px; padding: 24px 5px 24px 0; display: flex; flex-direction: column; gap: 12px; }
+    .trend-svg-wrap { width: 100%; aspect-ratio: 400 / 226; }
+    .chart-head { display: flex; align-items: center; justify-content: space-between; }
+    .chart-title-sm { font-size: 14px; font-weight: 600; color: #5a5855; }
+    .legend { display: flex; gap: 12px; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #8c8884; }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .chart-bars {
+      display: flex; align-items: flex-end; justify-content: space-around;
+      height: 260px; border-bottom: 1px solid #f0ede8; padding-bottom: 8px;
+    }
+    .bar-grp { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .bar-set { display: flex; gap: 4px; align-items: flex-end; }
+    .bar { width: 18px; border-radius: 3px 3px 0 0; }
+    .bar-h { background: #f0ede8; }
+    .bar-a { background: linear-gradient(180deg, #ec7070, #f0863f); }
+    .bar-mo { font-size: 11px; color: #8c8884; margin-top: 4px; }
+
+    /* ── SECTION 6 – AI AGENT PAGE FEATURES ── */
+    .section-features {
+      padding: 100px 80px;
+      display: flex; align-items: center; justify-content: center;
+      background: #faf8f4;
+    }
+    .features-inner { display: flex; align-items: center; gap: 48px; max-width: 1188px; width: 100%; }
+    .features-left { flex: 0 0 740px; }
+    .feat-dash {
+      background: #fff; border: 1px solid #f0ede8;
+      border-radius: 12px; overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    }
+    .dash-topbar {
+      background: #faf8f4; border-bottom: 1px solid #f0ede8;
+      padding: 14px 16px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .dash-stats { display: flex; gap: 24px; }
+    .dash-stat-lbl { font-size: 12px; color: #8c8884; }
+    .dash-stat-val { font-size: 24px; font-weight: 600; color: #5a5855; }
+    .dash-toggle { display: flex; background: #f0ede8; border-radius: 8px; overflow: hidden; }
+    .toggle-btn { padding: 5px 12px; font-size: 12px; color: #8c8884; cursor: pointer; }
+    .toggle-btn.active { background: #fff; color: #5a5855; font-weight: 600; border-radius: 6px; }
+    .dash-body { background: #fff; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+    .dash-row { display: flex; align-items: center; gap: 8px; }
+    .dash-row-lbl { font-size: 12px; color: #8c8884; width: 60px; text-align: right; flex-shrink: 0; }
+    .dash-bar-out { flex: 1; height: 7px; background: #f0ede8; border-radius: 4px; overflow: hidden; }
+    .dash-bar-in { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #ec7070, #f0863f); }
+    .dash-row-val { font-size: 12px; color: #5a5855; width: 36px; font-weight: 500; }
+    .dash-badge {
+      margin-top: 4px; padding: 12px;
+      background: #faf8f4; border: 1px solid #f0ede8; border-radius: 8px;
+    }
+    .dash-badge-lbl { font-size: 12px; color: #8c8884; margin-bottom: 4px; }
+    .dash-badge-val { font-size: 16px; font-weight: 700; color: #22c55e; }
+    .dash-badge-sub { font-size: 11px; color: #8c8884; margin-top: 4px; }
+    .features-right { flex: 1; display: flex; flex-direction: column; gap: 22px; }
+    .feat-h2 { font-size: 36px; font-weight: 600; color: #5a5855; line-height: 1.2; }
+    .feat-sub { font-size: 15px; color: #8c8884; margin-top: 6px; }
+    .feature-list { display: flex; flex-direction: column; }
+    .feature-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 0;
+    }
+    .feat-check {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: linear-gradient(135deg, #ff8904, #f54900);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .feature-item span { font-size: 15px; font-weight: 600; color: #5a5855; }
+
+    /* ── SECTION 7 – PLATFORM FEATURES ── */
+    .section-platform {
+      padding: 100px 80px;
+      display: flex; align-items: center; justify-content: center;
+      background: #faf8f4;
+    }
+    .platform-inner {
+      display: flex; flex-direction: column; align-items: center; gap: 28px;
+      max-width: 1280px; width: 100%;
+    }
+    .badge-glass {
+      display: inline-flex; align-items: center;
+      background: #fff; border: 1px solid #f0ede8;
+      border-radius: 9999px; padding: 6px 16px;
+    }
+    .badge-glass span { font-size: 13px; font-weight: 500; color: #5a5855; }
+    .platform-title { display: flex; align-items: center; gap: 14px; }
+    .h2-60-dark { font-size: 44px; font-weight: 600; color: #5a5855; line-height: 1.2; }
+    .h2-60-orange {
+      font-size: 44px; font-weight: 600; line-height: 1.2;
+      background: linear-gradient(90deg, #ff8904, #ff6900, #f54900);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .platform-sub { font-size: 16px; color: #8c8884; text-align: center; line-height: 1.6; max-width: 640px; }
+    .platform-grid { display: flex; flex-direction: column; gap: 20px; width: 100%; }
+    .platform-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+    .platform-card {
+      display: flex; flex-direction: column; gap: 8px; padding: 20px;
+      background: #fff; border: 1px solid #f0ede8;
+      border-radius: 14px; min-height: 160px;
+    }
+    .pcard-icon {
+      width: 36px; height: 36px;
+      background: #faf8f4;
+      border-radius: 9px; display: flex; align-items: center; justify-content: center; margin-bottom: 4px;
+    }
+    .platform-card h3 { font-size: 16px; font-weight: 700; color: #5a5855; }
+    .platform-card p { font-size: 13px; color: #8c8884; line-height: 1.55; }
+    .btn-outline-orange {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; font-weight: 600; color: #5a5855;
+      background: #fff; border: 1px solid #f0ede8;
+      border-radius: 100px; padding: 12px 28px;
+      cursor: pointer; text-decoration: none;
+    }
+
+    /* ── SECTION 8 – CTA ── */
+    .section-cta {
+      padding: 120px 80px;
+      display: flex; align-items: center; justify-content: center;
+      background: #faf8f4; position: relative; overflow: hidden;
+    }
+    .cta-glow { display: none; }
+    .cta-inner {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 36px;
+      max-width: 800px; padding: 0 32px; text-align: center;
+    }
+    .cta-title-row { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .h1-cta { font-size: 44px; font-weight: 600; color: #5a5855; line-height: 1.15; }
+    .h1-cta-grad {
+      font-size: 44px; font-weight: 600; line-height: 1.15;
+      background: linear-gradient(180deg, #ec7070, #f0863f);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .cta-sub { font-size: 16px; color: #8c8884; max-width: 600px; line-height: 1.7; }
+    .cta-buttons { display: flex; align-items: center; gap: 14px; }
+    .cta-contact { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+    .cta-contact-lbl { color: #8c8884; }
+    .cta-contact-email { color: #ff6900; font-weight: 500; text-decoration: none; }
+
+    /* ── HAMBURGER NAV ── */
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-burger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: #5a5855;
+      border-radius: 2px;
+      transition: transform 0.25s, opacity 0.25s;
+    }
+    .nav-burger.is-active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.is-active span:nth-child(2) { opacity: 0; }
+    .nav-burger.is-active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      padding: 16px 20px;
+      border-top: 1px solid rgba(234,234,234,0.6);
+    }
+    .nav-mobile-menu.is-open { display: flex; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: linear-gradient(180deg, #1e2939, #101828);
+      color: #fff; padding: 0;
+      position: relative;
+      z-index: 10000;
+    }
+    .footer-inner {
+      max-width: 1440px; width: 100%;
+      margin: 0 auto;
+      padding: 54px 80px 0;
+    }
+    .footer-top {
+      display: flex; justify-content: space-between; gap: 32px;
+      padding-bottom: 32px;
+    }
+    .footer-brand { display: flex; flex-direction: column; gap: 16px; max-width: 500px; }
+    .footer-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; margin-left: -6px; }
+    .footer-logo-mark { width: 32px; height: 32px; background: linear-gradient(135deg, #ff8904, #f54900); border-radius: 8px; }
+    .footer-logo-text { font-size: 18px; font-weight: 700; color: #fff; }
+    .footer-desc { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.75; }
+    .footer-socials { display: flex; gap: 10px; }
+    .social-icon {
+      width: 34px; height: 34px; background: rgba(255,255,255,0.08);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; text-decoration: none;
+    }
+    .footer-cols { display: flex; gap: 72px; }
+    .footer-col { display: flex; flex-direction: column; gap: 12px; }
+    .footer-col-title { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+    .footer-col a { font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 32px;
+    }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,0.35); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,0.35); text-decoration: none; }
+    /* toggle icon – hidden on desktop */
+    .footer-col-toggle { display: none; }
+    /* body wrapper – flex column for desktop */
+    .footer-col-body { display: flex; flex-direction: column; gap: 12px; }
+
+    /* ══════════════════════════════════════
+       RESPONSIVE BREAKPOINTS
+    ══════════════════════════════════════ */
+
+    /* ── 1100px ~ 1439px ── */
+    @media (max-width: 1439px) {
+      .nav-inner { padding: 16px 40px; }
+      .hero-content { padding: 60px 60px 0; }
+      .hero-panel-wrap { padding-left: 60px; padding-right: 16px; }
+      .section-agentic { padding: 80px 60px; }
+      .section-products { padding: 80px 60px; }
+      .section-demo { padding: 80px 40px; }
+      .section-targets .targets-inner { padding: 80px 40px 40px; }
+      #dtc-b2b-iframe { height: 420px !important; }
+      .section-casestudy { padding: 60px 40px; }
+      .section-features { padding: 80px 40px; }
+      .section-platform { padding: 80px 40px; }
+      .section-cta { padding: 80px 40px; }
+      .footer-inner { padding: 54px 40px 0; }
+    }
+
+    /* ── 768px ~ 1099px ── */
+    @media (max-width: 1099px) {
+      .nav-inner { padding: 16px 36px; }
+      .nav-actions { gap: 8px; }
+
+      /* Hero */
+      .hero-content { padding: 48px 40px 0; }
+      .hero-h1-dark, .hero-h1-gradient { font-size: 36px; }
+      .hero-action-row { flex-direction: column; align-items: flex-start; }
+      .cli-box { width: 100%; max-width: 540px; }
+
+      /* AI panel – align with text */
+      .hero-panel-wrap { padding-left: 40px; padding-right: 16px; }
+      .hero-panel-wrap iframe { height: 580px; }
+
+      /* Section 2 */
+      .section-agentic { padding: 80px 40px; }
+      .agentic-inner { gap: 48px; }
+      .agentic-left { flex: 0 0 380px; }
+      .agentic-title-dark, .agentic-title-gradient { font-size: 36px; }
+
+      /* Case study */
+      .casestudy-panels { flex-direction: column; align-items: flex-start; }
+      .cs-metrics, .cs-chart { width: 100%; }
+      .cs-chart { height: auto; min-height: 380px; }
+      .m-value { font-size: 32px; }
+      /* Shopify case study – narrow tablet: tighten gap, shrink left col */
+      #section-casestudy-shopify .casestudy-inner { gap: 40px; }
+      .shopify-col-left { flex: 0 0 300px; }
+
+      /* Features */
+      .features-inner { flex-direction: column; gap: 40px; }
+      .features-left { flex: none; width: 100%; }
+      .feat-h2 { font-size: 36px; }
+
+      /* Unified heading size ≤1099px → 36px */
+      .h2-dark, .h2-orange-gradient, .h2-red-gradient { font-size: 36px; }
+      .h1-60-dark, .h1-60-gradient { font-size: 36px; }
+      .casestudy-inner h2 { font-size: 36px; }
+      .h2-60-dark, .h2-60-orange { font-size: 36px; }
+      .h1-cta, .h1-cta-grad { font-size: 36px; }
+
+      /* Platform */
+      .platform-row { grid-template-columns: repeat(2, 1fr); }
+
+      /* Section 3 */
+      .section-products { padding: 64px 40px; }
+      .products-inner { flex-direction: column; align-items: center; gap: 40px; }
+      .products-left { width: 100%; justify-content: center; }
+      .products-left iframe { width: 100%; max-width: 100%; height: auto; aspect-ratio: 580 / 400; }
+      .products-right { align-items: center; text-align: center; }
+      .products-tags { justify-content: center; }
+
+      /* Footer */
+      .footer-cols { gap: 40px; }
+    }
+
+    /* ── ≤ 900px – heading 28px ── */
+    @media (max-width: 900px) {
+      .hero-h1-dark, .hero-h1-gradient,
+      .agentic-title-dark, .agentic-title-gradient,
+      .h2-dark, .h2-orange-gradient, .h2-red-gradient,
+      .h1-60-dark, .h1-60-gradient,
+      .casestudy-inner h2,
+      .feat-h2,
+      .h2-60-dark, .h2-60-orange,
+      .h1-cta, .h1-cta-grad { font-size: 28px; }
+      .m-value { font-size: 20px; }
+    }
+
+    /* ── ≤ 767px (Mobile) ── */
+    @media (max-width: 767px) {
+      /* Nav */
+      .nav-inner { padding: 14px 20px; }
+      .nav-actions { display: none; }
+      .nav-burger { display: flex; }
+
+      /* Hero */
+      .hero-content { padding: 32px 20px 0; max-width: 100%; }
+      .hero-h1-dark, .hero-h1-gradient { font-size: 28px; letter-spacing: -0.3px; }
+      .hero-sub { font-size: 14px; max-width: 100%; }
+      .hero-action-row { flex-direction: column; align-items: center; gap: 12px; }
+      .hero-buttons { flex-direction: row; justify-content: center; gap: 12px; }
+      .hero-buttons a { text-align: center; }
+      .cli-box { width: 100%; }
+
+      /* AI panel on mobile – show only left panel */
+      .hero-panel-wrap { display: block; padding-left: 20px; padding-right: 16px; }
+      .hero-panel-wrap iframe { height: 500px; border-radius: 16px; }
+
+      /* Section 2 */
+      .section-agentic { padding: 56px 20px; }
+      .agentic-inner { flex-direction: column; gap: 32px; }
+      .agentic-left { flex: none; width: 100%; }
+      .agentic-title-dark, .agentic-title-gradient { font-size: 28px; }
+      .agentic-sub { font-size: 14px; max-width: 100%; }
+      .agentic-list-item-desc { font-size: 14px; max-width: 100%; }
+      .agentic-right { display: none; }
+
+      /* Section 3 */
+      .section-products { padding: 48px 20px; }
+      .products-inner { gap: 28px; }
+      .h2-dark, .h2-orange-gradient, .h2-red-gradient { font-size: 28px; }
+      .products-sub { font-size: 14px; max-width: 100%; }
+
+      /* Video */
+      .demo-play-circle { width: 44px; height: 44px; }
+      .demo-play-label { font-size: 14px; padding: 0 6px; }
+
+      /* Section 4 */
+      .section-demo { padding: 56px 20px; }
+      .demo-title-row { flex-direction: column; align-items: center; gap: 2px; }
+      .h1-60-dark, .h1-60-gradient { font-size: 28px; }
+      .demo-stats { grid-template-columns: 1fr; }
+
+      /* Section 5a */
+      .section-targets .targets-inner { padding: 56px 20px 32px; }
+      .targets-cards { grid-template-columns: 1fr; }
+      .target-card p { font-size: 14px; max-width: 100%; }
+
+      /* Section 5b */
+      #dtc-b2b-iframe { height: 360px !important; }
+      .section-casestudy { padding: 40px 20px; }
+      .casestudy-inner h2 { font-size: 28px; }
+      .casestudy-desc p { font-size: 14px; max-width: 100%; }
+      .casestudy-panels { flex-direction: column; }
+      .cs-metrics, .cs-chart { width: 100%; }
+      .cs-chart { height: auto; min-height: 340px; }
+      /* Shopify case study – mobile: stack, single-col cards */
+      #section-casestudy-shopify .casestudy-inner { flex-direction: column; gap: 32px; }
+      .shopify-col-left { flex: none; width: 100%; }
+      .deploy-cards { grid-template-columns: 1fr; }
+      .deploy-card-val { font-size: 30px; }
+      .shopify-body { font-size: 14px; }
+
+      /* Section 6 */
+      .section-features { padding: 56px 20px; }
+      .features-inner { flex-direction: column; }
+      .features-left { display: none; }
+      .feat-h2 { font-size: 28px; }
+
+      /* Section 7 */
+      .section-platform { padding: 56px 20px; }
+      .platform-row { grid-template-columns: 1fr 1fr; }
+      .platform-title { flex-direction: column; align-items: center; gap: 2px; }
+      .h2-60-dark, .h2-60-orange { font-size: 28px; }
+      .platform-sub { font-size: 14px; }
+
+      /* Section 8 CTA */
+      .section-cta { padding: 56px 20px; }
+      .h1-cta, .h1-cta-grad { font-size: 28px; }
+      .cta-sub { font-size: 14px; }
+      .cta-title-row { flex-direction: column; align-items: center; }
+      .cta-buttons { flex-direction: column; align-items: stretch; }
+      .cta-buttons a { text-align: center; }
+      .cta-contact { flex-direction: column; gap: 4px; text-align: center; }
+
+      /* Footer */
+      .footer-inner { padding: 40px 20px 0; }
+      .footer-desc { font-size: 12px; }
+      .footer-top { flex-direction: column; gap: 28px; }
+      .footer-cols { flex-direction: column; gap: 0; }
+      .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+      /* Footer accordion – only when cols are stacked */
+      .footer-col-title {
+        display: flex; align-items: center; justify-content: space-between;
+        cursor: pointer; user-select: none;
+        padding-bottom: 14px; padding-top: 14px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        margin-bottom: 0;
+      }
+      .footer-col-toggle {
+        display: block;
+        font-size: 22px; font-weight: 300; line-height: 1;
+        color: rgba(255,255,255,0.5);
+        transition: transform 0.25s ease; flex-shrink: 0;
+      }
+      .footer-col.is-open .footer-col-toggle { transform: rotate(45deg); }
+      .footer-col-body {
+        max-height: 0; overflow: hidden; padding-top: 0;
+        transition: max-height 0.3s ease, padding-top 0.3s ease;
+      }
+      .footer-col.is-open .footer-col-body { max-height: 220px; padding-top: 14px; }
+
+      /* General */
+      img { max-width: 100%; }
+    }
+
+
+    /* ── ≤ 480px – Small phones ── */
+    @media (max-width: 480px) {
+      /* Nav */
+      .nav-inner { padding: 12px 16px; }
+      .nav-logo-img { height: 32px; }
+
+      /* Hero – prevent horizontal overflow on narrow screens */
+      .hero-content { padding: 24px 14px 0; }
+      .hero-h1-dark, .hero-h1-gradient { font-size: 24px; }
+      .hero-sub { font-size: 13px; }
+      .hero-buttons { flex-direction: column; align-items: stretch; gap: 10px; }
+      .hero-buttons a { text-align: center; }
+      .hero-panel-wrap { padding-left: 14px; padding-right: 10px; }
+      .hero-panel-wrap iframe { height: 420px; }
+
+      /* CLI box */
+      .cli-box { padding: 10px 12px; font-size: 12px; }
+
+      /* Section headings */
+      .agentic-title-dark, .agentic-title-gradient,
+      .h2-dark, .h2-orange-gradient, .h2-red-gradient,
+      .h1-60-dark, .h1-60-gradient,
+      .feat-h2, .h2-60-dark, .h2-60-orange,
+      .h1-cta, .h1-cta-grad,
+      .casestudy-inner h2 { font-size: 22px; }
+
+      /* Sections */
+      .section-agentic { padding: 40px 14px; }
+      .section-products { padding: 36px 14px; }
+      .section-demo { padding: 40px 14px; }
+      .section-features { padding: 40px 14px; }
+      .section-platform { padding: 40px 14px; }
+      .section-cta { padding: 40px 14px; }
+      .section-casestudy { padding: 32px 14px; }
+      .section-targets .targets-inner { padding: 40px 14px 28px; }
+      .footer-inner { padding: 32px 14px 0; }
+
+      /* Platform grid → 1 column */
+      .platform-row { grid-template-columns: 1fr; }
+
+      /* Demo screenshot */
+      .demo-screenshot { padding: 16px; }
+
+      /* Deploy cards */
+      .deploy-card-val { font-size: 26px; }
+      .deploy-cards { padding: 16px; gap: 10px; }
+
+      /* CTA */
+      .cta-buttons a { padding: 12px 20px; font-size: 14px; }
+    }
+
+    /* ── ≤ 320px – Extra small phones ── */
+    @media (max-width: 320px) {
+      .hero-content { padding: 20px 12px 0; }
+      .hero-h1-dark, .hero-h1-gradient { font-size: 20px; }
+      .nav-logo-img { height: 28px; }
+      .agentic-title-dark, .agentic-title-gradient,
+      .h2-dark, .h2-orange-gradient, .h2-red-gradient,
+      .h1-60-dark, .h1-60-gradient,
+      .feat-h2, .h2-60-dark, .h2-60-orange,
+      .h1-cta, .h1-cta-grad,
+      .casestudy-inner h2 { font-size: 19px; }
+    }
+
+    /* ── ≤ 580px – Products section fluid ── */
+    @media (max-width: 580px) {
+      .section-products { padding: 40px 16px; }
+      .products-inner { gap: 20px; }
+      .products-left { width: 100%; }
+      .products-left iframe { width: 100%; height: auto; aspect-ratio: 580 / 400; }
+    }
+    /* ── SECTION 5c – CASE STUDY: SHOPIFY ── */
+    #section-casestudy-shopify .casestudy-inner { flex-direction: row; align-items: flex-start; gap: 64px; }
+    .shopify-col-left { flex: 0 0 550px; display: flex; flex-direction: column; gap: 32px; }
+    .shopify-body { font-size: 15px; color: #8c8884; line-height: 1.6; margin-top: 12px; }
+    .shopify-tabs { display: flex; flex-direction: column; }
+    .shopify-tab { padding: 18px 0 18px 22px; border-left: 3px solid #e8e4e0; cursor: pointer; transition: border-color 0.25s; }
+    .shopify-tab + .shopify-tab { margin-top: 4px; }
+    .shopify-tab.is-active { border-left-color: #f0863f; }
+    .shopify-tab-title { font-size: 16px; font-weight: 700; color: #b8b4b0; transition: color 0.25s; }
+    .shopify-tab.is-active .shopify-tab-title { background: linear-gradient(135deg, #ec7070, #f0863f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; }
+    .shopify-tab-sub { font-size: 14px; color: #8c8884; line-height: 2; margin-top: 6px; max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease 0.05s; }
+    .shopify-tab.is-active .shopify-tab-sub { max-height: 120px; opacity: 1; }
+    .shopify-col-right { flex: 1; min-width: 0; }
+    .shopify-panels-wrap { display: grid; }
+    .shopify-right-panel { grid-area: 1 / 1; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+    .shopify-right-panel.is-active { opacity: 1; pointer-events: auto; }
+    .deploy-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 24px; background: #fff; border: 1px solid #f0ede8; border-radius: 16px; }
+    .deploy-card { padding: 20px; background: #faf8f4; border-radius: 12px; display: flex; flex-direction: column; gap: 6px; }
+    .deploy-card-val { font-size: 38px; font-weight: 700; line-height: 1; background: linear-gradient(135deg, #ec7070, #f0863f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .deploy-card-title { font-size: 14px; font-weight: 700; color: #2c2924; }
+    .deploy-card-desc { font-size: 13px; color: #8c8884; line-height: 1.2; }
+    .deploy-card-full { grid-column: 1 / -1; }
+    .shopify-chart-wrap { padding: 24px 8px 16px; background: #fff; border: 1px solid #f0ede8; border-radius: 16px; }
+  </style>
+</head>
+<body>
+
+<div class="page-frame"></div>
+<div class="banner-mask"></div>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="logo/logocis001.svg" alt="deeplumen" class="nav-logo-img" />
+    </a>
+    <div class="nav-actions">
+      <a href="Book a Demo.html" class="btn-demo-nav">Book a Demo</a>
+      <a href="https://www.deeplumen.com/auth/login" class="btn-login-nav">Log in</a>
+    </div>
+    <!-- 汉堡按钮（移动端显示） -->
+    <button class="nav-burger" id="nav-burger" aria-label="Menu" onclick="(function(){var m=document.getElementById('nav-mobile-menu');var b=document.getElementById('nav-burger');m.classList.toggle('is-open');b.classList.toggle('is-active');})()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <!-- 移动端下拉菜单 -->
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="Book a Demo.html" class="btn-demo-nav" style="width:100%;text-align:center;">Book a Demo</a>
+    <a href="https://www.deeplumen.com/auth/login" class="btn-login-nav" style="width:100%;text-align:center;">Log in</a>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-content">
+    <div>
+      <div class="hero-h1-dark">Helping Brands</div>
+      <div class="hero-h1-gradient">Get Ready for AI</div>
+    </div>
+    <p class="hero-sub">
+      Powering the future of Agentic Commerce by building Marketing-to-AI (M2AI) infrastructure
+      where brands are discovered, verified, and recommended by AI agents - not human browsers
+    </p>
+    <div class="hero-action-row">
+      <div class="cli-box">
+        <button class="cli-btn">Get deeplumen</button>
+        <span class="cli-command">curl -fsSL https://beta.deeplumen.cn/api/v1/deploy/install.sh | sudo bash -s www.smzdm.com -key dlk_85d860acb5b2c38362f630092ae7ace61c1e41b37cbf75a9dfd30897ea3e7f57</span>
+        <div class="cli-copy" onclick="(function(el){const txt='curl -fsSL https://beta.deeplumen.cn/api/v1/deploy/install.sh | sudo bash -s www.smzdm.com -key dlk_85d860acb5b2c38362f630092ae7ace61c1e41b37cbf75a9dfd30897ea3e7f57';navigator.clipboard.writeText(txt).then(function(){el.style.background='#e8f5e9';setTimeout(function(){el.style.background=''},1200)});})(this)" style="cursor:pointer;" title="Copy">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <rect x="4" y="4" width="8" height="8" rx="1.5" stroke="#8c8884" stroke-width="1.2"/>
+            <path d="M2 10V3a1 1 0 0 1 1-1h7" stroke="#8c8884" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="hero-buttons">
+        <a href="https://www.deeplumen.com/auth/guest-domain-init" class="btn-primary">Get Started</a>
+        <a href="Book a Demo.html" class="btn-ghost">Book a Demo</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Agent Panel mockup -->
+  <div class="hero-panel-wrap">
+    <iframe
+      src="./ai-agent-panel.html"
+      scrolling="no"
+    ></iframe>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+<!-- ── SECTION 2 – AGENTIC COMMERCE & M2AI ── -->
+<section class="section-agentic">
+  <div class="agentic-inner">
+    <div class="agentic-left">
+      <div>
+        <div class="agentic-title-dark">Agentic Commerce</div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div class="agentic-title-gradient">&amp; M2AI</div>
+          <div class="badge-orange-outline" style="flex-shrink:0;"><span>FUTURE OF COMMERCE</span></div>
+        </div>
+      </div>
+      <p class="agentic-sub">From persuading humans to informing agents</p>
+      <div class="agentic-list">
+        <div class="agentic-list-item" data-preview-src="./no_02_1.html">
+          <div class="agentic-list-item-title">Agentic Commerce</div>
+          <div class="agentic-list-item-desc">Establishing a seamless ecosystem where AI agents autonomously discover, evaluate, and execute transactions on behalf of users.</div>
+          <div class="agentic-progress-bar"><div class="agentic-progress-fill"></div></div>
+        </div>
+        <div class="agentic-list-item" data-preview-src="./no_02_5.html">
+          <div class="agentic-list-item-title">Marketing-to-AI (M2AI)</div>
+          <div class="agentic-list-item-desc">Pivoting from human audiences to marketing-to-AI, to dominate the decision-making process through semantic optimization and structured brand data.</div>
+          <div class="agentic-progress-bar"><div class="agentic-progress-fill"></div></div>
+        </div>
+        <div class="agentic-list-item" data-preview-src="./no_02_4.html">
+          <div class="agentic-list-item-title">Protocol-Driven</div>
+          <div class="agentic-list-item-desc">Enabling frictionless machine-to-machine consensus through standardized, machine-readable commercial protocols that AI agents can trust.</div>
+          <div class="agentic-progress-bar"><div class="agentic-progress-fill"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="agentic-right">
+      <iframe id="agentic-preview" src="./no_02_1.html" scrolling="no"></iframe>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+<!-- ── SECTION 3 – OUR PRODUCTS ── -->
+<section class="section-products">
+  <div class="products-inner">
+    <div class="products-left">
+      <iframe src="./AI Traffic.html" scrolling="no"></iframe>
+    </div>
+    <div class="products-right">
+      <div class="badge-peach"><span>Our Products</span></div>
+      <div>
+        <div class="h2-dark">The Agentic Page</div>
+        <div class="h2-orange-gradient">Free to Start. Built for AI Traffic</div>
+      </div>
+      <div class="products-tags">
+        <a href="#" class="products-tag">One-click install</a>
+        <a href="#" class="products-tag">Zero upfront cost</a>
+        <a href="#" class="products-tag">Performance-based</a>
+      </div>
+      <p class="products-sub">Make your brand discoverable and actionable for the Agentic Age.</p>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+<!-- ── SECTION 4 – AI AGENT PAGE DEMO ── -->
+<section class="section-demo">
+  <div class="demo-inner">
+    <div>
+      <div class="demo-title-row">
+        <span class="h1-60-dark">Introducing the</span>
+        <span class="h1-60-gradient">AI Agent Page</span>
+      </div>
+      <p class="demo-watch" style="text-align:center;margin-top:8px;">Watch the 84-second demo</p>
+    </div>
+
+    <!-- ── 视频播放器 ── -->
+    <div class="demo-player-wrap">
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+    <div class="demo-player-outer" id="demo-video-wrap">
+
+      <!-- 视频画面 -->
+      <div class="demo-video-area">
+        <video id="demo-video" src="https://www.deeplumen.com/video/AI_Agentic_Page_Commercial_Video_2602.mp4" poster="./image 21.jpg" preload="metadata" playsinline></video>
+        <!-- 居中播放按钮（未播放时显示） -->
+        <button class="demo-play-btn" id="demo-play-btn" aria-label="Play video">
+          <div class="demo-play-circle">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <polygon points="8,5 18,11 8,17" fill="#fff"/>
+            </svg>
+          </div>
+          <span class="demo-play-label">Marketing-to-AI(M2AI)</span>
+        </button>
+        <!-- 点击视频区域遮罩 -->
+        <div class="demo-click-overlay" id="demo-click-overlay"></div>
+      </div>
+
+      <!-- 控制栏（视频下方，始终可见） -->
+      <div class="demo-controls" id="demo-controls">
+        <button class="demo-pause-btn" id="demo-pause-btn" aria-label="Play/Pause">
+          <svg id="demo-pause-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <polygon points="3,1 13,7 3,13" fill="white"/>
+          </svg>
+        </button>
+        <div class="demo-progress-wrap" id="demo-progress-wrap">
+          <div class="demo-progress-fill" id="demo-progress-fill"></div>
+        </div>
+        <span class="demo-time" id="demo-time">0:00 / 0:00</span>
+        <button class="demo-mute-btn" id="demo-mute-btn" aria-label="Mute">
+          <svg id="demo-mute-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 5.5H1.5A.5.5 0 0 0 1 6v4a.5.5 0 0 0 .5.5H3l3.5 3V2.5L3 5.5Z" fill="#5a5855"/>
+            <path d="M10 5.5a3.5 3.5 0 0 1 0 5M12 3.5a6 6 0 0 1 0 9" stroke="#5a5855" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <div class="demo-volume-wrap" id="demo-volume-wrap">
+          <div class="demo-volume-fill" id="demo-volume-fill"></div>
+        </div>
+      </div>
+
+    </div>
+
+    </div><!-- /.demo-player-outer -->
+    </div><!-- /.demo-player-wrap -->
+
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+<!-- ── SECTION 5a – DTC & B2B ── -->
+<section class="section-targets">
+  <div class="targets-inner">
+    <div style="text-align:center;">
+      <div class="h2-dark">We Help Both DTC and B2B</div>
+      <div class="h2-red-gradient">Enterprise Brands</div>
+    </div>
+  </div>
+  <iframe id="dtc-b2b-iframe" src="./DTC and B2B.html" scrolling="no"
+    style="width:100%;max-width:1440px;height:500px;border:none;display:block;"></iframe>
+</section>
+
+<!-- ── SECTION 5c – CASE STUDY: SHOPIFY ── -->
+<section class="section-casestudy" id="section-casestudy-shopify">
+  <div class="casestudy-inner">
+    <div class="shopify-col-left">
+      <div>
+        <h2>Shopify <span style="background:linear-gradient(180deg,#ec7070,#f0863f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">AI Commerce</span></h2>
+        <p class="shopify-body">From zero to AI-ready in hours. We deploy Shopify storefronts as structured, machine-readable pages - then track every AI-referred visit straight to checkout.</p>
+      </div>
+      <div class="shopify-tabs">
+        <div class="shopify-tab is-active" data-shopify-tab="deploy">
+          <div class="shopify-tab-title">Shopify Deployment</div>
+          <div class="shopify-tab-sub">One-click integration from your Shopify admin. Full catalog AI-indexed and live in 24 hours - no engineering resources required.</div>
+        </div>
+        <div class="shopify-tab" data-shopify-tab="attr">
+          <div class="shopify-tab-title">AI Search Revenue Attribution</div>
+          <div class="shopify-tab-sub">Track every recommendation from Perplexity, ChatGPT, and Claude all the way to checkout - closing the full revenue loop.</div>
+        </div>
+      </div>
+    </div>
+    <div class="shopify-col-right">
+      <div class="shopify-panels-wrap">
+      <div class="shopify-right-panel is-active" id="sp-deploy">
+        <div style="border-radius:16px;overflow:hidden;">
+          <iframe src="./no_02_6.html" scrolling="no" style="width:100%;height:420px;border:none;display:block;"></iframe>
+        </div>
+      </div>
+      <div class="shopify-right-panel" id="sp-attr">
+        <div style="border-radius:16px;overflow:hidden;">
+          <iframe src="./no_02_7.html" scrolling="no" style="width:100%;height:420px;border:none;display:block;"></iframe>
+        </div>
+      </div>
+      </div><!-- /.shopify-panels-wrap -->
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+<!-- ── SECTION 5b – CASE STUDY ── -->
+<section class="section-casestudy">
+  <div class="casestudy-inner">
+    <h2>Case Study: HR SaaS</h2>
+    <div class="casestudy-desc">
+      <p>We helped a leading HR SaaS provider improve discoverability in AI search. By deploying an Agentic Page (AP), their marketing content was translated into a machine-readable format for accurate AI recommendations.</p>
+    </div>
+    <div class="casestudy-panels">
+      <div class="cs-panel cs-metrics">
+        <div class="metric">
+          <div class="m-value" data-count="5" data-suffix="x">0x</div>
+          <div class="m-title">Inbound AI Traffic</div>
+          <div class="metric-reveal"><div class="metric-reveal-inner">
+            <div class="m-desc">Organic discovery lift across Perplexity, SearchGPT, and Claude → Boosted organic discovery across AI platforms.</div>
+          </div></div>
+        </div>
+        <div class="metric">
+          <div class="m-value" data-count="87.3" data-suffix="%" data-decimals="1">0%</div>
+          <div class="m-title">AI Model Visibility</div>
+          <div class="metric-reveal"><div class="metric-reveal-inner">
+            <div class="m-desc">Market share dominance within AI-driven category recommendations → Increased AI visibility within AI recommendations.</div>
+          </div></div>
+        </div>
+        <div class="metric">
+          <div class="m-value" data-count="2" data-suffix="x">0x</div>
+          <div class="m-title">Qualified Lead Pipeline</div>
+          <div class="metric-reveal"><div class="metric-reveal-inner">
+            <div class="m-desc">Verified value of high-intent prospects captured through Agentic discovery → Captured high-intent prospects via AI-powered discovery.</div>
+          </div></div>
+        </div>
+      </div>
+      <div class="cs-panel cs-chart" id="trend-chart-panel">
+        <div class="trend-svg-wrap">
+          <svg id="trend-svg" viewBox="0 0 400 226" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+            <defs>
+              <linearGradient id="ai-fill-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ec7070" stop-opacity="0.22"/>
+                <stop offset="100%" stop-color="#f0863f" stop-opacity="0.03"/>
+              </linearGradient>
+              <linearGradient id="ai-line-grad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#ec7070"/>
+                <stop offset="100%" stop-color="#f0863f"/>
+              </linearGradient>
+              <linearGradient id="human-fill-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#c8c0b4" stop-opacity="0.14"/>
+                <stop offset="100%" stop-color="#c8c0b4" stop-opacity="0.02"/>
+              </linearGradient>
+              <clipPath id="chart-clip">
+                <rect x="30" y="5" width="355" height="215"/>
+              </clipPath>
+            </defs>
+            <!-- Grid -->
+            <line x1="30" y1="60"  x2="385" y2="60"  stroke="#f0ede8" stroke-width="1"/>
+            <line x1="30" y1="105" x2="385" y2="105" stroke="#f0ede8" stroke-width="1"/>
+            <line x1="30" y1="150" x2="385" y2="150" stroke="#f0ede8" stroke-width="1"/>
+            <line x1="30" y1="195" x2="385" y2="195" stroke="#f0ede8" stroke-width="1"/>
+            <!-- Area fills -->
+            <g clip-path="url(#chart-clip)">
+              <path id="human-area"
+                d="M 40,113 C 68,116 97,118 125,121 C 153,124 182,126 210,130 C 238,134 267,140 295,144 C 323,149 352,153 380,157 L 380,195 L 40,195 Z"
+                fill="url(#human-fill-grad)" opacity="0"/>
+              <path id="ai-area"
+                d="M 40,188 C 68,181 97,176 125,166 C 153,156 182,146 210,130 C 238,114 267,87 295,68 C 323,49 352,33 380,15 L 380,195 L 40,195 Z"
+                fill="url(#ai-fill-grad)" opacity="0"/>
+            </g>
+            <!-- Human line -->
+            <path id="human-line"
+              d="M 40,113 C 68,116 97,118 125,121 C 153,124 182,126 210,130 C 238,134 267,140 295,144 C 323,149 352,153 380,157"
+              stroke="#c8c0b4" stroke-width="2" stroke-linecap="round"/>
+            <!-- AI line -->
+            <path id="ai-line"
+              d="M 40,188 C 68,181 97,176 125,166 C 153,156 182,146 210,130 C 238,114 267,87 295,68 C 323,49 352,33 380,15"
+              stroke="url(#ai-line-grad)" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Human dots -->
+            <circle class="h-dot" cx="40"  cy="113" r="0" fill="#fff" stroke="#c8c0b4" stroke-width="1.5"/>
+            <circle class="h-dot" cx="125" cy="121" r="0" fill="#fff" stroke="#c8c0b4" stroke-width="1.5"/>
+            <circle class="h-dot" cx="210" cy="130" r="0" fill="#fff" stroke="#c8c0b4" stroke-width="1.5"/>
+            <circle class="h-dot" cx="295" cy="144" r="0" fill="#fff" stroke="#c8c0b4" stroke-width="1.5"/>
+            <circle class="h-dot" cx="380" cy="157" r="0" fill="#fff" stroke="#c8c0b4" stroke-width="1.5"/>
+            <!-- AI dots -->
+            <circle class="a-dot" cx="40"  cy="188" r="0" fill="#fff" stroke="#ec7070" stroke-width="1.5"/>
+            <circle class="a-dot" cx="125" cy="166" r="0" fill="#fff" stroke="#ec7070" stroke-width="1.5"/>
+            <circle class="a-dot" cx="210" cy="130" r="0" fill="#fff" stroke="#f07050" stroke-width="1.5"/>
+            <circle class="a-dot" cx="295" cy="68"  r="0" fill="#fff" stroke="#f0863f" stroke-width="1.5"/>
+            <circle class="a-dot" cx="380" cy="15"  r="0" fill="#fff" stroke="#f0863f" stroke-width="1.5"/>
+            <!-- Cross-over highlight -->
+            <circle id="cross-dot" cx="210" cy="130" r="0" fill="#f07050" opacity="0"/>
+            <!-- X Labels -->
+            <text x="40"  y="215" text-anchor="middle" font-size="11" fill="#8c8884" font-family="system-ui,sans-serif">Q1</text>
+            <text x="125" y="215" text-anchor="middle" font-size="11" fill="#8c8884" font-family="system-ui,sans-serif">Q2</text>
+            <text x="210" y="215" text-anchor="middle" font-size="11" fill="#8c8884" font-family="system-ui,sans-serif">Q3</text>
+            <text x="295" y="215" text-anchor="middle" font-size="11" fill="#8c8884" font-family="system-ui,sans-serif">Q4</text>
+            <text x="380" y="215" text-anchor="middle" font-size="11" fill="#8c8884" font-family="system-ui,sans-serif">Q5</text>
+          </svg>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:4px;margin-top:-4px;padding-left:7.5%;padding-right:3.75%;">
+          <div class="chart-title-sm">AI vs Human Discovery Traffic</div>
+          <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#d0c8c0;"></div><span>Human</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:linear-gradient(90deg,#ec7070,#f0863f);"></div><span>AI</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+<!-- ── SECTION 6 – AI AGENT PAGE FEATURES ── -->
+<section class="section-features">
+  <div class="features-inner">
+    <div class="features-left">
+      <div style="width:740px;height:538px;overflow:hidden;border-radius:16px;">
+        <iframe src="./no_02_3.html" scrolling="no" style="width:800px;height:560px;border:none;transform:scale(0.9607);transform-origin:top left;"></iframe>
+      </div>
+    </div>
+    <div class="features-right">
+      <div>
+        <div class="feat-h2">AI Agent Page</div>
+        <p class="feat-sub">Make your brand machine-readable and discoverable</p>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span>The Lean Server-Rendered HTML</span>
+        </div>
+        <div class="feature-item">
+          <div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span>Structured Abstract &amp; Modular Context</span>
+        </div>
+        <div class="feature-item">
+          <div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span>Simplified Dynamic Components</span>
+        </div>
+        <div class="feature-item">
+          <div class="feat-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span>Entity Definition &amp; Declaration</span>
+        </div>
+      </div>
+      <a href="https://www.deeplumen.com/auth/guest-domain-init" class="btn-primary" style="align-self:flex-start;">Get Started</a>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+<!-- ── SECTION 7 – PLATFORM FEATURES ── -->
+<section class="section-platform">
+  <div class="platform-inner">
+    <div class="badge-glass"><span>Platform Features</span></div>
+    <div class="platform-title">
+      <span class="h2-60-dark">Built for the</span>
+      <span class="h2-60-orange">M2AI Era</span>
+    </div>
+    <p class="platform-sub">
+      Everything you need to manage, monitor,<br/>
+      and optimize your brand's presence across AI systems
+    </p>
+    <iframe id="m2ai-iframe" src="./M2AI Era.html" scrolling="no" style="width:100%;height:440px;border:none;display:block;"></iframe>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+<!-- ── SECTION 8 – CTA ── -->
+<section class="section-cta">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <div>
+      <div class="cta-title-row">
+        <span class="h1-cta">Ready to Lead in the</span>
+        <span class="h1-cta-grad">AI Era?</span>
+      </div>
+      <p class="cta-sub" style="margin-top:16px;">Join forward-thinking brands positioning themselves at the forefront of Agentic Commerce.</p>
+    </div>
+    <div class="cta-buttons">
+      <a href="https://www.deeplumen.com/auth/guest-domain-init" class="btn-primary">Get Started</a>
+      <a href="Book a Demo.html" class="btn-ghost">Book a Demo</a>
+    </div>
+    <div class="cta-contact">
+      <span class="cta-contact-lbl">Contact us at</span>
+      <a href="mailto:contact@deeplumen.com" class="cta-contact-email">contact@deeplumen.com</a>
+    </div>
+  </div>
+</section>
+
+</div><!-- /.page-wrapper -->
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="footer-logo">
+        <img src="logo/logosvg.svg" alt="deeplumen" style="height:40px;width:auto;display:block;">
+      </a>
+      <p class="footer-desc">Deeplumen is an AI-first technology company focused on the intersection of AI agents and global commerce. As the pioneers of the M2AI (Marketing to AI) framework, Deeplumen builds the protocols, infrastructure, and connectors that allow brands to thrive in an era where machines represent the consumer.</p>
+      <div class="footer-socials">
+        <!-- X (Twitter) -->
+        <a href="https://x.com/Deeplumen0922" target="_blank" class="social-icon" aria-label="X / Twitter">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M9.16 6.77 14.08 1H12.9L8.62 6.01 5.22 1H1.5l5.17 7.52L1.5 15h1.18l4.52-5.25L10.78 15H14.5L9.16 6.77ZM7.79 9.09l-.52-.75L3.1 1.87h1.8l3.37 4.82.52.75 4.37 6.24h-1.8L7.79 9.09Z" fill="rgba(255,255,255,0.6)"/></svg>
+        </a>
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/company/deeplumen/posts/?feedView=all" target="_blank" class="social-icon" aria-label="LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.5 5.5H5V14H2.5V5.5ZM3.75 4.5A1.25 1.25 0 1 1 3.75 2 1.25 1.25 0 0 1 3.75 4.5Z" fill="rgba(255,255,255,0.6)"/><path d="M6.5 5.5H9V6.7C9.4 6 10.3 5.3 11.6 5.3 14.4 5.3 14.5 7.1 14.5 9.5V14H12V10C12 9 11.9 7.8 10.4 7.8 8.9 7.8 8.5 8.8 8.5 9.8V14H6.5V5.5Z" fill="rgba(255,255,255,0.6)"/></svg>
+        </a>
+        <!-- Reddit -->
+        <a href="https://www.reddit.com/user/Deeplumen_AI/" target="_blank" class="social-icon" aria-label="Reddit">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8.5" r="5.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.3"/><circle cx="5.8" cy="9" r="0.9" fill="rgba(255,255,255,0.6)"/><circle cx="10.2" cy="9" r="0.9" fill="rgba(255,255,255,0.6)"/><path d="M5.8 11c.6.7 4.4.7 4.4 0" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round"/><path d="M5.5 8c.4-.9 1.4-1.5 2.5-1.5s2.1.6 2.5 1.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round"/><path d="M8 6.5V4.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round"/><circle cx="8.5" cy="3.8" r="0.9" fill="rgba(255,255,255,0.6)"/><path d="M10.5 7.5c.8-.3 1.5.2 1.5.9" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-linecap="round"/><path d="M5.5 7.5c-.8-.3-1.5.2-1.5.9" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <div class="footer-col-title">Company<span class="footer-col-toggle" aria-hidden="true">+</span></div>
+        <div class="footer-col-body">
+          <a href="About Us_page.html">About Us</a>
+          <a href="https://www.prnewswire.com/news-releases/deeplumen-unveils-ucp-for-java-infrastructure-powering-the-future-of-agentic-commerce-302664496.html" target="_blank">Press</a>
+          <a href="Contact_page.html">Contact</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Resources<span class="footer-col-toggle" aria-hidden="true">+</span></div>
+        <div class="footer-col-body">
+          <a href="#">API Docs</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 DeepLumen. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+  </div><!-- /.footer-inner -->
+</footer>
+
+<script>
+(function () {
+  var items  = Array.from(document.querySelectorAll('.agentic-list-item[data-preview-src]'));
+  var iframe = document.getElementById('agentic-preview');
+  if (!items.length || !iframe) return;
+
+  iframe.style.transition = 'opacity 0.35s';
+
+  var current = 0;
+
+  // 初始化：默认激活第一项
+  items.forEach(function (el, i) {
+    el.classList.toggle('is-open', i === 0);
+    var f = el.querySelector('.agentic-progress-fill');
+    if (f) f.style.width = i === 0 ? '100%' : '0%';
+  });
+
+  function activate(index) {
+    if (index === current) return;
+    current = index;
+    items.forEach(function (el, i) {
+      el.classList.toggle('is-open', i === index);
+      var f = el.querySelector('.agentic-progress-fill');
+      if (f) f.style.width = i === index ? '100%' : '0%';
+    });
+    var src = items[index].getAttribute('data-preview-src');
+    iframe.style.opacity = '0';
+    setTimeout(function () {
+      iframe.src = src;
+      iframe.onload = function () { iframe.style.opacity = '1'; };
+    }, 180);
+  }
+
+  items.forEach(function (el, i) {
+    el.addEventListener('mouseenter', function () { activate(i); });
+    el.addEventListener('click',      function () { activate(i); });
+  });
+})();
+
+(function () {
+  var panel = document.querySelector('.hero-panel-wrap');
+  if (!panel) return;
+
+  function updatePanelOpacity() {
+    var rect = panel.getBoundingClientRect();
+    var panelHeight = rect.height;
+    // 从 panel 顶部开始滚入视口时保持不透明
+    // 当 panel 顶部滚出到视口上方时开始渐隐，顶部离开视口 panelHeight*0.5 时完全透明
+    var fadeStart = 0;          // panel 顶部与视口顶部齐平时开始渐隐
+    var fadeEnd = panelHeight * 0.55; // panel 顶部再向上走 55% 高度时完全透明
+
+    var scrolledPast = -rect.top; // panel 顶部已滚出视口的像素数
+    if (scrolledPast <= fadeStart) {
+      panel.style.opacity = '1';
+    } else if (scrolledPast >= fadeEnd) {
+      panel.style.opacity = '0';
+    } else {
+      var ratio = (scrolledPast - fadeStart) / (fadeEnd - fadeStart);
+      panel.style.opacity = (1 - ratio).toFixed(3);
+    }
+  }
+
+  window.addEventListener('scroll', updatePanelOpacity, { passive: true });
+  updatePanelOpacity();
+})();
+
+/* ── 视频控制逻辑 ── */
+(function () {
+  var video     = document.getElementById('demo-video');
+  var wrap      = document.getElementById('demo-video-wrap');
+  var pauseBtn  = document.getElementById('demo-pause-btn');
+  var pauseIcon = document.getElementById('demo-pause-icon');
+  var fill      = document.getElementById('demo-progress-fill');
+  var timeEl    = document.getElementById('demo-time');
+  var progWrap  = document.getElementById('demo-progress-wrap');
+  var muteBtn   = document.getElementById('demo-mute-btn');
+  var muteIcon  = document.getElementById('demo-mute-icon');
+  var volWrap   = document.getElementById('demo-volume-wrap');
+  var volFill   = document.getElementById('demo-volume-fill');
+  if (!video) return;
+
+  var PAUSE_SVG = '<rect x="2" y="1" width="4" height="12" rx="1" fill="white"/><rect x="8" y="1" width="4" height="12" rx="1" fill="white"/>';
+  var PLAY_SVG  = '<polygon points="3,1 13,7 3,13" fill="white"/>';
+  var MUTE_SVG  = '<path d="M3 5.5H1.5A.5.5 0 0 0 1 6v4a.5.5 0 0 0 .5.5H3l3.5 3V2.5L3 5.5Z" fill="#5a5855"/><line x1="10" y1="6" x2="14" y2="10" stroke="#5a5855" stroke-width="1.4" stroke-linecap="round"/><line x1="14" y1="6" x2="10" y2="10" stroke="#5a5855" stroke-width="1.4" stroke-linecap="round"/>';
+  var VOL_SVG   = '<path d="M3 5.5H1.5A.5.5 0 0 0 1 6v4a.5.5 0 0 0 .5.5H3l3.5 3V2.5L3 5.5Z" fill="#5a5855"/><path d="M10 5.5a3.5 3.5 0 0 1 0 5M12 3.5a6 6 0 0 1 0 9" stroke="#5a5855" stroke-width="1.3" stroke-linecap="round"/>';
+
+  function fmt(s) {
+    s = Math.floor(s || 0);
+    return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2);
+  }
+
+  function updateMuteIcon() {
+    muteIcon.innerHTML = video.muted || video.volume === 0 ? MUTE_SVG : VOL_SVG;
+    volFill.style.width = (video.muted ? 0 : video.volume * 100) + '%';
+  }
+
+  function togglePlay() {
+    if (video.paused) {
+      var p = video.play();
+      if (p && p.catch) p.catch(function () {});
+      wrap.classList.add('playing');
+      pauseIcon.innerHTML = PAUSE_SVG;
+    } else {
+      video.pause();
+      pauseIcon.innerHTML = PLAY_SVG;
+    }
+  }
+
+  /* 点击视频画面区域 → 切换播放/暂停 */
+  wrap.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('#demo-controls')) return;
+    togglePlay();
+  });
+
+  /* 暂停/播放按钮 */
+  pauseBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    togglePlay();
+  });
+
+  /* 进度条 */
+  progWrap.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (!video.duration) return;
+    var rect = progWrap.getBoundingClientRect();
+    video.currentTime = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)) * video.duration;
+  });
+
+  /* 静音 */
+  muteBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    video.muted = !video.muted;
+    updateMuteIcon();
+  });
+
+  /* 音量 */
+  volWrap.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var rect = volWrap.getBoundingClientRect();
+    var vol = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    video.volume = vol;
+    video.muted = vol === 0;
+    updateMuteIcon();
+  });
+
+  /* 进度同步 */
+  video.addEventListener('timeupdate', function () {
+    if (!video.duration) return;
+    fill.style.width = (video.currentTime / video.duration * 100) + '%';
+    timeEl.textContent = fmt(video.currentTime) + ' / ' + fmt(video.duration);
+  });
+
+  /* 视频结束 */
+  video.addEventListener('ended', function () {
+    wrap.classList.remove('playing');
+    fill.style.width = '0%';
+    timeEl.textContent = '0:00 / ' + fmt(video.duration);
+    pauseIcon.innerHTML = PLAY_SVG;
+  });
+
+  /* 元数据加载 */
+  video.addEventListener('loadedmetadata', function () {
+    timeEl.textContent = '0:00 / ' + fmt(video.duration);
+    updateMuteIcon();
+  });
+})();
+
+/* ── DTC & B2B iframe 高度自动同步（postMessage）── */
+(function () {
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.type === 'dtc-height' && e.data.height > 0) {
+      var iframe = document.getElementById('dtc-b2b-iframe');
+      if (iframe) iframe.style.height = e.data.height + 'px';
+    }
+    if (e.data && e.data.type === 'm2ai-height' && e.data.height > 0) {
+      var iframe = document.getElementById('m2ai-iframe');
+      if (iframe) iframe.style.height = e.data.height + 'px';
+    }
+  });
+})();
+
+/* ── Footer accordion (≤800px) ── */
+(function () {
+  var cols = document.querySelectorAll('.footer-col');
+  cols.forEach(function (col) {
+    var title = col.querySelector('.footer-col-title');
+    if (!title) return;
+    title.addEventListener('click', function () {
+      col.classList.toggle('is-open');
+    });
+  });
+})();
+
+/* ── Nav border on scroll ── */
+(function () {
+  var nav = document.querySelector('nav');
+  if (!nav) return;
+  function update() {
+    nav.style.borderBottomColor = window.scrollY > 10
+      ? 'rgba(234,234,234,0.6)'
+      : 'transparent';
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+
+/* ── Trend chart line animation ── */
+(function () {
+  var panel = document.getElementById('trend-chart-panel');
+  if (!panel) return;
+
+  var humanLine = document.getElementById('human-line');
+  var aiLine    = document.getElementById('ai-line');
+  var humanArea = document.getElementById('human-area');
+  var aiArea    = document.getElementById('ai-area');
+  var crossDot  = document.getElementById('cross-dot');
+  var hDots = panel.querySelectorAll('.h-dot');
+  var aDots = panel.querySelectorAll('.a-dot');
+
+  // Init dash state after layout
+  requestAnimationFrame(function () {
+    var hl = humanLine.getTotalLength();
+    var al = aiLine.getTotalLength();
+    humanLine.setAttribute('stroke-dasharray', hl);
+    humanLine.setAttribute('stroke-dashoffset', hl);
+    aiLine.setAttribute('stroke-dasharray', al);
+    aiLine.setAttribute('stroke-dashoffset', al);
+  });
+
+  var triggered = false;
+
+  function animateDotR(dot, targetR, delay) {
+    setTimeout(function () {
+      var start = null;
+      var dur = 280;
+      (function step(ts) {
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        var ease = 1 - Math.pow(1 - p, 3);
+        dot.setAttribute('r', (targetR * ease).toFixed(2));
+        if (p < 1) requestAnimationFrame(step);
+      })(performance.now());
+    }, delay);
+  }
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting && !triggered) {
+        triggered = true;
+        obs.disconnect();
+
+        humanLine.style.transition = 'stroke-dashoffset 1.3s cubic-bezier(0.4,0,0.2,1)';
+        humanLine.setAttribute('stroke-dashoffset', '0');
+
+        setTimeout(function () {
+          aiLine.style.transition = 'stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.15,1)';
+          aiLine.setAttribute('stroke-dashoffset', '0');
+        }, 180);
+
+        setTimeout(function () {
+          humanArea.style.transition = 'opacity 0.9s ease';
+          humanArea.setAttribute('opacity', '1');
+          aiArea.style.transition = 'opacity 0.9s ease';
+          aiArea.setAttribute('opacity', '1');
+        }, 500);
+
+        hDots.forEach(function (d, i) { animateDotR(d, 3.5, 350 + i * 130); });
+        aDots.forEach(function (d, i) { animateDotR(d, 3.5, 530 + i * 130); });
+
+        setTimeout(function () {
+          animateDotR(crossDot, 6, 0);
+          crossDot.style.transition = 'opacity 0.3s ease';
+          crossDot.setAttribute('opacity', '0.9');
+        }, 1300);
+      }
+    });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.15 });
+
+  obs.observe(panel);
+})();
+
+/* ── Case Study metrics 进入视口自动展开第一条 + hover 互斥 ── */
+(function () {
+  var metricsPanel = document.querySelector('.cs-metrics');
+  if (!metricsPanel) return;
+  var metrics = Array.from(metricsPanel.querySelectorAll('.metric'));
+  if (!metrics.length) return;
+
+  function openOnly(el) {
+    metrics.forEach(function (m) { m.classList.remove('is-open'); });
+    el.classList.add('is-open');
+  }
+
+  metrics.forEach(function (m) {
+    m.addEventListener('mouseenter', function () { openOnly(m); });
+    m.addEventListener('click', function () { openOnly(m); });
+  });
+
+  var triggered = false;
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting && !triggered) {
+        triggered = true;
+        obs.disconnect();
+        setTimeout(function () { openOnly(metrics[0]); }, 300);
+      }
+    });
+  }, { rootMargin: '0px 0px -15% 0px', threshold: 0.2 });
+
+  obs.observe(metricsPanel);
+})();
+
+/* ── Case Study 数字计数动画 ── */
+(function () {
+  var els = document.querySelectorAll('.cs-metrics .m-value[data-count]');
+  if (!els.length) return;
+  var triggered = false;
+
+  function animateCount(el) {
+    var target   = parseFloat(el.getAttribute('data-count'));
+    var suffix   = el.getAttribute('data-suffix') || '';
+    var decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+    var duration = 1400;
+    var start    = null;
+
+    function step(ts) {
+      if (!start) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      // easeOutExpo
+      var ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      var val  = target * ease;
+      el.textContent = val.toFixed(decimals) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting && !triggered) {
+        triggered = true;
+        els.forEach(function (el, i) {
+          setTimeout(function () { animateCount(el); }, i * 120);
+        });
+        obs.disconnect();
+      }
+    });
+  }, { rootMargin: '0px 0px -15% 0px', threshold: 0.1 });
+
+  obs.observe(document.querySelector('.cs-metrics'));
+})();
+
+/* ── Shopify tabs ── */
+(function () {
+  var tabs   = Array.from(document.querySelectorAll('.shopify-tab'));
+  var panels = Array.from(document.querySelectorAll('.shopify-right-panel'));
+  if (!tabs.length) return;
+  function activate(idx) {
+    tabs.forEach(function (t) { t.classList.remove('is-active'); });
+    panels.forEach(function (p) { p.classList.remove('is-active'); });
+    tabs[idx].classList.add('is-active');
+    if (panels[idx]) panels[idx].classList.add('is-active');
+    if (idx === 1) triggerChart();
+  }
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { activate(i); });
+    tab.addEventListener('mouseenter', function () { activate(i); });
+  });
+
+  /* ── Shopify Bar Chart animation (fires on first switch to attr tab) ── */
+  var chartTriggered = false;
+  var baseline = 195;
+  var bars = [
+    { el: document.getElementById('sbar-ai'),      finalH: 109, val: document.getElementById('sval-ai')      },
+    { el: document.getElementById('sbar-paid'),    finalH: 77,  val: document.getElementById('sval-paid')    },
+    { el: document.getElementById('sbar-organic'), finalH: 59,  val: document.getElementById('sval-organic') },
+    { el: document.getElementById('sbar-direct'),  finalH: 40,  val: document.getElementById('sval-direct')  }
+  ];
+  function animateBar(bar, delay) {
+    setTimeout(function () {
+      var start = null; var dur = 900;
+      (function step(ts) {
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        var ease = 1 - Math.pow(1 - p, 3);
+        var h = bar.finalH * ease;
+        bar.el.setAttribute('height', h.toFixed(1));
+        bar.el.setAttribute('y', (baseline - h).toFixed(1));
+        if (p < 1) { requestAnimationFrame(step); } else {
+          bar.val.style.transition = 'opacity 0.35s ease';
+          bar.val.setAttribute('opacity', '1');
+        }
+      })(performance.now());
+    }, delay);
+  }
+  function triggerChart() {
+    if (chartTriggered) return;
+    chartTriggered = true;
+    bars.forEach(function (bar, i) { animateBar(bar, i * 120); });
+  }
+})();
+
+</script>
+
+<!-- ── 视频框噪点粒子汇聚效果 ── -->
+<script>
+(function () {
+  const canvas = document.getElementById('particle-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const wrap = canvas.parentElement;
+
+  const PAD = 120;
+  const COUNT = 180;
+  let W, H, particles = [];
+
+  function resize() {
+    const r = wrap.getBoundingClientRect();
+    W = r.width + PAD * 2;
+    H = r.height + PAD * 2;
+    canvas.width  = W;
+    canvas.height = H;
+    canvas.style.width  = W + 'px';
+    canvas.style.height = H + 'px';
+    canvas.style.left   = -PAD + 'px';
+    canvas.style.top    = -PAD + 'px';
+  }
+
+  function spawn() {
+    // 起点：外圈随机位置（PAD 区域内）
+    const side = Math.floor(Math.random() * 4);
+    let x, y;
+    const margin = PAD * 0.92;
+    if (side === 0) { x = Math.random() * W; y = Math.random() * margin; }
+    else if (side === 1) { x = W - Math.random() * margin; y = Math.random() * H; }
+    else if (side === 2) { x = Math.random() * W; y = H - Math.random() * margin; }
+    else { x = Math.random() * margin; y = Math.random() * H; }
+
+    // 目标：视频边框上的随机点
+    const vw = W - PAD * 2, vh = H - PAD * 2;
+    const perim = 2 * (vw + vh);
+    const t = Math.random() * perim;
+    let tx, ty;
+    if (t < vw)            { tx = PAD + t;            ty = PAD; }
+    else if (t < vw + vh)  { tx = PAD + vw;           ty = PAD + (t - vw); }
+    else if (t < 2*vw+vh)  { tx = PAD + vw - (t-vw-vh); ty = PAD + vh; }
+    else                   { tx = PAD;                 ty = PAD + vh - (t-2*vw-vh); }
+
+    const dist = Math.hypot(tx - x, ty - y) || 1;
+    const speed = 0.38 + Math.random() * 0.62;
+    const maxLife = 100 + Math.random() * 110;
+
+    return {
+      x, y, tx, ty,
+      bx: (tx - x) / dist,
+      by: (ty - y) / dist,
+      speed,
+      r: 0.7 + Math.random() * 1.7,
+      alpha: 0,
+      maxAlpha: 0.22 + Math.random() * 0.42,
+      life: Math.random() * maxLife,
+      maxLife,
+      warm: Math.random() > 0.38,
+      jx: (Math.random() - 0.5) * 0.28,
+      jy: (Math.random() - 0.5) * 0.28,
+    };
+  }
+
+  function init() {
+    particles = Array.from({ length: COUNT }, spawn);
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+
+    particles.forEach((p, i) => {
+      p.life++;
+
+      // 接近目标时加速（引力感）
+      const distLeft = Math.hypot(p.tx - p.x, p.ty - p.y);
+      const accel = 1 + Math.max(0, 1 - distLeft / 180) * 1.8;
+      p.x += (p.bx + p.jx) * p.speed * accel;
+      p.y += (p.by + p.jy) * p.speed * accel;
+
+      // 淡入淡出
+      const prog = p.life / p.maxLife;
+      if (prog < 0.18)      p.alpha = (prog / 0.18) * p.maxAlpha;
+      else if (prog > 0.62) p.alpha = ((1 - prog) / 0.38) * p.maxAlpha;
+      else                  p.alpha = p.maxAlpha;
+
+      // 绘制粒子（带微弱光晕）
+      const col = p.warm ? '200,191,181' : '185,176,167';
+      ctx.save();
+      ctx.shadowBlur = p.r * 4;
+      ctx.shadowColor = `rgba(${col},${p.alpha * 0.6})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${col},${p.alpha})`;
+      ctx.fill();
+      ctx.restore();
+
+      // 到达边缘或生命结束时重置
+      if (p.life >= p.maxLife || distLeft < 3.5) {
+        particles[i] = spawn();
+        particles[i].life = 0;
+      }
+    });
+
+    requestAnimationFrame(tick);
+  }
+
+  resize();
+  init();
+  tick();
+  window.addEventListener('resize', () => { resize(); init(); });
+})();
+</script>
+
+
+<!-- ── 噪点投影 SVG filter ── -->
+<svg style="width:0;height:0;position:absolute;overflow:hidden" aria-hidden="true">
+  <defs>
+    <filter id="demo-noise-shadow" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="14" in="SourceGraphic" result="blurred"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.78" numOctaves="4" seed="6" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 20 -8" in="noise" result="grain"/>
+      <feComposite in="blurred" in2="grain" operator="in"/>
+    </filter>
+  </defs>
+</svg>
+</body>
+</html>

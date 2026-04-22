@@ -1,0 +1,266 @@
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #FBF9F4; }
+
+  .canvas {
+    width: 580px;
+    height: 400px;
+    background-color: #FBF9F4;
+    background-image: radial-gradient(circle, rgba(130,110,80,0.18) 1px, transparent 1px);
+    background-size: 18px 18px;
+    overflow: hidden;
+    position: relative;
+    font-family: system-ui, -apple-system, sans-serif;
+    border-radius: 16px;
+    border: 1px solid #d5cfc5;
+  }
+
+  .scene {
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 500;
+    padding: 4px 10px; border-radius: 20px;
+    border: 0.5px solid;
+  }
+  .badge-amber { background: #faeeda; color: #633806; border-color: #c9a87a; }
+  .badge-green { background: #eaf3de; color: #27500a; border-color: #97c459; }
+  .badge-warm  { background: #f5efe4; color: #2c2924; border-color: #d5cfc5; }
+
+  .card {
+    background: #FFFFFF;
+    border-radius: 11px;
+    padding: 10px 14px;
+    width: 240px;
+    height: 85px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .card-unit {
+    position: relative;
+    padding-top: 11px;
+    width: 240px;
+    cursor: grab;
+    user-select: none;
+  }
+  .card-unit:active { cursor: grabbing; }
+
+  @keyframes flow {
+    0%   { stroke-dashoffset: 20; }
+    100% { stroke-dashoffset: 0; }
+  }
+
+
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    border: 0.5px solid #e6e0d6;
+    color: #6b6359;
+    background: #FBF9F4;
+    margin: 2px 2px;
+  }
+
+  .icon-box {
+    width: 26px; height: 26px; border-radius: 7px;
+    background: #f0e6d6;
+    border: 0.5px solid #d6c4a8;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .offer-btn {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: #c9a87a; color: #2c2924;
+    font-size: 11px; font-weight: 500;
+    padding: 4px 10px; border-radius: 6px;
+    border: none; cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+  }
+  .offer-btn:hover { opacity: 0.85; }
+</style>
+
+<div class="canvas">
+
+  <!-- Dynamic connector SVG overlay -->
+  <svg id="conn-svg" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;">
+    <path id="conn1" fill="none" stroke="#c9a87a" stroke-width="1.5" stroke-dasharray="4 3"
+      style="animation: flow 1.4s linear infinite;"/>
+    <path id="conn2" fill="none" stroke="#97c459" stroke-width="1.5" stroke-dasharray="4 3"
+      style="animation: flow 1.4s linear infinite; animation-delay:0.4s;"/>
+  </svg>
+
+  <div class="scene">
+
+    <!-- Card 1 -->
+    <div class="card-unit" id="unit1">
+      <span class="badge badge-amber" style="position:absolute;top:0;left:12px;z-index:1">
+        <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
+          <polygon points="5,1 6.5,4 10,4.5 7.5,7 8.2,10.5 5,8.8 1.8,10.5 2.5,7 0,4.5 3.5,4" fill="#c9a87a"/>
+        </svg>
+        Matching user intent...
+      </span>
+      <div class="card" style="border:1.5px solid #c9a87a; height:52px; display:flex; align-items:center; justify-content:space-between; padding:0 14px;">
+        <span style="font-size:14px;font-weight:500;color:#2c2924;">Add auth to my app</span>
+        <span style="width:24px;height:24px;border-radius:50%;border:0.5px solid #e6e0d6;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+            <path d="M6 10V2M2 6l4-4 4 4" stroke="#6b6359" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card-unit" id="unit2" style="align-self:flex-end; width:310px; margin-top:20px;">
+      <span class="badge badge-green" style="position:absolute;top:0;right:12px;z-index:1">
+        <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
+          <path d="M2 5.5 L4.2 8 L8 3" stroke="#3b6d11" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        96% match
+      </span>
+      <div class="card" style="border:1.5px solid #97c459; width:310px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div class="icon-box">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+              <path d="M8 2L14 5.5V10.5L8 14L2 10.5V5.5L8 2Z" fill="none" stroke="#7a5a2e" stroke-width="1.2"/>
+              <path d="M8 5L10.5 8L8 11L5.5 8L8 5Z" fill="#7a5a2e"/>
+            </svg>
+          </div>
+          <span style="font-size:13px;font-weight:500;color:#2c2924">Supabase</span>
+        </div>
+        <div style="white-space:nowrap;">
+          <span class="tag">authentication</span>
+          <span class="tag">user management</span>
+          <span class="tag">database</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card-unit" id="unit3" style="align-self:flex-start; width:280px; margin-top:15px;">
+      <span class="badge badge-warm" style="position:absolute;top:0;left:12px;z-index:1">
+        <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
+          <circle cx="5" cy="5" r="3.5" stroke="#6b6359" stroke-width="1.2"/>
+          <path d="M3.5 5 C3.5 3 6.5 3 6.5 5 C6.5 7 3.5 7 3.5 5Z" fill="#6b6359" opacity="0.5"/>
+        </svg>
+        Offer served
+      </span>
+      <div class="card" style="border:1.5px solid #d5cfc5; width:280px; height:90px; padding-top:16px;">
+
+        <!-- Row 1: execution status -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:6px">
+            <span style="width:16px;height:16px;border-radius:50%;background:#f0ede8;border:0.5px solid #c8bfb0;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
+                <path d="M1.5 5 L4 7.5 L8.5 2" stroke="#6b5a3e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span style="font-size:12px;font-weight:600;color:#2c2924;">Executed</span>
+            <span style="width:3px;height:3px;border-radius:50%;background:#c8c0b4;flex-shrink:0;"></span>
+            <span style="font-size:10.5px;color:#6b6359;">3 steps</span>
+          </div>
+          <span style="font-size:10.5px;color:#9a8a72;font-weight:500;">0.3s</span>
+        </div>
+
+        <!-- Row 2: result summary -->
+        <div style="font-size:11.5px;color:#3a3028;line-height:1.3;margin-bottom:8px;white-space:nowrap;">
+          Auth ready — matched your stack
+        </div>
+
+        <!-- Row 3: capability tags + CTA -->
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;gap:3px;">
+            <span class="tag" style="font-size:10px;padding:1px 7px;">JWT</span>
+            <span class="tag" style="font-size:10px;padding:1px 7px;">OAuth</span>
+            <span class="tag" style="font-size:10px;padding:1px 7px;">RLS</span>
+          </div>
+          <button class="offer-btn" style="padding:3px 11px;font-size:11px;background:#e8dfd0;color:#4a3a24;position:relative;top:-5px;">Apply ↗</button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const canvas = document.querySelector('.canvas');
+  const conn1 = document.getElementById('conn1');
+  const conn2 = document.getElementById('conn2');
+  const units = [
+    document.getElementById('unit1'),
+    document.getElementById('unit2'),
+    document.getElementById('unit3')
+  ];
+
+  // Get center point of a card element relative to canvas
+  function cardCenter(unit) {
+    const card = unit.querySelector('.card');
+    const cr = canvas.getBoundingClientRect();
+    const r  = card.getBoundingClientRect();
+    return {
+      x: r.left + r.width  / 2 - cr.left,
+      y: r.top  + r.height / 2 - cr.top
+    };
+  }
+
+  // Orthogonal path: vertical → horizontal → vertical, with rounded corners
+  function orthoPath(x1, y1, x2, y2, r = 10) {
+    const midY = (y1 + y2) / 2;
+    const dx = x2 - x1;
+    if (Math.abs(dx) < 1) return `M${x1},${y1} L${x2},${y2}`;
+    const cr = Math.min(r, Math.abs(dx) / 2, Math.abs(y2 - y1) / 4);
+    const sx = dx > 0 ? 1 : -1;
+    return [
+      `M${x1},${y1}`,
+      `L${x1},${midY - cr}`,
+      `Q${x1},${midY} ${x1 + sx * cr},${midY}`,
+      `L${x2 - sx * cr},${midY}`,
+      `Q${x2},${midY} ${x2},${midY + cr}`,
+      `L${x2},${y2}`
+    ].join(' ');
+  }
+
+  function updateConnectors() {
+    const p = units.map(cardCenter);
+    conn1.setAttribute('d', orthoPath(p[0].x, p[0].y, p[1].x, p[1].y));
+    conn2.setAttribute('d', orthoPath(p[1].x, p[1].y, p[2].x, p[2].y));
+  }
+
+  function makeDraggable(el) {
+    let dx = 0, dy = 0;
+    el.addEventListener('mousedown', e => {
+      if (e.target.closest('.offer-btn')) return;
+      e.preventDefault();
+      const startX = e.clientX - dx;
+      const startY = e.clientY - dy;
+      el.style.cursor = 'grabbing';
+      el.style.zIndex = '100';
+      const onMove = e => {
+        dx = e.clientX - startX;
+        dy = e.clientY - startY;
+        el.style.transform = `translate(${dx}px, ${dy}px)`;
+        updateConnectors();
+      };
+      const onUp = () => {
+        el.style.cursor = 'grab';
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+  }
+
+  units.forEach(makeDraggable);
+  updateConnectors(); // draw initial lines
+</script>

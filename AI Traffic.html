@@ -1,0 +1,360 @@
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; }
+
+  /* ── Terminal card ── */
+  .terminal {
+    width: 580px;
+    height: 400px;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #ebebeb;
+    box-shadow: 0 4px 24px rgba(90,88,85,0.08);
+    overflow: hidden;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Title bar ── */
+  .t-bar {
+    height: 40px;
+    background: #f5f3ef;
+    border-bottom: 1px solid #ebebeb;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+  }
+  .t-dots { display: flex; gap: 6px; flex-shrink: 0; }
+  .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .t-dot-r { background: #f0a0a0; }
+  .t-dot-y { background: #f0cc80; }
+  .t-dot-g { background: #a0d8a0; }
+  .t-title {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    color: #8c8884;
+    letter-spacing: 0.02em;
+    margin-right: 40px;
+  }
+
+  /* ── Body ── */
+  .t-body {
+    flex: 1;
+    padding: 24px 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* ── Command line ── */
+  .cmd-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .cmd-prompt {
+    font-size: 13px;
+    color: #c9a87a;
+    font-family: 'SF Mono', ui-monospace, monospace;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .cmd-text {
+    font-size: 13px;
+    color: #5a5855;
+    font-family: 'SF Mono', ui-monospace, monospace;
+    font-weight: 500;
+    letter-spacing: -0.2px;
+  }
+  .cmd-cursor {
+    display: inline-block;
+    width: 7px; height: 14px;
+    background: #5a5855;
+    border-radius: 1px;
+    vertical-align: middle;
+    margin-left: 1px;
+    animation: blink 1s step-end infinite;
+  }
+  .cmd-cursor.hidden { display: none; }
+
+  /* ── Steps ── */
+  .steps { display: flex; flex-direction: column; gap: 10px; }
+
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .step.visible { opacity: 1; transform: translateY(0); }
+
+  .step-icon {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid #e0ddd9;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    position: relative;
+  }
+  .step-icon.loading {
+    border-color: #e0ddd9;
+    border-top-color: #f0863f;
+    animation: spin 0.7s linear infinite;
+  }
+  .step-icon.done {
+    background: linear-gradient(135deg, #ec7070, #f0863f);
+    border-color: transparent;
+    animation: none;
+  }
+  .step-icon.done::after {
+    content: '';
+    display: block;
+    width: 5px; height: 8px;
+    border-right: 1.5px solid #fff;
+    border-bottom: 1.5px solid #fff;
+    transform: rotate(45deg) translate(-1px, -1px);
+  }
+
+  .step-label {
+    font-size: 13px;
+    color: #8c8884;
+    transition: color 0.3s ease;
+  }
+  .step.done .step-label { color: #5a5855; }
+
+  .step-time {
+    margin-left: auto;
+    font-size: 11px;
+    color: #c8c4be;
+    font-family: 'SF Mono', ui-monospace, monospace;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .step.done .step-time { opacity: 1; }
+
+  /* ── Success banner ── */
+  .success-banner {
+    margin-top: 18px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(236,112,112,0.07), rgba(240,134,63,0.07));
+    border: 1px solid rgba(240,134,63,0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .success-banner.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .success-icon {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ec7070, #f0863f);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .success-icon::after {
+    content: '';
+    display: block;
+    width: 6px; height: 10px;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(45deg) translate(-1px, -1px);
+  }
+  .success-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: #5a5855;
+  }
+  .success-sub {
+    font-size: 11px;
+    color: #8c8884;
+    margin-top: 1px;
+  }
+  .success-version {
+    margin-left: auto;
+    font-size: 11px;
+    color: #f0863f;
+    font-family: 'SF Mono', ui-monospace, monospace;
+    font-weight: 500;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes charBounce {
+    0%   { transform: translateY(0); }
+    28%  { transform: translateY(-6px); }
+    55%  { transform: translateY(2px); }
+    78%  { transform: translateY(-2px); }
+    100% { transform: translateY(0); }
+  }
+  .cmd-text span {
+    display: inline-block;
+  }
+  .cmd-text span.bounce {
+    animation: charBounce 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+  }
+</style>
+
+<div class="terminal">
+
+  <div class="t-bar">
+    <div class="t-dots">
+      <div class="t-dot t-dot-r"></div>
+      <div class="t-dot t-dot-y"></div>
+      <div class="t-dot t-dot-g"></div>
+    </div>
+    <div class="t-title">deeplumen — terminal</div>
+  </div>
+
+  <div class="t-body">
+
+    <div class="cmd-line">
+      <span class="cmd-prompt">~$</span>
+      <span class="cmd-text" id="cmdText"></span>
+      <span class="cmd-cursor" id="cmdCursor"></span>
+    </div>
+
+    <div class="steps">
+      <div class="step" id="step0">
+        <div class="step-icon" id="icon0"></div>
+        <span class="step-label">Resolving packages</span>
+        <span class="step-time">0.3s</span>
+      </div>
+      <div class="step" id="step1">
+        <div class="step-icon" id="icon1"></div>
+        <span class="step-label">Fetching dependencies</span>
+        <span class="step-time">0.6s</span>
+      </div>
+      <div class="step" id="step2">
+        <div class="step-icon" id="icon2"></div>
+        <span class="step-label">Building module graph</span>
+        <span class="step-time">0.2s</span>
+      </div>
+      <div class="step" id="step3">
+        <div class="step-icon" id="icon3"></div>
+        <span class="step-label">Linking binaries</span>
+        <span class="step-time">0.1s</span>
+      </div>
+    </div>
+
+    <div class="success-banner" id="successBanner">
+      <div class="success-icon"></div>
+      <div>
+        <div class="success-text">Installation complete</div>
+        <div class="success-sub">DeepLumen SDK is ready to use</div>
+      </div>
+      <div class="success-version">v2.4.1</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const CMD     = 'npm install @deeplumen/sdk';
+  const CHAR_MS  = 55;
+  const STEP_GAP = 680;
+  const STEP_DUR = 520;
+
+  const cmdText   = document.getElementById('cmdText');
+  const cmdCursor = document.getElementById('cmdCursor');
+  const banner    = document.getElementById('successBanner');
+
+  function getStep(i) {
+    return {
+      el:   document.getElementById('step' + i),
+      icon: document.getElementById('icon' + i),
+    };
+  }
+
+  function reset() {
+    cmdText.textContent = '';
+    cmdCursor.classList.remove('hidden');
+    banner.classList.remove('visible');
+    for (let i = 0; i < 4; i++) {
+      const { el, icon } = getStep(i);
+      el.classList.remove('visible', 'done');
+      icon.classList.remove('loading', 'done');
+    }
+  }
+
+  function typeCommand(cb) {
+    let i = 0;
+    const t = setInterval(() => {
+      cmdText.textContent = CMD.slice(0, ++i);
+      if (i === CMD.length) { clearInterval(t); cb(); }
+    }, CHAR_MS);
+  }
+
+  function bounceChars() {
+    const chars = CMD.split('');
+    cmdText.innerHTML = chars
+      .map(c => c === ' ' ? '<span>&nbsp;</span>' : `<span>${c}</span>`)
+      .join('');
+
+    const spans = cmdText.querySelectorAll('span');
+    const STAGGER = 32;
+
+    spans.forEach((span, idx) => {
+      setTimeout(() => span.classList.add('bounce'), idx * STAGGER);
+    });
+  }
+
+  function runStep(i, cb) {
+    const { el, icon } = getStep(i);
+    el.classList.add('visible');
+    icon.classList.add('loading');
+    setTimeout(() => {
+      icon.classList.remove('loading');
+      icon.classList.add('done');
+      el.classList.add('done');
+      cb();
+    }, STEP_DUR);
+  }
+
+  function runAll() {
+    reset();
+    setTimeout(() => {
+      typeCommand(() => {
+        // bounce and steps start together
+        bounceChars();
+        setTimeout(() => {
+          cmdCursor.classList.add('hidden');
+          let delay = 220;
+          for (let i = 0; i < 4; i++) {
+            ((idx, d) => {
+              setTimeout(() => {
+                runStep(idx, () => {
+                  if (idx === 3) {
+                    setTimeout(() => {
+                      banner.classList.add('visible');
+                      setTimeout(runAll, 3200);
+                    }, 300);
+                  }
+                });
+              }, d);
+            })(i, delay);
+            delay += STEP_GAP;
+          }
+        }, 280);
+      });
+    }, 600);
+  }
+
+  runAll();
+</script>

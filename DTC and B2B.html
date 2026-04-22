@@ -1,0 +1,278 @@
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #faf8f4;
+    margin: 0;
+  }
+
+  /* ── Outer wrapper: full 1440px wide, holds bg + dividers ── */
+  .outer-wrap {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    position: relative;
+    background: #faf8f4;
+    overflow: hidden;
+  }
+
+  /* ── ASCII background layer ── */
+  #ascii-bg {
+    position: absolute;
+    inset: 0;
+    font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
+    font-size: 11px;
+    line-height: 1.65;
+    letter-spacing: 0.05em;
+    color: rgba(150, 118, 72, 0.13);
+    white-space: pre;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  /* ── Full-width 1px horizontal rules ── */
+  .h-rule {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 1px;
+    background: #e8e4de;
+    flex-shrink: 0;
+  }
+
+  /* ── Inner section: max 1188px, centered ── */
+  .section {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1188px;
+    height: 500px;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    gap: 0;
+    align-items: stretch;
+  }
+
+  /* ── Inactive card dims on sibling hover ── */
+  .section:has(.card:hover) .card:not(:hover) {
+    opacity: 0.45;
+  }
+
+  /* ── Base card: transparent ── */
+  .card {
+    flex: 1;
+    padding: 64px 56px;
+    position: relative;
+    overflow: hidden;
+    transition: opacity 0.38s ease;
+    cursor: default;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* ── Vertical divider between cards ── */
+  .v-divider {
+    z-index: 1;
+    width: 1px;
+    background: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(213,207,197,0.7) 15%,
+      rgba(213,207,197,0.7) 85%,
+      transparent 100%
+    );
+    align-self: stretch;
+    flex-shrink: 0;
+  }
+
+  /* ── Badge ── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f0ece4;
+    border: none;
+    border-radius: 9999px;
+    padding: 5px 14px;
+    margin-bottom: 28px;
+    width: 280px;
+  }
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ec7070, #f0863f);
+    flex-shrink: 0;
+  }
+  .badge span {
+    font-size: 12px;
+    font-weight: 500;
+    color: #8c8884;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Headings ── */
+  .card-eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    color: #8c8884;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #5a5855;
+    line-height: 1.2;
+    letter-spacing: -0.4px;
+    margin-bottom: 6px;
+  }
+  .card-title-gradient {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.4px;
+    background: linear-gradient(180deg, #ec7070, #f0863f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 22px;
+    display: block;
+  }
+  .card-desc {
+    font-size: 15px;
+    color: #8c8884;
+    line-height: 1.75;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1268px) {
+    .section { padding: 0 40px; }
+  }
+  @media (max-width: 1100px) {
+    .section { padding: 0 32px; }
+    .card { padding: 48px 40px; }
+    .card-title, .card-title-gradient { font-size: 20px; }
+  }
+  @media (max-width: 860px) {
+    .section {
+      flex-direction: column;
+      height: auto;
+      padding: 0 24px;
+    }
+    .card { padding: 48px 24px; justify-content: flex-start; }
+    .v-divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(to right,
+        transparent 0%, rgba(213,207,197,0.7) 15%,
+        rgba(213,207,197,0.7) 85%, transparent 100%
+      );
+    }
+    .section:has(.card:hover) .card:not(:hover) { opacity: 1; }
+  }
+  @media (max-width: 480px) {
+    .card { padding: 36px 20px; }
+    .card-title, .card-title-gradient { font-size: 18px; }
+    .card-desc { font-size: 14px; }
+  }
+</style>
+
+<div class="outer-wrap">
+  <pre id="ascii-bg" aria-hidden="true"></pre>
+
+  <div class="h-rule"></div>
+
+  <section class="section">
+
+    <!-- ── DTC Card ── -->
+    <div class="card">
+      <div class="badge">
+        <div class="badge-dot"></div>
+        <span>DTC Brands</span>
+      </div>
+
+      <div class="card-title">Maximize Revenue</div>
+      <span class="card-title-gradient">from AI Traffic</span>
+
+      <p class="card-desc">
+        Bridge the gap between your catalog and LLM recommendation engines.
+        Convert high-intent agent queries into direct revenue through optimized
+        semantic indexing.
+      </p>
+    </div>
+
+    <div class="v-divider"></div>
+
+    <!-- ── B2B Card ── -->
+    <div class="card">
+      <div class="badge">
+        <div class="badge-dot"></div>
+        <span>B2B &amp; Enterprise</span>
+      </div>
+
+      <div class="card-title">Generate High-Quality Leads</div>
+      <span class="card-title-gradient">from AI Traffic</span>
+
+      <p class="card-desc">
+        Position your brand as the "Ground Truth" for research agents. Influence
+        the AI-driven discovery journey to secure consistent, high-quality
+        pipeline volume.
+      </p>
+    </div>
+
+  </section>
+
+  <div class="h-rule"></div>
+</div>
+
+<script>
+  (function () {
+    const pre  = document.getElementById('ascii-bg');
+    const wrap = pre.parentElement;
+
+    const ROW_TILES = [
+      '/   \\   ',
+      '  \u00B7     ',
+      '\\   /   ',
+      '  \u2014     ',
+    ];
+
+    function build() {
+      const FONT_SIZE = 11;
+      const LINE_H    = FONT_SIZE * 1.65;
+      const CHAR_W    = FONT_SIZE * 0.62;
+
+      const cols = Math.ceil(wrap.offsetWidth  / CHAR_W) + 4;
+      const rows = Math.ceil(wrap.offsetHeight / LINE_H) + 2;
+
+      let out = '';
+      for (let r = 0; r < rows; r++) {
+        const tile = ROW_TILES[r % ROW_TILES.length];
+        let line = '';
+        while (line.length < cols) line += tile;
+        out += line.slice(0, cols) + '\n';
+      }
+      pre.textContent = out;
+    }
+
+    build();
+    window.addEventListener('resize', build);
+  })();
+</script>
+
+<script>
+  function notifyHeight() {
+    window.parent.postMessage({
+      type: 'dtc-height',
+      height: document.documentElement.scrollHeight
+    }, '*');
+  }
+  window.addEventListener('load', notifyHeight);
+  window.addEventListener('resize', notifyHeight);
+</script>

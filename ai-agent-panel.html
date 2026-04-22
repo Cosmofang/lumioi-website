@@ -1,0 +1,1207 @@
+<!doctype html>
+<html lang="zh-CN" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Agent Panel · DeepLumen</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #fbf9f4;
+      --bg-warm: #f5f2eb;
+      --text-charcoal: #2c2924;
+      --text-muted: #7a7368;
+      --text-light: #a89f94;
+      --border-soft: #e4dfd5;
+      --accent-line: #c8c0b4;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: var(--bg-main);
+      color: var(--text-charcoal);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .app-wrapper {
+      width: 100%;
+      max-width: 1200px;
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--bg-main);
+      margin: 0 auto;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border-soft); border-radius: 2px; }
+
+    .panel-left {
+      background: var(--bg-main);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      border: none;
+    }
+
+    .msg-user {
+      background: var(--bg-warm);
+      border: none;
+      border-radius: 14px 14px 4px 14px;
+      padding: 10px 14px;
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--text-charcoal);
+      max-width: 80%;
+      margin-left: auto;
+    }
+
+    .msg-ai {
+      background: white;
+      border: none;
+      border-radius: 14px 14px 14px 4px;
+      padding: 10px 14px;
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: var(--text-charcoal);
+      max-width: 85%;
+    }
+
+    .chat-input {
+      background: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 14px;
+      color: var(--text-charcoal);
+      font-family: 'Inter', sans-serif;
+      resize: none;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.2s;
+      flex: 1;
+    }
+
+    .chat-input::placeholder { color: var(--text-light); }
+
+    .send-btn {
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: auto;
+      height: auto;
+      margin: 0 16px;
+    }
+
+    .send-btn:hover { color: var(--text-charcoal); }
+
+    .progress-bar-bg {
+      background: var(--border-soft);
+      border-radius: 99px;
+      height: 5px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: var(--text-muted);
+      transition: width 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .data-card {
+      background: var(--bg-warm);
+      border: none;
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+
+    .step-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border-soft);
+      margin-top: 5px;
+      flex-shrink: 0;
+      transition: background 0.3s;
+    }
+
+    .step-dot.active { background: var(--text-muted); }
+    .step-dot.done { background: var(--text-charcoal); }
+
+    .step-line {
+      border-left: 1.5px dashed var(--border-soft);
+      margin-left: 3px;
+      flex-shrink: 0;
+    }
+
+    .chip {
+      display: inline-block;
+      background: var(--bg-warm);
+      border: none;
+      border-radius: 6px;
+      font-size: 11px;
+      padding: 2px 8px;
+      color: var(--text-muted);
+    }
+
+    .section-label {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+    }
+
+    .initial-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      flex: 1;
+      gap: 24px;
+      padding: 24px;
+    }
+
+    .ai-status-icon {
+      transition: opacity 0.4s, color 0.4s;
+    }
+
+    .code-block {
+      background: rgba(0, 0, 0, 0.03);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 11px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      color: var(--text-muted);
+      line-height: 1.4;
+      overflow: hidden;
+      margin: 8px 0 0;
+      max-height: 120px;
+      position: relative;
+    }
+
+    .code-block::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 16px;
+      background: linear-gradient(to bottom, transparent, var(--bg-warm));
+      pointer-events: none;
+    }
+
+    .status-line {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin: 6px 0;
+      font-family: 'Monaco', 'Courier New', monospace;
+    }
+
+    .status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--text-light);
+      animation: pulse-soft 1.5s ease infinite;
+      flex-shrink: 0;
+    }
+
+    .status-dot.done {
+      background: #8fad8f;
+      animation: none;
+    }
+
+    /* ---- Animations ---- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.35s ease forwards; }
+
+    @keyframes slideUpGentle {
+      0%   { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .slide-up-gentle { animation: slideUpGentle 0.5s ease-out forwards; }
+
+    .card-hidden  { opacity: 0; transform: translateY(16px); }
+    @keyframes cardReveal {
+      0%   { opacity: 0; transform: translateY(16px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .card-visible { animation: cardReveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+    @keyframes inputEntrance {
+      0%   { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    .input-enter {
+      opacity: 0;
+      animation: inputEntrance 0.3s ease forwards;
+    }
+
+    @keyframes collapseDown {
+      0%   { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(40px) scale(0.92); }
+    }
+    .collapse-down { animation: collapseDown 0.38s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+
+    @keyframes riseUp {
+      0%   { opacity: 0; transform: translateY(100%); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .rise-up { animation: riseUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+    .bottom-bar {
+      padding: 10px 12px;
+      border-top: 1px solid var(--border-soft);
+      flex-shrink: 0;
+      background: var(--bg-main);
+    }
+
+    .bottom-input-wrap {
+      display: flex;
+      align-items: center;
+      background: var(--bg-warm);
+      border-radius: 12px;
+      padding: 4px 4px 4px 12px;
+    }
+
+    #bottom-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--text-charcoal);
+      resize: none;
+      height: 32px;
+      line-height: 32px;
+      padding: 0;
+    }
+    #bottom-input::placeholder { color: var(--text-light); }
+
+    @keyframes letterBounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30%           { transform: translateY(-4px); }
+    }
+    .bounce-letter {
+      display: inline-block;
+      animation: letterBounce 1.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-soft {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.5; }
+    }
+    .thinking-active { animation: pulse-soft 1.5s ease infinite; }
+
+    @keyframes rotate-icon {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    .icon-rotate { animation: rotate-icon 2s linear infinite; }
+
+    .suggestion-btn {
+      background: white;
+      border: none;
+      border-radius: 8px;
+      padding: 7px 13px;
+      font-size: 14px;
+      color: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .suggestion-btn:hover {
+      color: var(--text-charcoal);
+      background: var(--bg-warm);
+    }
+
+    /* ── RESPONSIVE ── */
+
+    /* 1100px ~ 1199px: 右列隐藏，中列展开填剩余 */
+    @media (max-width: 1199px) {
+      #right-panel  { display: none !important; }
+      .panel-middle { flex: 1 !important; }
+    }
+
+    /* 768px ~ 1099px: 隐藏右列，中列保留 */
+    @media (max-width: 1099px) {
+      .app-wrapper { height: auto; min-height: 600px; }
+      #right-panel { display: none !important; }
+      .panel-middle { flex: 0 0 340px !important; }
+      .panel-left { flex: 1 !important; }
+    }
+
+    /* ≤ 767px: 只显示左列，全宽 */
+    @media (max-width: 767px) {
+      .app-wrapper {
+        height: auto;
+        min-height: 500px;
+        border-radius: 16px !important;
+      }
+      .panel-middle { display: none !important; }
+      #right-panel  { display: none !important; }
+      .panel-left {
+        flex: 1 !important;
+        border-right: none !important;
+      }
+      #input-zone { height: 420px !important; }
+    }
+  </style>
+</head>
+<body class="h-full">
+
+<div class="app-wrapper" style="border: 1px solid var(--border-soft); border-radius: 20px; overflow: hidden;">
+
+  <!-- Top bar -->
+  <header style="padding: 0 24px; height: 52px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span style="font-size: 16px; font-weight: 600; color: var(--text-charcoal);" id="agent-title-display">DeepLumen</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <span style="font-size: 12px; color: var(--text-light);">Model · DLM-3.2</span>
+      <div style="width: 6px; height: 6px; border-radius: 50%; background: #8fad8f;"></div>
+    </div>
+  </header>
+
+  <!-- Main: LEFT | MIDDLE | RIGHT -->
+  <main style="flex: 1; display: flex; overflow: hidden; min-height: 0;">
+
+    <!-- LEFT: Chat panel -->
+    <section class="panel-left" style="flex: 0 0 400px; border-right: 1px solid var(--border-soft); overflow: hidden; display: flex; flex-direction: column;">
+
+      <!-- Messages: flex:1, fills space above input after first send -->
+      <div id="messages-area" style="display:none; overflow-y:auto; padding:16px 12px; flex-direction:column; gap:12px;"></div>
+
+      <!-- Input zone: 700px tall, top-aligned initially.
+           Sinks to 400px at the bottom on submit and stays there. -->
+      <div id="input-zone" style="flex-shrink:0; height:496px; padding:16px; overflow:hidden;">
+        <div id="input-card" class="input-enter" style="width:100%; height:100%; animation-delay:0.2s;">
+          <div style="display:flex; flex-direction:column; height:100%; background:var(--bg-warm); border-radius:16px; padding:8px 8px 4px;">
+            <textarea id="main-input" class="chat-input"
+              placeholder="Ask anything..."
+              style="flex:1; min-height:0; background:transparent; border:none; padding:16px; font-size:16px; font-weight:500; resize:none;"
+              onkeydown="handleKeydown(event)"></textarea>
+            <div style="display:flex; justify-content:flex-end; padding:4px 4px 2px;">
+              <button class="send-btn" onclick="sendMessage()" style="padding:8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="22" y1="2" x2="11" y2="13"/>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- MIDDLE: Thinking Steps -->
+    <section class="panel-middle" style="flex: 0 0 500px; border-right: 1px solid var(--border-soft); padding: 14px 12px; overflow-y: auto;">
+      <div class="data-card">
+        <p class="section-label" style="margin: 0 0 10px;">Thinking Steps</p>
+        <div id="thinking-steps" style="display: flex; flex-direction: column; gap: 2px;"></div>
+      </div>
+    </section>
+
+    <!-- RIGHT: Data cards -->
+    <section id="right-panel" style="flex: 0 0 300px; padding: 14px 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px;">
+
+      <!-- Human token card -->
+      <div class="data-card" style="position: relative; overflow: hidden; min-height: 95px;">
+
+        <!-- Icon + title -->
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px; position: relative; z-index: 1;">
+          <i data-lucide="network" style="width: 18px; height: 18px; color: var(--text-muted); flex-shrink: 0;"></i>
+          <span style="font-size: 15px; font-weight: 600; color: var(--text-charcoal); font-family: 'Inter', sans-serif;">Human Perspective</span>
+        </div>
+
+        <!-- Token number (HTML, left-aligned) -->
+        <div style="display: flex; align-items: flex-end; gap: 5px; position: relative; z-index: 1;">
+          <span id="human-token-num" style="font-size: 26px; font-weight: 600; color: var(--text-charcoal); letter-spacing: -0.5px; line-height: 1;">—</span>
+          <span style="font-size: 11px; color: var(--text-light); line-height: 1; padding-bottom: 2px;">tokens</span>
+        </div>
+
+        <!-- Half-pie: bottom-right, partially clipped -->
+        <div class="pie-wrap" style="position: absolute; bottom: -12px; right: -12px; width: 150px; pointer-events: none;">
+          <svg viewBox="0 0 200 108" style="width: 100%; display: block;">
+            <circle cx="100" cy="104" r="80"
+              fill="none" stroke="var(--border-soft)" stroke-width="28"
+              stroke-dasharray="251.3 502.7" stroke-linecap="round"
+              transform="rotate(180 100 104)"/>
+            <circle id="human-pie-fill" cx="100" cy="104" r="80"
+              fill="none" stroke="var(--text-muted)" stroke-width="28"
+              stroke-dasharray="0 502.7" stroke-linecap="round"
+              transform="rotate(180 100 104)"/>
+            <text id="human-pie-pct" x="100" y="85"
+              text-anchor="middle" font-family="Inter, sans-serif"
+              font-size="14" fill="var(--text-muted)">—</text>
+          </svg>
+        </div>
+
+      </div>
+
+      <!-- AI token card -->
+      <div class="data-card" style="position: relative; overflow: hidden; min-height: 95px;">
+
+        <!-- Icon + title -->
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px; position: relative; z-index: 1;">
+          <i data-lucide="cpu" style="width: 18px; height: 18px; color: var(--text-muted); flex-shrink: 0;"></i>
+          <span style="font-size: 15px; font-weight: 600; color: var(--text-charcoal); font-family: 'Inter', sans-serif;">AI Perspective</span>
+        </div>
+
+        <!-- Token number -->
+        <div style="display: flex; align-items: flex-end; gap: 5px; position: relative; z-index: 1;">
+          <span id="ai-token-num" style="font-size: 26px; font-weight: 600; color: var(--text-charcoal); letter-spacing: -0.5px; line-height: 1;">—</span>
+          <span style="font-size: 11px; color: var(--text-light); line-height: 1; padding-bottom: 2px;">tokens</span>
+        </div>
+
+        <!-- Half-pie: bottom-right, partially clipped -->
+        <div class="pie-wrap" style="position: absolute; bottom: -12px; right: -12px; width: 150px; pointer-events: none;">
+          <svg viewBox="0 0 200 108" style="width: 100%; display: block;">
+            <circle cx="100" cy="104" r="80"
+              fill="none" stroke="var(--border-soft)" stroke-width="28"
+              stroke-dasharray="251.3 502.7" stroke-linecap="round"
+              transform="rotate(180 100 104)"/>
+            <circle id="ai-pie-fill" cx="100" cy="104" r="80"
+              fill="none" stroke="var(--accent-line)" stroke-width="28"
+              stroke-dasharray="0 502.7" stroke-linecap="round"
+              transform="rotate(180 100 104)"/>
+            <text id="ai-pie-pct" x="100" y="85"
+              text-anchor="middle" font-family="Inter, sans-serif"
+              font-size="14" fill="var(--text-muted)">—</text>
+          </svg>
+        </div>
+
+      </div>
+
+      <!-- Progress card -->
+      <div class="data-card">
+        <p class="section-label" style="margin: 0 0 10px;">Progress</p>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+              <span style="font-size:14px;color:var(--text-muted);">Understanding</span>
+              <span style="font-size:12px;color:var(--text-light);" id="prog-1-val">0%</span>
+            </div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-1" style="width:0%"></div></div>
+          </div>
+          <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+              <span style="font-size:14px;color:var(--text-muted);">Retrieval</span>
+              <span style="font-size:12px;color:var(--text-light);" id="prog-2-val">0%</span>
+            </div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-2" style="width:0%"></div></div>
+          </div>
+          <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+              <span style="font-size:14px;color:var(--text-muted);">Reasoning</span>
+              <span style="font-size:12px;color:var(--text-light);" id="prog-3-val">0%</span>
+            </div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-3" style="width:0%"></div></div>
+          </div>
+          <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+              <span style="font-size:14px;color:var(--text-muted);">Validating</span>
+              <span style="font-size:12px;color:var(--text-light);" id="prog-4-val">0%</span>
+            </div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-4" style="width:0%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+        <div class="data-card" style="text-align:center;padding:10px 8px;">
+          <p style="font-size:18px;font-weight:600;color:var(--text-charcoal);margin:0 0 2px;" id="stat-tokens">—</p>
+          <p style="font-size:12px;color:var(--text-light);margin:0;">Tokens</p>
+        </div>
+        <div class="data-card" style="text-align:center;padding:10px 8px;">
+          <p style="font-size:18px;font-weight:600;color:var(--text-charcoal);margin:0 0 2px;" id="stat-steps">—</p>
+          <p style="font-size:12px;color:var(--text-light);margin:0;">Steps</p>
+        </div>
+        <div class="data-card" style="text-align:center;padding:10px 8px;">
+          <p style="font-size:18px;font-weight:600;color:var(--text-charcoal);margin:0 0 2px;" id="stat-time">—</p>
+          <p style="font-size:12px;color:var(--text-light);margin:0;">Time (s)</p>
+        </div>
+      </div>
+
+    </section>
+  </main>
+</div>
+
+<script>
+  // ---- State ----
+  let isActive = true;
+  let messageCount = 0;
+  let isThinking = false;
+  let loopInterval = null;
+
+  const autoQuestion = "What can AI do for my brand?";
+
+  const aiResponses = [
+    "AI can amplify your brand by personalising every customer interaction at scale — from dynamic content to predictive recommendations — turning casual visitors into loyal advocates.",
+    "AI helps your brand stay consistently present: analysing trends in real time, generating on-brand copy, and surfacing insights so your team can focus on strategy rather than repetitive tasks.",
+    "From automated customer support to hyper-targeted campaigns, AI gives your brand the speed and precision to compete with larger players while maintaining an authentic voice.",
+  ];
+
+  const thinkingStepsData = [
+    { label: "Parse Intent",      detail: "Extract key semantics" },
+    { label: "Knowledge Search",  detail: "Match domain knowledge" },
+    { label: "Build Reasoning",   detail: "Multi-step path solving" },
+    { label: "Generate Response", detail: "Evaluate options" },
+    { label: "Validate Output",   detail: "Ensure accuracy" },
+  ];
+
+  // ---- Input handling ----
+  function handleKeydown(e) {
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault();
+      sendMessage();
+    }
+  }
+
+  function sendMessage() {
+    if (isThinking) return;
+    const inputEl = document.getElementById('main-input');
+    const text = inputEl.value.trim();
+    if (!text) return;
+    inputEl.value = '';
+    isThinking = true;
+    if (loopInterval) { clearTimeout(loopInterval); loopInterval = null; }
+    transitionToThinking(text);
+    startThinkingSequence(text);
+    messageCount++;
+  }
+
+  function transitionToThinking(text) {
+    const inputZone    = document.getElementById('input-zone');
+    const messagesArea = document.getElementById('messages-area');
+    const card         = document.getElementById('input-card');
+
+    card.classList.remove('input-enter');
+
+    // Remove text stroke before sinking
+    const mainInputEl = document.getElementById('main-input');
+    if (mainInputEl) { mainInputEl.style.textShadow = 'none'; }
+
+    // Distance to travel: panel height minus final input height (400px)
+    const panelH  = document.querySelector('.panel-left').offsetHeight;
+    const finalH  = 300;
+    const dy      = panelH - finalH;           // e.g. 748 - 400 = 348px
+    const ease    = 'cubic-bezier(0.4,0,0.2,1)';
+
+    // Animate: sink down + shrink height simultaneously
+    requestAnimationFrame(() => {
+      inputZone.style.transition = `height 0.6s ${ease}, transform 0.6s ${ease}`;
+      inputZone.style.height     = finalH + 'px';
+      inputZone.style.transform  = `translateY(${dy}px)`;
+    });
+
+    // Commit: remove transform (flex layout puts input at bottom naturally now)
+    setTimeout(() => {
+      inputZone.style.transition = 'none';
+      inputZone.style.transform  = '';
+      messagesArea.style.display = 'flex';
+      messagesArea.style.flex    = '1';
+      requestAnimationFrame(() => { inputZone.style.transition = ''; });
+      appendUserMessage(text);
+    }, 640);
+  }
+
+  function handleBottomKeydown(e) {
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault();
+      sendFromBottom();
+    }
+  }
+
+  function sendFromBottom() {
+    if (isThinking) return;
+    const el = document.getElementById('bottom-input');
+    const text = el.value.trim();
+    if (!text) return;
+    el.value = '';
+    isThinking = true;
+    if (loopInterval) { clearTimeout(loopInterval); loopInterval = null; }
+    appendUserMessage(text);
+    startThinkingSequence(text);
+    messageCount++;
+  }
+
+  // ---- Chat bubbles ----
+  function appendUserMessage(text) {
+    const area = document.getElementById('messages-area');
+    const wrapper = document.createElement('div');
+    wrapper.className = 'fade-up';
+    wrapper.style.cssText = 'display:flex;justify-content:flex-end;';
+    const bubble = document.createElement('div');
+    bubble.className = 'msg-user';
+    bubble.innerText = text;
+    wrapper.appendChild(bubble);
+    area.appendChild(wrapper);
+    area.scrollTop = area.scrollHeight;
+  }
+
+  function appendTypingIndicator() {
+    const area = document.getElementById('messages-area');
+    const wrapper = document.createElement('div');
+    wrapper.id = 'typing-indicator';
+    wrapper.className = 'fade-up';
+    wrapper.style.cssText = 'display:flex;align-items:center;gap:6px;';
+    const bubble = document.createElement('div');
+    bubble.className = 'msg-ai';
+    bubble.style.cssText = 'display:flex;align-items:center;gap:8px;padding:12px 16px;';
+    bubble.innerHTML = `
+      <i data-lucide="star" style="width:16px;height:16px;color:var(--text-muted);animation:rotate-icon 2s linear infinite;flex-shrink:0;"></i>
+      <span style="color:var(--text-muted);font-size:14px;">Thinking...</span>`;
+    wrapper.appendChild(bubble);
+    area.appendChild(wrapper);
+    lucide.createIcons();
+    area.scrollTop = area.scrollHeight;
+  }
+
+  function removeTypingIndicator() {
+    const el = document.getElementById('typing-indicator');
+    if (el) el.remove();
+  }
+
+  function appendAIMessage(text) {
+    const area = document.getElementById('messages-area');
+    const wrapper = document.createElement('div');
+    wrapper.className = 'fade-up';
+    const bubble = document.createElement('div');
+    bubble.className = 'msg-ai';
+    bubble.style.whiteSpace = 'pre-line';
+    bubble.innerText = text;
+    wrapper.appendChild(bubble);
+    area.appendChild(wrapper);
+    area.scrollTop = area.scrollHeight;
+  }
+
+  // ---- Thinking sequence ----
+  function startThinkingSequence(userText) {
+    resetProgress();
+    updateDataCards();
+    renderThinkingSteps(thinkingStepsData.slice(0, 1), 0);
+
+    const totalDuration = 2800 + Math.random() * 800;
+    const stepDelay = totalDuration / thinkingStepsData.length;
+
+    animateRightPanelCards();
+
+    thinkingStepsData.forEach((_, i) => {
+      setTimeout(() => {
+        renderThinkingSteps(thinkingStepsData.slice(0, i + 1), i);
+        animateProgressAt(i);
+      }, Math.max(0, stepDelay * i - 100));
+    });
+
+    setTimeout(() => {
+      appendTypingIndicator();
+      const response = aiResponses[messageCount % aiResponses.length];
+      setTimeout(() => {
+        finalizeProgress();
+        updateStats(totalDuration);
+        isThinking = false;
+        loopInterval = setTimeout(() => { resetChat(); loopSequence(); }, 2000);
+      }, 1200);
+    }, Math.max(0, totalDuration - 600));
+  }
+
+  // ---- Reset & loop ----
+  function resetChat() {
+    const inputZone    = document.getElementById('input-zone');
+    const messagesArea = document.getElementById('messages-area');
+    const mainInput    = document.getElementById('main-input');
+
+    // Hide messages
+    messagesArea.style.display = 'none';
+    messagesArea.style.flex    = '0';
+    messagesArea.innerHTML     = '';
+
+    // Restore input zone instantly (no transition during reset)
+    inputZone.style.transition = 'none';
+    inputZone.style.height     = '700px';
+    inputZone.style.transform  = '';
+
+    mainInput.value = '';
+    mainInput.style.textShadow = 'none';
+    mainInput.style.transition  = '';
+
+    // Re-enable transitions next frame
+    requestAnimationFrame(() => { inputZone.style.transition = ''; });
+
+    // Re-run entrance fade on card
+    const card = document.getElementById('input-card');
+    card.classList.remove('input-enter', 'collapse-down');
+    void card.offsetWidth;
+    card.classList.add('input-enter');
+
+    renderThinkingSteps([]);
+    resetProgress();
+    resetTokenCards();
+    ['stat-tokens','stat-steps','stat-time'].forEach(id => {
+      document.getElementById(id).innerText = '—';
+    });
+    isThinking = false;
+  }
+
+  // ---- Stroke sweep: narrow mask window glides left→right with soft fade edges ----
+  function sweepTextStroke(inputEl, callback) {
+    const inputZone = document.getElementById('input-zone');
+    inputZone.style.position = 'relative';
+
+    const inputRect = inputEl.getBoundingClientRect();
+    const zoneRect  = inputZone.getBoundingClientRect();
+    const cs = getComputedStyle(inputEl);
+
+    const clone = document.createElement('div');
+    clone.textContent = inputEl.value;
+    clone.style.cssText = `
+      position:absolute;
+      top:${inputRect.top - zoneRect.top}px;
+      left:${inputRect.left - zoneRect.left}px;
+      width:${inputRect.width}px;
+      height:${inputRect.height}px;
+      font-family:${cs.fontFamily};
+      font-size:${cs.fontSize};
+      font-weight:${cs.fontWeight};
+      line-height:${cs.lineHeight};
+      padding:${cs.padding};
+      letter-spacing:${cs.letterSpacing};
+      color:transparent;
+      text-shadow:1px 0 0 #a89f94,-1px 0 0 #a89f94,0 1px 0 #a89f94,0 -1px 0 #a89f94;
+      white-space:pre-wrap;
+      word-break:break-word;
+      pointer-events:none;
+      user-select:none;
+      box-sizing:border-box;
+      overflow:hidden;
+      background:transparent;
+      -webkit-mask-repeat:no-repeat;
+      mask-repeat:no-repeat;
+      z-index:5;
+    `;
+    inputZone.appendChild(clone);
+
+    // Window: ~3 character widths (~40px), soft fade-in/out edges
+    const winW    = 44;
+    const elemW   = inputRect.width;
+    const dur     = 1367; // ms total travel (0.6x speed)
+    const grad    = 'linear-gradient(to right, transparent 0%, black 30%, black 70%, transparent 100%)';
+    const t0      = Date.now();
+
+    const setMask = (x) => {
+      const pos = `${x}px 0`;
+      const sz  = `${winW}px 100%`;
+      clone.style.webkitMaskImage    = grad;
+      clone.style.webkitMaskSize     = sz;
+      clone.style.webkitMaskPosition = pos;
+      clone.style.maskImage          = grad;
+      clone.style.maskSize           = sz;
+      clone.style.maskPosition       = pos;
+    };
+
+    const tick = () => {
+      const p    = Math.min((Date.now() - t0) / dur, 1);
+      // ease-in-out
+      const ease = p < 0.5 ? 2 * p * p : -1 + (4 - 2 * p) * p;
+      setMask(-winW + ease * (elemW + winW));
+      if (p < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        // Sweep done: clean up
+        clone.remove();
+        setTimeout(callback, 280);
+      }
+    };
+    requestAnimationFrame(tick);
+  }
+
+  // ---- Typewriter with blinking cursor ----
+  function startTypewriter(inputEl, text, onDone) {
+    inputEl.value = '';
+    let ci = 0;
+    let cursorOn = true;
+
+    // Independent cursor blink (500ms)
+    const cursorTimer = setInterval(() => {
+      if (ci >= text.length) return;
+      cursorOn = !cursorOn;
+      inputEl.value = text.slice(0, ci) + (cursorOn ? '|' : '');
+    }, 500);
+
+    // Typing tick (40ms/char)
+    const typeTimer = setInterval(() => {
+      if (ci < text.length) {
+        ci++;
+        cursorOn = true;
+        inputEl.value = text.slice(0, ci) + '|';
+      } else {
+        clearInterval(typeTimer);
+        // Sweep stroke left→right, then fire callback
+        setTimeout(() => {
+          clearInterval(cursorTimer);
+          inputEl.value = text;
+          sweepTextStroke(inputEl, onDone);
+        }, 400);
+      }
+    }, 40);
+  }
+
+  function loopSequence() {
+    const input = document.getElementById('main-input');
+    input.value = '';
+    startTypewriter(input, autoQuestion, () => sendMessage());
+  }
+
+  // ---- Right panel animations ----
+  function animateRightPanelCards() {
+    const cards = document.querySelectorAll('#right-panel .data-card');
+    // Reset all to hidden first
+    cards.forEach(card => {
+      card.classList.remove('card-visible');
+      card.classList.add('card-hidden');
+    });
+    // Reveal one by one with stagger
+    cards.forEach((card, i) => {
+      setTimeout(() => {
+        card.classList.remove('card-hidden');
+        card.classList.add('card-visible');
+      }, i * 220);
+    });
+  }
+
+  function resetProgress() {
+    for (let i = 1; i <= 4; i++) {
+      document.getElementById(`prog-${i}`).style.width = '0%';
+      document.getElementById(`prog-${i}-val`).innerText = '0%';
+    }
+  }
+
+  function animateProgressAt(stepIndex) {
+    const barMap = [[0, 85], [1, 90], [2, 70], [3, 55]];
+    if (stepIndex < barMap.length) {
+      const [barIdx, val] = barMap[stepIndex];
+      document.getElementById(`prog-${barIdx+1}`).style.width = val + '%';
+      document.getElementById(`prog-${barIdx+1}-val`).innerText = val + '%';
+    }
+  }
+
+  function finalizeProgress() {
+    [95, 88, 92, 78].forEach((v, i) => {
+      setTimeout(() => {
+        document.getElementById(`prog-${i+1}`).style.width = v + '%';
+        document.getElementById(`prog-${i+1}-val`).innerText = v + '%';
+      }, i * 100);
+    });
+  }
+
+  function updateStats(duration) {
+    const tokens = Math.floor(300 + Math.random() * 400);
+    const steps  = thinkingStepsData.length;
+    const time   = parseFloat((duration / 1000).toFixed(1));
+    animateNumber('stat-tokens', 0, tokens, 800);
+    animateNumber('stat-steps',  0, steps,  800);
+    animateNumber('stat-time',   0, time,   800, true);
+  }
+
+  function animateNumber(id, from, to, dur, isDecimal = false) {
+    const el = document.getElementById(id);
+    const t0 = Date.now();
+    const tick = () => {
+      const p = Math.min((Date.now() - t0) / dur, 1);
+      const v = from + (to - from) * p;
+      el.innerText = isDecimal ? v.toFixed(1) : Math.floor(v);
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    tick();
+  }
+
+  // Generation counter — incremented on reset to cancel stale RAF loops
+  let tokenGen = 0;
+
+  // ---- Token cards ----
+  function updateDataCards() {
+    // Generate plausible token counts
+    const humanTokens = Math.floor(12000 + Math.random() * 12000);
+    const aiTokens    = Math.floor(4000  + Math.random() * 8000);
+    const humanMax = 28000;
+    const aiMax    = 16000;
+
+    // Reset
+    document.getElementById('human-pie-fill').setAttribute('stroke-dasharray', '0 502.7');
+    document.getElementById('human-token-num').innerText = '—';
+    document.getElementById('human-pie-pct').textContent = '—';
+    document.getElementById('ai-pie-fill').setAttribute('stroke-dasharray', '0 502.7');
+    document.getElementById('ai-pie-pct').textContent = '—';
+    document.getElementById('ai-token-num').innerText = '—';
+
+    const gen = tokenGen;
+
+    // Animate human tokens after a short delay
+    setTimeout(() => {
+      if (tokenGen !== gen) return;
+      const humanPct = humanTokens / humanMax * 100;
+      animateTokenCount('human-token-num', humanTokens, 900, gen);
+      animateHumanPie(humanPct, 1000, gen);
+    }, 200);
+
+    // Animate AI tokens slightly later
+    setTimeout(() => {
+      if (tokenGen !== gen) return;
+      animateTokenCount('ai-token-num', aiTokens, 900, gen);
+      animateAIPie(aiTokens / aiMax * 100, 1000, gen);
+    }, 500);
+  }
+
+  function animateTokenCount(id, target, dur, gen) {
+    const el = document.getElementById(id);
+    const t0 = Date.now();
+    const tick = () => {
+      if (tokenGen !== gen) return;
+      const p = Math.min((Date.now() - t0) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.innerText = Math.floor(ease * target).toLocaleString('en-US');
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    tick();
+  }
+
+  // SVG <text> version of token count
+  function animateSVGTokenCount(id, target, dur, gen) {
+    const el = document.getElementById(id);
+    const t0 = Date.now();
+    const tick = () => {
+      if (tokenGen !== gen) return;
+      const p = Math.min((Date.now() - t0) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.floor(ease * target).toLocaleString('en-US');
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    tick();
+  }
+
+  // Half-pie animation: fills the semicircle arc
+  function animateHumanPie(targetPct, dur, gen) {
+    const arc     = document.getElementById('human-pie-fill');
+    const label   = document.getElementById('human-pie-pct');
+    const halfC   = 251.3; // π * r (r=80)
+    const fullC   = 502.7;
+    const t0 = Date.now();
+    const tick = () => {
+      if (tokenGen !== gen) return;
+      const p    = Math.min((Date.now() - t0) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      const filled = ease * (targetPct / 100) * halfC;
+      arc.setAttribute('stroke-dasharray', `${filled.toFixed(2)} ${fullC}`);
+      label.textContent = `${(ease * targetPct).toFixed(1)}%`;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    tick();
+  }
+
+  function animateAIPie(targetPct, dur, gen) {
+    const arc   = document.getElementById('ai-pie-fill');
+    const label = document.getElementById('ai-pie-pct');
+    const halfC = 251.3, fullC = 502.7;
+    const t0 = Date.now();
+    const tick = () => {
+      if (tokenGen !== gen) return;
+      const p    = Math.min((Date.now() - t0) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      arc.setAttribute('stroke-dasharray', `${(ease * (targetPct / 100) * halfC).toFixed(2)} ${fullC}`);
+      label.textContent = `${(ease * targetPct).toFixed(1)}%`;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    tick();
+  }
+
+  function animateBar(id, targetPct, dur, gen) {
+    const el = document.getElementById(id);
+    const t0 = Date.now();
+    const tick = () => {
+      if (tokenGen !== gen) return; // stale — abort
+      const p = Math.min((Date.now() - t0) / dur, 1);
+      el.style.width = (p * targetPct).toFixed(1) + '%';
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    tick();
+  }
+
+  function resetTokenCards() {
+    tokenGen++; // invalidate any running animations
+    // Human pie
+    document.getElementById('human-token-num').textContent = '—';
+    document.getElementById('human-pie-pct').textContent   = '—';
+    document.getElementById('human-pie-fill').setAttribute('stroke-dasharray', '0 502.7');
+    // AI pie
+    document.getElementById('ai-pie-fill').setAttribute('stroke-dasharray', '0 502.7');
+    document.getElementById('ai-pie-pct').textContent = '—';
+    document.getElementById('ai-token-num').innerText = '—';
+  }
+
+  // ---- Thinking steps render ----
+  function renderThinkingSteps(steps) {
+    const container = document.getElementById('thinking-steps');
+    container.innerHTML = '';
+
+    if (!steps.length) {
+      const waitText = 'Waiting for input…';
+      const lettersHtml = waitText.split('').map((ch, i) => {
+        if (ch === ' ') return '<span style="display:inline-block;width:0.28em;"></span>';
+        return `<span class="bounce-letter" style="animation-delay:${i * 72}ms">${ch}</span>`;
+      }).join('');
+      container.innerHTML = `
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <div class="step-dot" style="margin-top:5px;"></div>
+          <p style="font-size:14px;color:var(--text-light);margin:0;">${lettersHtml}</p>
+        </div>`;
+      return;
+    }
+
+    steps.forEach((step, i) => {
+      const isLast = i === steps.length - 1;
+      const isDone = !isLast;
+
+      const item = document.createElement('div');
+      item.style.cssText = 'display:flex;gap:10px;align-items:flex-start;padding-bottom:10px;';
+      if (isLast) item.classList.add('fade-up');
+
+      const dotCol = document.createElement('div');
+      dotCol.style.cssText = 'display:flex;flex-direction:column;align-items:center;padding-top:3px;';
+      const dot = document.createElement('div');
+      dot.className = `step-dot ${isDone ? 'done' : 'active'}${isLast ? ' thinking-active' : ''}`;
+      dotCol.appendChild(dot);
+      if (!isLast) {
+        const line = document.createElement('div');
+        line.className = 'step-line';
+        line.style.cssText = 'height:24px;margin-top:3px;';
+        dotCol.appendChild(line);
+      }
+
+      const textCol = document.createElement('div');
+      const lbl = document.createElement('p');
+      lbl.style.cssText = `font-size:14px;color:${isDone ? 'var(--text-charcoal)' : 'var(--text-muted)'};margin:0 0 1px;line-height:1.5;font-weight:${isDone ? 500 : 400};`;
+
+      const det = document.createElement('p');
+      det.style.cssText = 'font-size:12px;color:var(--text-light);margin:0;';
+      det.innerText = step.detail;
+
+      if (isLast) {
+        // Typewriter: reveal label character by character
+        lbl.innerText = '';
+        det.style.opacity = '0';
+        det.style.transition = 'opacity 0.35s ease';
+
+        let ci = 0;
+        const labelChars = step.label;
+        const typeInterval = setInterval(() => {
+          if (ci < labelChars.length) {
+            lbl.innerText += labelChars[ci++];
+          } else {
+            clearInterval(typeInterval);
+            // Fade in detail after label finishes
+            setTimeout(() => { det.style.opacity = '1'; }, 80);
+          }
+        }, 28);
+
+        textCol.appendChild(lbl);
+        textCol.appendChild(det);
+
+        // Code block fades in after label + detail
+        const cb = document.createElement('div');
+        cb.className = 'code-block';
+        cb.style.cssText = 'opacity:0;transition:opacity 0.4s ease;';
+        cb.innerHTML = getLogForStep(step.label);
+        setTimeout(() => { cb.style.opacity = '1'; }, labelChars.length * 28 + 200);
+        textCol.appendChild(cb);
+      } else {
+        lbl.innerText = step.label;
+        textCol.appendChild(lbl);
+        textCol.appendChild(det);
+      }
+
+      item.appendChild(dotCol);
+      item.appendChild(textCol);
+      container.appendChild(item);
+    });
+
+    // Pending (greyed out)
+    thinkingStepsData.slice(steps.length).forEach(step => {
+      const item = document.createElement('div');
+      item.style.cssText = 'display:flex;gap:10px;align-items:flex-start;padding-bottom:10px;opacity:0.35;';
+      item.innerHTML = `
+        <div style="padding-top:3px;"><div class="step-dot"></div></div>
+        <div><p style="font-size:14px;color:var(--text-light);margin:0;">${step.label}</p></div>`;
+      container.appendChild(item);
+    });
+  }
+
+  function getLogForStep(label) {
+    const logs = {
+      'Parse Intent': [
+        '<div class="status-line"><div class="status-dot done"></div>[01] intent_classifier ✓ 8ms</div>',
+        '<div class="status-line" style="color:var(--text-light);margin-left:12px;">└─ brand_capability · en</div>',
+      ],
+      'Knowledge Search': [
+        '<div class="status-line"><div class="status-dot done"></div>[02] knowledge_graph ✓ 43ms</div>',
+        '<div class="status-line" style="color:var(--text-light);margin-left:12px;">└─ 2,847 nodes · relevance ≥ 0.94</div>',
+      ],
+      'Build Reasoning': [
+        '<div class="status-line"><div class="status-dot"></div>[03] reasoning_engine ⟳ running</div>',
+        '<div class="status-line" style="color:var(--text-light);margin-left:12px;">├─ discovery_layer → active</div>',
+        '<div class="status-line" style="color:var(--text-light);margin-left:12px;">├─ trust_signal_engine → building</div>',
+        '<div class="status-line" style="color:var(--text-light);margin-left:12px;">└─ recommend_graph → streaming</div>',
+      ],
+      'Generate Response': [
+        '<div class="status-line"><div class="status-dot done"></div>const result = await</div>',
+        '<div class="status-line" style="color:var(--text-light);">&nbsp;&nbsp;DeepLumen.reason({...})</div>',
+      ],
+      'Validate Output': [
+        '<div class="status-line"><div class="status-dot done"></div>[04] validator ✓ 12ms</div>',
+        '<div class="status-line" style="color:var(--text-light);margin-left:12px;">└─ score: 0.98 · ready</div>',
+      ],
+    };
+    return (logs[label] || []).join('');
+  }
+
+  // ---- Init ----
+  renderThinkingSteps([]);
+  lucide.createIcons();
+
+  window.addEventListener('load', () => {
+    // Wait for fade-in to finish (200ms delay + 400ms animation = ~620ms)
+    setTimeout(() => {
+      const input = document.getElementById('main-input');
+      startTypewriter(input, autoQuestion, () => sendMessage());
+    }, 650);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact – DeepLumen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', Arial, Helvetica, sans-serif;
+      font-size: 16px; font-weight: 400; line-height: 24px;
+      background: #faf8f4; color: #5a5855; overflow-x: hidden;
+    }
+
+    /* ── PAGE FRAME ── */
+    .page-frame {
+      position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 1440px; height: 100vh;
+      border-left: 1px solid #e8e4de; border-right: 1px solid #e8e4de;
+      pointer-events: none; z-index: 9999;
+    }
+    .banner-mask {
+      position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 1440px; height: 40px;
+      border-left: 2px solid #faf8f4; border-right: 2px solid #faf8f4;
+      pointer-events: none; z-index: 10000;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 10002;
+      background: rgba(250,248,244,0.90);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(232,228,222,0.8);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 80px; max-width: 1440px; margin: 0 auto;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; margin-left: -6px; }
+    .nav-logo-img { height: 40px; width: auto; display: block; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .btn-demo-nav {
+      font-size: 14px; font-weight: 600; color: #5a5855;
+      background: transparent; border: 1px solid #eaeaea;
+      border-radius: 100px; padding: 10px 20px; cursor: pointer; text-decoration: none;
+    }
+    .btn-login-nav {
+      font-size: 14px; font-weight: 600; color: #fff;
+      background: linear-gradient(180deg, #ec7070, #f0863f);
+      border: none; border-radius: 100px; padding: 10px 20px; cursor: pointer; text-decoration: none;
+    }
+    .nav-burger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .nav-burger span { display: block; width: 22px; height: 2px; background: #5a5855; border-radius: 2px; transition: all 0.3s; }
+    .nav-mobile-menu {
+      display: none; flex-direction: column; gap: 8px;
+      padding: 12px 20px 16px;
+      background: rgba(250,248,244,0.98); border-top: 1px solid #f0ede8;
+    }
+    .nav-mobile-menu.is-open { display: flex; }
+
+    /* ── MAIN LAYOUT ── */
+    .contact-page { padding-top: 72px; min-height: 100vh; background: #faf8f4; }
+    .contact-wrap {
+      display: flex;
+      min-height: calc(100vh - 72px);
+      max-width: 1440px; margin: 0 auto;
+    }
+
+    /* ── LEFT ── */
+    .contact-left {
+      flex: 0 0 520px;
+      padding: 72px 64px 72px 80px;
+      display: flex; flex-direction: column;
+      justify-content: flex-start; gap: 40px;
+      border-right: 1px solid #f0ede8;
+    }
+    /* Badge */
+    .contact-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid #ff6900; border-radius: 9999px;
+      padding: 5px 14px; width: fit-content;
+    }
+    .contact-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: linear-gradient(135deg, #ec7070, #f0863f); flex-shrink: 0;
+    }
+    .contact-badge span { font-size: 12px; font-weight: 500; color: #ff6900; letter-spacing: 0.05em; }
+    /* Headline */
+    .contact-headline { display: flex; flex-direction: row; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+    .contact-h1 {
+      font-size: 48px; font-weight: 700; line-height: 1.1; letter-spacing: -0.8px; color: #5a5855;
+    }
+    .contact-h1-grad {
+      font-size: 48px; font-weight: 700; line-height: 1.1; letter-spacing: -0.8px;
+      background: linear-gradient(180deg, #ec7070, #f0863f);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .contact-value-prop { font-size: 16px; color: #8c8884; line-height: 1.75; max-width: 400px; }
+
+    /* Benefits list */
+    .benefit-list { display: flex; flex-direction: column; gap: 16px; }
+    .benefit-item { display: flex; align-items: center; gap: 16px; }
+    .benefit-icon {
+      flex-shrink: 0; width: 32px; height: 32px; border-radius: 10px;
+      background: linear-gradient(135deg, rgba(236,112,112,0.12), rgba(240,134,63,0.12));
+      display: flex; align-items: center; justify-content: center;
+    }
+    .benefit-icon svg { display: block; }
+    .benefit-text { font-size: 14px; color: #5a5855; font-weight: 500; }
+
+    /* Contact info block */
+    .contact-info { display: flex; flex-direction: column; gap: 12px; }
+    .contact-info-row { display: flex; align-items: center; gap: 12px; }
+    .contact-info-icon {
+      flex-shrink: 0; width: 32px; height: 32px;
+      background: rgba(240,134,63,0.10); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .contact-info-label { font-size: 13px; color: #8c8884; }
+    .contact-info-val { font-size: 14px; font-weight: 600; color: #5a5855; }
+
+    /* ── RIGHT (form panel) ── */
+    .contact-right {
+      flex: 1;
+      padding: 72px 80px 72px 64px;
+      display: flex; align-items: flex-start; justify-content: center;
+    }
+    .contact-form-wrap { width: 100%; max-width: 560px; }
+    .form-card {
+      width: 100%; background: #fff;
+      border: 1px solid #f0ede8; border-radius: 20px; padding: 40px;
+      box-shadow: 0 2px 24px rgba(90,88,85,0.06);
+    }
+    .form-card-title { font-size: 22px; font-weight: 700; color: #2c2924; margin-bottom: 6px; }
+    .form-card-sub { font-size: 14px; color: #8c8884; line-height: 1.6; margin-bottom: 28px; }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .form-label { font-size: 13px; font-weight: 600; color: #5a5855; }
+    .form-label .req { color: #f0863f; margin-left: 2px; }
+
+    .input-wrap { position: relative; }
+    .input-icon {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      pointer-events: none; display: flex; align-items: center;
+    }
+    .form-input, .form-select {
+      height: 44px; width: 100%;
+      background: #faf8f4; border: 1.5px solid #eaeaea; border-radius: 10px;
+      padding: 0 14px 0 44px;
+      font-size: 14px; font-family: 'Inter', sans-serif; color: #2c2924;
+      outline: none; -webkit-appearance: none; appearance: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-input::placeholder { color: #c0bbb6; }
+    .form-input:focus, .form-select:focus {
+      border-color: #f0863f; box-shadow: 0 0 0 3px rgba(240,134,63,0.12);
+    }
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238c8884' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; cursor: pointer;
+    }
+    .form-select option { color: #2c2924; background: #fff; }
+
+    .form-textarea {
+      width: 100%; min-height: 110px;
+      background: #faf8f4; border: 1.5px solid #eaeaea; border-radius: 10px;
+      padding: 12px 14px 12px 44px;
+      font-size: 14px; font-family: 'Inter', sans-serif; color: #2c2924; line-height: 1.6;
+      outline: none; resize: vertical; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-textarea::placeholder { color: #c0bbb6; }
+    .form-textarea:focus { border-color: #f0863f; box-shadow: 0 0 0 3px rgba(240,134,63,0.12); }
+    .textarea-icon { position: absolute; top: 14px; left: 14px; pointer-events: none; }
+
+    .form-checkbox-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px; background: #faf8f4;
+      border: 1.5px solid #eaeaea; border-radius: 10px;
+      cursor: pointer; transition: border-color 0.2s; margin-bottom: 20px;
+    }
+    .form-checkbox-row:hover { border-color: #f0863f; }
+    .form-checkbox-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: #f0863f; flex-shrink: 0; cursor: pointer; }
+    .checkbox-label { font-size: 14px; font-weight: 600; color: #5a5855; }
+
+    .form-divider { height: 1px; background: #f0ede8; margin: 20px 0; }
+
+    .btn-submit {
+      width: 100%; height: 52px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      font-size: 16px; font-weight: 700; color: #fff;
+      background: linear-gradient(135deg, #ec7070, #f0863f);
+      border: none; border-radius: 14px; cursor: pointer;
+      box-shadow: 0 6px 24px rgba(240,134,63,0.35);
+      transition: opacity 0.2s, transform 0.15s; text-decoration: none;
+    }
+    .btn-submit:hover { opacity: 0.92; transform: translateY(-1px); }
+    .btn-submit:active { transform: translateY(0); }
+
+    .form-legal {
+      font-size: 12px; color: #b8b3ae; text-align: center; margin-top: 14px; line-height: 1.6;
+    }
+    .form-legal a { color: #8c8884; text-decoration: underline; text-underline-offset: 2px; }
+
+    /* Success */
+    .form-success {
+      display: none; flex-direction: column; align-items: center; gap: 20px;
+      padding: 40px 20px; text-align: center;
+    }
+    .form-success.is-visible { display: flex; }
+    .success-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: linear-gradient(135deg, rgba(236,112,112,0.15), rgba(240,134,63,0.15));
+      display: flex; align-items: center; justify-content: center;
+    }
+    .success-title { font-size: 22px; font-weight: 700; color: #2c2924; }
+    .success-sub { font-size: 15px; color: #8c8884; line-height: 1.7; max-width: 300px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: linear-gradient(180deg, #1e2939, #101828);
+      color: #fff; padding: 0; position: relative; z-index: 10001;
+    }
+    .footer-inner { max-width: 1440px; width: 100%; margin: 0 auto; padding: 54px 80px 0; }
+    .footer-top { display: flex; justify-content: space-between; gap: 32px; padding-bottom: 32px; }
+    .footer-brand { display: flex; flex-direction: column; gap: 16px; max-width: 460px; }
+    .footer-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; margin-left: -6px; }
+    .footer-desc { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.75; }
+    .footer-socials { display: flex; gap: 10px; }
+    .social-icon {
+      width: 34px; height: 34px; background: rgba(255,255,255,0.08);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; text-decoration: none;
+    }
+    .social-icon:hover { background: rgba(255,255,255,0.15); }
+    .footer-cols { display: flex; gap: 72px; }
+    .footer-col { display: flex; flex-direction: column; gap: 12px; }
+    .footer-col-title { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+    .footer-col a { font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; }
+    .footer-col a:hover { color: #fff; }
+    .footer-col-body { display: flex; flex-direction: column; gap: 12px; }
+    .footer-col-toggle { display: none; }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 32px;
+    }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,0.35); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,0.35); text-decoration: none; }
+    .footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+    /* ── PAGE ENTER ANIMATIONS ── */
+    @keyframes fadeSlideLeft {
+      from { opacity: 0; transform: translateX(-36px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeSlideRight {
+      from { opacity: 0; transform: translateX(36px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .contact-left  { animation: fadeSlideLeft  0.75s cubic-bezier(0.22,1,0.36,1) both; }
+    .contact-badge { animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.05s both; }
+    .contact-headline,
+    .contact-value-prop { animation: fadeUp 0.65s cubic-bezier(0.22,1,0.36,1) 0.15s both; }
+    .benefit-list  { animation: fadeUp 0.65s cubic-bezier(0.22,1,0.36,1) 0.25s both; }
+    .contact-info  { animation: fadeUp 0.65s cubic-bezier(0.22,1,0.36,1) 0.35s both; }
+    .contact-right { animation: fadeSlideRight 0.75s cubic-bezier(0.22,1,0.36,1) 0.1s both; }
+
+    /* ── INTERACTIVE ── */
+    .benefit-item { transition: transform 0.2s; }
+    .benefit-item:hover { transform: translateX(4px); }
+    .contact-info-row { transition: transform 0.2s; }
+    .contact-info-row:hover { transform: translateX(4px); }
+    .form-input, .form-select, .form-textarea { transition: border-color 0.2s, box-shadow 0.2s, background 0.2s; }
+    .form-input:hover, .form-select:hover, .form-textarea:hover { border-color: #d4cfc8; }
+    .form-checkbox-row { transition: border-color 0.2s, background 0.2s; }
+    .btn-submit { transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s; }
+    .btn-submit:hover { opacity: 0.93; transform: translateY(-2px); box-shadow: 0 10px 32px rgba(240,134,63,0.4); }
+    .contact-badge { transition: border-color 0.2s, box-shadow 0.2s; }
+    .contact-badge:hover { border-color: #f0863f; box-shadow: 0 0 0 3px rgba(240,134,63,0.10); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1280px) {
+      .nav-inner { padding: 16px 40px; }
+      .contact-left { flex: 0 0 460px; padding: 60px 48px 60px 60px; }
+      .contact-right { padding: 60px 60px 60px 48px; }
+      .footer-inner { padding: 54px 40px 0; }
+    }
+    @media (max-width: 1100px) {
+      .contact-left { flex: 0 0 380px; padding: 48px 32px 48px 40px; }
+      .contact-right { padding: 48px 40px 48px 32px; }
+      .contact-h1, .contact-h1-grad { font-size: 40px; }
+      .nav-inner { padding: 14px 32px; }
+    }
+    @media (max-width: 860px) {
+      .nav-inner { padding: 14px 20px; }
+      .nav-actions { display: none; }
+      .nav-burger { display: flex; }
+      .page-frame, .banner-mask { display: none; }
+      .contact-wrap { flex-direction: column; min-height: unset; }
+      .contact-left {
+        flex: none; border-right: none; border-bottom: 1px solid #f0ede8;
+        padding: 40px 24px 36px; gap: 28px;
+      }
+      .contact-h1, .contact-h1-grad { font-size: 36px; }
+      .contact-value-prop { font-size: 15px; max-width: 100%; }
+      .contact-right { padding: 32px 24px 60px; }
+      .contact-form-wrap { max-width: 100%; }
+      .form-card { padding: 28px 20px; border-radius: 16px; }
+      .footer-inner { padding: 40px 24px 0; }
+      .footer-top { flex-direction: column; gap: 28px; }
+      .footer-cols { gap: 32px; flex-wrap: wrap; }
+      .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .contact-left { padding: 32px 16px 28px; gap: 24px; }
+      .contact-h1, .contact-h1-grad { font-size: 30px; }
+      .contact-right { padding: 24px 16px 48px; }
+      .form-card { padding: 22px 16px; border-radius: 14px; }
+      .form-card-title { font-size: 18px; }
+      .nav-logo-img { height: 32px; }
+      .nav-inner { padding: 12px 16px; }
+      .footer-inner { padding: 32px 16px 0; }
+      .footer-cols { flex-direction: column; gap: 20px; }
+      .footer-col-toggle { display: inline-block; margin-left: 8px; transition: transform 0.3s; }
+      .footer-col-body { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.35s ease, opacity 0.3s ease; }
+      .footer-col.is-open .footer-col-body { max-height: 200px; opacity: 1; }
+      .footer-col.is-open .footer-col-toggle { transform: rotate(45deg); }
+      .footer-col-title { cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+    }
+    @media (max-width: 360px) {
+      .contact-h1, .contact-h1-grad { font-size: 26px; }
+      .form-card { padding: 18px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-frame"></div>
+<div class="banner-mask"></div>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="logo/logocis001.svg" alt="deeplumen" class="nav-logo-img" />
+    </a>
+    <div class="nav-actions">
+      <a href="Book a Demo.html" class="btn-demo-nav">Book a Demo</a>
+      <a href="https://www.deeplumen.com/auth/login" class="btn-login-nav">Log in</a>
+    </div>
+    <button class="nav-burger" id="nav-burger" aria-label="Menu"
+      onclick="(function(){var m=document.getElementById('nav-mobile-menu');m.classList.toggle('is-open');})()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="Book a Demo.html" class="btn-demo-nav" style="width:100%;text-align:center;">Book a Demo</a>
+    <a href="https://www.deeplumen.com/auth/login" class="btn-login-nav" style="width:100%;text-align:center;">Log in</a>
+  </div>
+</nav>
+
+<!-- ── MAIN ── -->
+<div class="contact-page">
+  <div class="contact-wrap">
+
+    <!-- LEFT -->
+    <div class="contact-left">
+      <div class="contact-badge">
+        <div class="contact-badge-dot"></div>
+        <span>AI MARKETING TECHNOLOGY</span>
+      </div>
+
+      <div>
+        <div class="contact-headline">
+          <span class="contact-h1">Talk to our</span>
+          <span class="contact-h1-grad">M2AI team</span>
+        </div>
+        <p class="contact-value-prop" style="margin-top:16px;">
+          Connect with our team to explore how we can help your brand thrive in the agentic commerce era.
+        </p>
+      </div>
+
+      <!-- Benefits -->
+      <div class="benefit-list">
+        <div class="benefit-item">
+          <div class="benefit-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8.5l3.5 3.5 6.5-7" stroke="#ec7070" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="benefit-text">Demo of the Deeplumen platform</span>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8.5l3.5 3.5 6.5-7" stroke="#f0863f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="benefit-text">Custom M2AI readiness report for your brand</span>
+        </div>
+      </div>
+
+      <!-- Contact info -->
+      <div class="contact-info">
+        <div class="contact-info-row">
+          <div class="contact-info-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="1.5" y="3" width="13" height="10" rx="2" stroke="#f0863f" stroke-width="1.4"/>
+              <path d="M1.5 5.5l6.5 4.5 6.5-4.5" stroke="#f0863f" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <div class="contact-info-label">Email us</div>
+            <a href="mailto:contact@deeplumen.com" class="contact-info-val" style="text-decoration:none;color:#5a5855;">contact@deeplumen.com</a>
+          </div>
+        </div>
+        <div class="contact-info-row">
+          <div class="contact-info-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="8" r="6" stroke="#f0863f" stroke-width="1.4"/>
+              <path d="M8 5v3l2 1.5" stroke="#f0863f" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <div class="contact-info-label">Response time</div>
+            <div class="contact-info-val">Within 24 hours</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Form -->
+    <div class="contact-right">
+      <div class="contact-form-wrap">
+      <div class="form-card">
+
+        <div id="form-body">
+          <div class="form-card-title">How can we help?</div>
+          <div class="form-card-sub">Fill in your details and we'll be in touch shortly.</div>
+
+          <form id="contact-form" action="https://www.deeplumen.com/register" method="get" novalidate>
+
+            <div class="form-group">
+              <label class="form-label" for="fname">Full name<span class="req">*</span></label>
+              <div class="input-wrap">
+                <span class="input-icon">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5.5" r="3" stroke="#c0bbb6" stroke-width="1.4"/><path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="#c0bbb6" stroke-width="1.4" stroke-linecap="round"/></svg>
+                </span>
+                <input class="form-input" id="fname" name="name" type="text" placeholder="Your full name" required autocomplete="name" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="femail">Work email<span class="req">*</span></label>
+              <div class="input-wrap">
+                <span class="input-icon">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="3" width="13" height="10" rx="2" stroke="#c0bbb6" stroke-width="1.4"/><path d="M1.5 5.5l6.5 4.5 6.5-4.5" stroke="#c0bbb6" stroke-width="1.4" stroke-linecap="round"/></svg>
+                </span>
+                <input class="form-input" id="femail" name="email" type="email" placeholder="you@company.com" required autocomplete="email" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="fcompany">Company<span class="req">*</span></label>
+              <div class="input-wrap">
+                <span class="input-icon">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="13" rx="1.5" stroke="#c0bbb6" stroke-width="1.4"/><path d="M5 6h6M5 9h6M5 12h3" stroke="#c0bbb6" stroke-width="1.4" stroke-linecap="round"/></svg>
+                </span>
+                <input class="form-input" id="fcompany" name="company" type="text" placeholder="Your company name" required autocomplete="organization" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="fsize">Company size<span class="req">*</span></label>
+              <div class="input-wrap">
+                <span class="input-icon">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="5.5" cy="5" r="2.5" stroke="#c0bbb6" stroke-width="1.4"/><circle cx="11" cy="5" r="2.5" stroke="#c0bbb6" stroke-width="1.4"/><path d="M1 14c0-2.761 2.015-4.5 4.5-4.5" stroke="#c0bbb6" stroke-width="1.4" stroke-linecap="round"/><path d="M8.5 14c0-2.761 1.343-4.5 3-4.5s3 1.739 3 4.5" stroke="#c0bbb6" stroke-width="1.4" stroke-linecap="round"/></svg>
+                </span>
+                <select class="form-select" id="fsize" name="company_size" required>
+                  <option value="" disabled selected>Select size</option>
+                  <option value="1-10">1–10</option>
+                  <option value="11-50">11–50</option>
+                  <option value="51-200">51–200</option>
+                  <option value="200+">200+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <div class="form-group">
+              <div class="input-wrap">
+                <svg class="textarea-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M2 3A1.5 1.5 0 0 1 3.5 1.5h9A1.5 1.5 0 0 1 14 3v7A1.5 1.5 0 0 1 12.5 11.5H4.5L2 14V3Z" stroke="#c0bbb6" stroke-width="1.4" stroke-linejoin="round"/>
+                </svg>
+                <textarea class="form-textarea" name="requirements" placeholder="How did you hear about Deeplumen?" rows="4"></textarea>
+              </div>
+            </div>
+
+            <label class="form-checkbox-row" for="fagency">
+              <input type="checkbox" id="fagency" name="is_agency" value="on" />
+              <span class="checkbox-label">We're an agency</span>
+            </label>
+
+            <button type="submit" class="btn-submit">
+              Send message
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M2 8h12M10 4l4 4-4 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <p class="form-legal">
+              By submitting you agree to our <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a>.
+            </p>
+          </form>
+        </div>
+
+        <!-- Success state -->
+        <div class="form-success" id="form-success">
+          <div class="success-icon">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <circle cx="14" cy="14" r="13" stroke="url(#sg)" stroke-width="1.5"/>
+              <path d="M8.5 14l4 4 7-8" stroke="url(#sg2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <defs>
+                <linearGradient id="sg" x1="1" y1="1" x2="27" y2="27" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#ec7070"/><stop offset="1" stop-color="#f0863f"/>
+                </linearGradient>
+                <linearGradient id="sg2" x1="8" y1="10" x2="20" y2="20" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#ec7070"/><stop offset="1" stop-color="#f0863f"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="success-title">Message sent!</div>
+          <div class="success-sub">Our team will reach out to your work email within 24 hours.</div>
+          <a href="index.html" class="btn-submit" style="width:auto;padding:0 32px;">Back to Home</a>
+        </div>
+
+      </div>
+      </div><!-- /.contact-form-wrap -->
+    </div>
+
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">
+          <img src="logo/logosvg.svg" alt="deeplumen" style="height:40px;width:auto;display:block;">
+        </a>
+        <p class="footer-desc">Deeplumen is an AI-first technology company focused on the intersection of AI agents and global commerce. As the pioneers of the M2AI (Marketing to AI) framework, Deeplumen builds the protocols, infrastructure, and connectors that allow brands to thrive in an era where machines represent the consumer.</p>
+        <div class="footer-socials">
+          <a href="https://x.com/Deeplumen0922" target="_blank" class="social-icon" aria-label="X / Twitter">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M9.16 6.77 14.08 1H12.9L8.62 6.01 5.22 1H1.5l5.17 7.52L1.5 15h1.18l4.52-5.25L10.78 15H14.5L9.16 6.77ZM7.79 9.09l-.52-.75L3.1 1.87h1.8l3.37 4.82.52.75 4.37 6.24h-1.8L7.79 9.09Z" fill="rgba(255,255,255,0.6)"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/company/deeplumen/posts/?feedView=all" target="_blank" class="social-icon" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.5 5.5H5V14H2.5V5.5ZM3.75 4.5A1.25 1.25 0 1 1 3.75 2 1.25 1.25 0 0 1 3.75 4.5Z" fill="rgba(255,255,255,0.6)"/><path d="M6.5 5.5H9V6.7C9.4 6 10.3 5.3 11.6 5.3 14.4 5.3 14.5 7.1 14.5 9.5V14H12V10C12 9 11.9 7.8 10.4 7.8 8.9 7.8 8.5 8.8 8.5 9.8V14H6.5V5.5Z" fill="rgba(255,255,255,0.6)"/></svg>
+          </a>
+          <a href="https://www.reddit.com/user/Deeplumen_AI/" target="_blank" class="social-icon" aria-label="Reddit">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8.5" r="5.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.3"/><circle cx="5.8" cy="9" r="0.9" fill="rgba(255,255,255,0.6)"/><circle cx="10.2" cy="9" r="0.9" fill="rgba(255,255,255,0.6)"/><path d="M5.8 11c.6.7 4.4.7 4.4 0" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round"/><path d="M5.5 8c.4-.9 1.4-1.5 2.5-1.5s2.1.6 2.5 1.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round"/><path d="M8 6.5V4.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round"/><circle cx="8.5" cy="3.8" r="0.9" fill="rgba(255,255,255,0.6)"/><path d="M10.5 7.5c.8-.3 1.5.2 1.5.9" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-linecap="round"/><path d="M5.5 7.5c-.8-.3-1.5.2-1.5.9" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">Company<span class="footer-col-toggle" aria-hidden="true">+</span></div>
+          <div class="footer-col-body">
+            <a href="About Us_page.html">About Us</a>
+            <a href="https://www.prnewswire.com/news-releases/deeplumen-unveils-ucp-for-java-infrastructure-powering-the-future-of-agentic-commerce-302664496.html" target="_blank">Press</a>
+            <a href="Contact_page.html">Contact</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Resources<span class="footer-col-toggle" aria-hidden="true">+</span></div>
+          <div class="footer-col-body">
+            <a href="#">API Docs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 DeepLumen. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Form validation & submit
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    var valid = true;
+    this.querySelectorAll('[required]').forEach(function(el) {
+      if (!el.value.trim()) {
+        el.style.borderColor = '#ec7070';
+        el.style.boxShadow = '0 0 0 3px rgba(236,112,112,0.15)';
+        valid = false;
+      } else {
+        el.style.borderColor = ''; el.style.boxShadow = '';
+      }
+    });
+    if (!valid) { e.preventDefault(); return; }
+    var email = document.getElementById('femail');
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      email.style.borderColor = '#ec7070';
+      email.style.boxShadow = '0 0 0 3px rgba(236,112,112,0.15)';
+      e.preventDefault(); return;
+    }
+    // Submit to https://www.deeplumen.com/register
+  });
+
+  // Mobile footer accordion
+  document.querySelectorAll('.footer-col-title').forEach(function(title) {
+    title.addEventListener('click', function() {
+      if (window.innerWidth > 480) return;
+      this.closest('.footer-col').classList.toggle('is-open');
+    });
+  });
+</script>
+
+</body>
+</html>
