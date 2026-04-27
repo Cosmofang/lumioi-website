@@ -58,6 +58,17 @@ Status 改为 Published
 | **Tags** | 可选 | 标签（可多选） | `AI`, `Marketing` |
 | **Author** | 推荐 | 你的名字 | `Zhang Wei` |
 
+### 封面图（Cover）
+
+每篇文章可以在 Notion 页面顶部设置封面图：打开文章页面 → 点击右上角 `···` → **Add cover** → 选择 **Link**，粘贴图片 URL。
+
+**默认封面（无自定义图片时使用）：**
+```
+https://lumioi.com/logo/image/blog_1.jpg
+```
+
+> 新建文章请手动添加此封面，或上传你自己的封面图片替换。
+
 ### Slug 命名规则
 - ✅ `ai-marketing-guide-2026`
 - ✅ `how-to-use-wdt-tool`
