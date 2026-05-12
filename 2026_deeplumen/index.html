@@ -1310,10 +1310,18 @@
       transition: background-color 0.3s ease; white-space: nowrap;
     }
     .cta-submit:hover { background: var(--text-dark); }
-    .cta-note { font-size: 13px; color: var(--text-muted); margin-top: 12px; }
-    .cta-perks { display: flex; justify-content: center; gap: 28px; margin-top: 24px; flex-wrap: wrap; }
+    .cta-note { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
+    .cta-perks { display: flex; justify-content: center; gap: 32px; margin-top: 20px; flex-wrap: wrap; }
     .cta-perk { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-body); }
     .cta-perk-icon { color: var(--accent); font-weight: 700; }
+    /* Green-circle check (matches shopify "Ready to be discovered?" style) */
+    .cta-perk-icon--check {
+      width: 20px; height: 20px;
+      background: rgba(95,158,79,0.12); color: #5f9e4f;
+      border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700;
+    }
     .cta-success {
       display: none; padding: 20px 28px;
       background: var(--surface-card); border: 1px solid var(--accent); border-radius: 12px;
@@ -1976,6 +1984,7 @@
     /* ── Marquee track ── */
     .logowall-marquee {
       width: 100%; overflow: hidden;
+      display: flex; flex-direction: column; gap: 28px;
       /* Fade edges */
       -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
       mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
@@ -1984,7 +1993,11 @@
       display: flex; align-items: center;
       gap: 72px;
       width: max-content;
-      animation: lw-scroll 32s linear infinite;
+      animation: lw-scroll 36s linear infinite;
+    }
+    .logowall-track--reverse {
+      animation-direction: reverse;
+      animation-duration: 42s;
     }
     .logowall-marquee:hover .logowall-track { animation-play-state: paused; }
     @keyframes lw-scroll {
@@ -3230,31 +3243,51 @@
   <div class="logowall-cw">
     <div class="logowall-label"><span>Trusted by selected brands and partners across the globe</span></div>
     <div class="logowall-marquee fade-up" aria-label="Brand logos">
+      <!-- Row 1 — scrolls right to left -->
       <div class="logowall-track" aria-hidden="true">
         <!-- Set 1 -->
-        <img src="logo/brands%20logo/Qbedding.svg"         alt="Qbedding"    class="lw-logo">
-        <img src="logo/brands%20logo/Dymestry.svg"         alt="Dymestry"    class="lw-logo">
-        <img src="logo/brands%20logo/looktech.svg"         alt="Looktech"    class="lw-logo">
-        <img src="logo/brands%20logo/magarri.svg"          alt="Magarri"     class="lw-logo">
-        <img src="logo/brands%20logo/moseeker.svg"         alt="Moseeker"    class="lw-logo">
-        <img src="logo/brands%20logo/NEW/yahoo.svg"        alt="Yahoo"       class="lw-logo">
-        <img src="logo/brands%20logo/NEW/MORNINGSTAR.svg"  alt="Morningstar" class="lw-logo">
-        <img src="logo/brands%20logo/NEW/PRNEWSWIRE.svg"   alt="PR Newswire" class="lw-logo">
-        <img src="logo/brands%20logo/NEW/LIFFTOFF.svg"     alt="Liftoff"     class="lw-logo">
-        <img src="logo/brands%20logo/NEW/VELOCITY.svg"     alt="Velocity"    class="lw-logo">
-        <img src="logo/brands%20logo/NEW/两个黑色.svg"      alt=""            class="lw-logo">
+        <img src="logo/brands%20logo/Qbedding.svg"               alt="Qbedding"       class="lw-logo">
+        <img src="logo/brands%20logo/looktech.svg"               alt="Looktech"       class="lw-logo">
+        <img src="logo/brands%20logo/moseeker.svg"               alt="Moseeker"       class="lw-logo">
+        <img src="logo/brands%20logo/NEW/yahoo.svg"              alt="Yahoo"          class="lw-logo">
+        <img src="logo/brands%20logo/NEW/PRNEWSWIRE.svg"         alt="PR Newswire"    class="lw-logo">
+        <img src="logo/brands%20logo/NEW/VELOCITY.svg"           alt="Velocity"       class="lw-logo">
+        <img src="logo/brands%20logo/NEW02/Airwallex%20.svg"     alt="Airwallex"      class="lw-logo">
+        <img src="logo/brands%20logo/NEW02/intel.svg"            alt="Intel"          class="lw-logo">
+        <img src="logo/brands%20logo/NEW02/nemo.svg"             alt="Nemo"           class="lw-logo">
         <!-- Set 2 — duplicate for seamless loop -->
-        <img src="logo/brands%20logo/Qbedding.svg"         alt="" class="lw-logo">
-        <img src="logo/brands%20logo/Dymestry.svg"         alt="" class="lw-logo">
-        <img src="logo/brands%20logo/looktech.svg"         alt="" class="lw-logo">
-        <img src="logo/brands%20logo/magarri.svg"          alt="" class="lw-logo">
-        <img src="logo/brands%20logo/moseeker.svg"         alt="" class="lw-logo">
-        <img src="logo/brands%20logo/NEW/yahoo.svg"        alt="" class="lw-logo">
-        <img src="logo/brands%20logo/NEW/MORNINGSTAR.svg"  alt="" class="lw-logo">
-        <img src="logo/brands%20logo/NEW/PRNEWSWIRE.svg"   alt="" class="lw-logo">
-        <img src="logo/brands%20logo/NEW/LIFFTOFF.svg"     alt="" class="lw-logo">
-        <img src="logo/brands%20logo/NEW/VELOCITY.svg"     alt="" class="lw-logo">
-        <img src="logo/brands%20logo/NEW/两个黑色.svg"      alt="" class="lw-logo">
+        <img src="logo/brands%20logo/Qbedding.svg"               alt="" class="lw-logo">
+        <img src="logo/brands%20logo/looktech.svg"               alt="" class="lw-logo">
+        <img src="logo/brands%20logo/moseeker.svg"               alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW/yahoo.svg"              alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW/PRNEWSWIRE.svg"         alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW/VELOCITY.svg"           alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW02/Airwallex%20.svg"     alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW02/intel.svg"            alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW02/nemo.svg"             alt="" class="lw-logo">
+      </div>
+      <!-- Row 2 — scrolls left to right -->
+      <div class="logowall-track logowall-track--reverse" aria-hidden="true">
+        <!-- Set 1 -->
+        <img src="logo/brands%20logo/Dymestry.svg"               alt="Dymestry"       class="lw-logo">
+        <img src="logo/brands%20logo/magarri.svg"                alt="Magarri"        class="lw-logo">
+        <img src="logo/brands%20logo/NEW/MORNINGSTAR.svg"        alt="Morningstar"    class="lw-logo">
+        <img src="logo/brands%20logo/NEW/LIFFTOFF.svg"           alt="Liftoff"        class="lw-logo">
+        <img src="logo/brands%20logo/NEW/两个黑色.svg"            alt=""              class="lw-logo">
+        <img src="logo/brands%20logo/NEW02/Even%20Realities.svg" alt="Even Realities" class="lw-logo">
+        <img src="logo/brands%20logo/NEW02/landlakes.svg"        alt="Land O'Lakes"   class="lw-logo">
+        <img src="logo/brands%20logo/NEW02/skywork.svg"          alt="Skywork"        class="lw-logo">
+        <img src="logo/brands%20logo/NEW02/webull.svg"           alt="Webull"         class="lw-logo">
+        <!-- Set 2 — duplicate for seamless loop -->
+        <img src="logo/brands%20logo/Dymestry.svg"               alt="" class="lw-logo">
+        <img src="logo/brands%20logo/magarri.svg"                alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW/MORNINGSTAR.svg"        alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW/LIFFTOFF.svg"           alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW/两个黑色.svg"            alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW02/Even%20Realities.svg" alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW02/landlakes.svg"        alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW02/skywork.svg"          alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW02/webull.svg"           alt="" class="lw-logo">
       </div>
     </div>
   </div>
@@ -4051,31 +4084,25 @@
      ══════════════════════════════════════ -->
 <section class="section-cta" id="cta">
   <div class="cta-inner">
+    <div class="badge-orange"><span>Get Started</span></div>
     <div>
-      <span class="h2-dark">Find Out if AI is</span><br>
-      <span class="h2-gradient">Recommending You.</span>
+      <span class="h2-dark">Ready to be </span>
+      <span class="h2-gradient">discovered?</span>
     </div>
     <p class="body-text" style="text-align:center;margin:0 auto;">
-      Enter your store URL and email. We'll send you a <strong style="color:var(--text-dark)">free AI visibility diagnostic report</strong>
-      and a <strong style="color:var(--text-dark)">free account</strong> when we launch.
+      Install from the Shopify App Store. Early access, priority onboarding, and white-glove specialist support.
     </p>
-    <div class="cta-form" id="cta-form-wrap">
-      <div class="cta-input-row">
-        <input class="cta-input" type="url" id="cta-url" placeholder="yourstore.myshopify.com">
-      </div>
-      <div class="cta-input-row">
-        <input class="cta-input" type="email" id="cta-email" placeholder="you@yourbrand.com">
-        <button class="cta-submit" onclick="submitCTA()">Get Free AI Report</button>
-      </div>
-      <div class="cta-note">No credit card required — report delivered within 48 hours</div>
-      <div class="cta-perks">
-        <div class="cta-perk"><span class="cta-perk-icon">&#10003;</span> Free AI diagnostic report</div>
-        <div class="cta-perk"><span class="cta-perk-icon">&#10003;</span> Free account on launch</div>
-        <div class="cta-perk"><span class="cta-perk-icon">&#10003;</span> Priority Shopify App access</div>
-      </div>
+    <div style="margin-top: 4px;">
+      <a href="https://apps.shopify.com/deeplumen-ai-seo-optimizer" target="_blank" rel="noopener" class="btn-primary" style="padding: 14px 28px; font-size: 15px;">
+        Install Now
+        <span class="btn-arrow-wrap"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.917 7h8.166M7.583 4.083 10.5 7l-2.917 2.917" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
     </div>
-    <div class="cta-success" id="cta-success">
-      &#10003; You're in! We'll analyze your store and send your free AI diagnostic report within 48 hours.
+    <div class="cta-note">No credit card required · Setup in 15 minutes · We respect your inbox</div>
+    <div class="cta-perks">
+      <div class="cta-perk"><span class="cta-perk-icon cta-perk-icon--check">&#10003;</span> Built for Shopify</div>
+      <div class="cta-perk"><span class="cta-perk-icon cta-perk-icon--check">&#10003;</span> Free AI visibility audit</div>
+      <div class="cta-perk"><span class="cta-perk-icon cta-perk-icon--check">&#10003;</span> Direct founder access</div>
     </div>
     <div class="cta-contact">
       <span class="cta-contact-lbl">Contact us at</span>
