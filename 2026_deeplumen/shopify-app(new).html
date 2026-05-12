@@ -3579,7 +3579,8 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
   function addRipple() {
     var r = document.createElement('div');
     r.className = 'fc1-ripple';
-    r.style.left = '50%'; r.style.top = '50%';
+    r.style.left = '50%';
+    r.style.top = '50%';
     btn.appendChild(r);
     setTimeout(function(){ r.remove(); }, 600);
   }
