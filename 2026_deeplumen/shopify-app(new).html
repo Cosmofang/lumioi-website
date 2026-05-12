@@ -35,12 +35,19 @@
 
 /* ── Reset + base ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; background: var(--bg); }
 body {
   font-family: var(--font-body);
   font-size: 16px; font-weight: 400; line-height: 1.5;
-  background: var(--bg); color: var(--text-body);
-  overflow-x: hidden;
+  color: var(--text-body); overflow-x: hidden;
+  position: relative;
+  background:
+    url('./neura-nova-assets/Hero_Bg_01.webp'),
+    var(--bg);
+  background-attachment: fixed, fixed;
+  background-size: cover, auto;
+  background-position: center top, center top;
+  background-repeat: no-repeat, no-repeat;
 }
 a { color: inherit; text-decoration: none; }
 .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
@@ -191,6 +198,14 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; color: var(--te
   transition: background-color 0.3s ease;
 }
 .btn-primary:hover { background: var(--text-dark); }
+.btn-arrow-wrap {
+  width: 20px; height: 20px;
+  border: 1.5px solid rgba(255,255,255,0.45);
+  border-radius: 9999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: border-color 0.3s, background 0.3s;
+}
+.btn-primary:hover .btn-arrow-wrap { border-color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.12); }
 .btn-ghost {
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 14px; font-weight: 600; color: var(--text-dark);
@@ -284,12 +299,19 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; color: var(--te
 .hero-stats {
   display: grid; grid-template-columns: repeat(3, 1fr);
   margin-top: 56px;
-  background: var(--bg-2);
-  border: 1px solid var(--stroke-cream);
+  background: rgba(255, 252, 246, 0.58);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.72);
   border-radius: 16px;
   padding: 28px 0;
+  box-shadow: 0 8px 32px rgba(33,29,29,0.07), inset 0 1px 0 rgba(255,255,255,0.85);
 }
-.hero-stat { padding: 0 32px; border-right: 1px solid var(--stroke-cream); }
+.hero-stat {
+  padding: 0 32px;
+  border-right: 1px solid rgba(255,255,255,0.45);
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+}
 .hero-stat:last-child { border-right: none; }
 .hero-stat-num {
   font-family: var(--font-heading); font-style: italic; font-weight: 500;
@@ -348,9 +370,8 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; color: var(--te
 .hf-store-shopify {
   width: 22px; height: 22px;
   border-radius: 6px;
-  background: #95bf47;
+  background: transparent;
   display: flex; align-items: center; justify-content: center;
-  color: #fff;
   flex-shrink: 0;
 }
 .hf-store-shopify svg { width: 14px; height: 14px; }
@@ -477,33 +498,32 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; color: var(--te
   padding: 8px 0;
 }
 .hf-ai-pill {
-  background: var(--surface-card);
-  border: 1px solid var(--stroke-soft);
+  background: rgba(255, 252, 246, 0.55);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.70);
   border-radius: 999px;
-  padding: 8px 14px 8px 8px;
+  padding: 8px 16px 8px 10px;
   display: flex; align-items: center; gap: 10px;
   font-size: 13px; font-weight: 600;
   color: var(--text-dark);
   transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-  box-shadow: 0 4px 12px rgba(120,90,50,0.04);
+  box-shadow: 0 4px 16px rgba(33,29,29,0.07), inset 0 1px 0 rgba(255,255,255,0.85);
   white-space: nowrap;
 }
 .hf-ai-pill:hover {
-  border-color: var(--accent);
+  border-color: rgba(190,142,62,0.55);
   transform: translateX(-3px);
-  box-shadow: 0 6px 18px rgba(190,142,62,0.10);
+  box-shadow: 0 8px 24px rgba(190,142,62,0.12), inset 0 1px 0 rgba(255,255,255,0.9);
 }
 .hf-ai-pill-ico {
   width: 30px; height: 30px;
-  border-radius: 50%;
-  background: var(--surface-card);
-  border: 1px solid var(--stroke-soft);
   display: flex; align-items: center; justify-content: center;
-  color: var(--text-dark);
   flex-shrink: 0;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.3);
+  color: var(--text-dark);
 }
-.hf-ai-pill-ico svg { width: 20px; height: 20px; display: block; }
+.hf-ai-pill-ico svg { width: 26px; height: 26px; display: block; }
+.hf-ai-pill-ico img { width: 26px; height: 26px; display: block; object-fit: contain; }
 
 /* ── Hero right: 2-column "human view" / "AI view" pairs (legacy, kept) ── */
 .hero-pairs {
@@ -707,28 +727,44 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; color: var(--te
    FEATURES — One-Click Install (ported from w15k1x-v19)
    ══════════════════════════════════════ */
 .section-features {
-  padding: 100px 80px;
-  background: transparent;
-  overflow: clip;
-}
+      padding: 100px 80px 80px;
+      background: transparent;
+      overflow: clip;
+    }
 .feat-cw {
-  max-width: 1100px; margin: 0 auto;
+  max-width: 1240px; margin: 0 auto;
   display: flex; flex-direction: column; align-items: center; gap: 48px;
 }
 .feat-head { text-align: center; max-width: 680px; }
+.feat-item:hover h4,
+    .feat-item:focus-within h4 { margin-bottom: 4px; }
+.feat-item p {
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.65;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.25s ease 0.05s;
+    }
+.feat-item h4 { font-family: var(--font-heading); font-size: 18px; font-weight: 500; color: var(--text-dark); margin-bottom: 0; transition: margin-bottom 0.3s ease; }
+.feat-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; }
+.feat-check {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--text-dark-2);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
+    }
 .feat-head .h2-dark, .feat-head .h2-gradient {
   font-size: 48px; line-height: 1.2; letter-spacing: -0.3px;
   white-space: nowrap;
 }
-.feat-sub { margin-top: 16px; }
+.feat-sub { margin-top: 14px; }
 .feat-steps-row { display: flex; gap: 16px; width: 100%; }
 .feat-scard {
   flex: 1; background: transparent;
   border: none; border-radius: 16px;
-  padding: 20px 18px 14px;
-  display: flex; flex-direction: column;
+  padding: 20px 18px 14px; display: flex; flex-direction: column; gap: 0;
   transition: opacity 0.35s;
-  opacity: 0.4;
 }
 .feat-scard.fsc-active { opacity: 1; }
 .feat-scard.fsc-done { opacity: 0.4; }
@@ -740,7 +776,6 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; color: var(--te
   font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
   color: var(--text-dark); background: var(--bg-2);
   padding: 2px 8px; border-radius: 20px;
-  text-transform: uppercase;
 }
 .fsc-check {
   width: 18px; height: 18px; border-radius: 50%;
@@ -750,146 +785,154 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; color: var(--te
   transition: opacity 0.3s, transform 0.3s;
 }
 .feat-scard.fsc-done .fsc-check { opacity: 1; transform: scale(1); }
-.fsc-title { font-size: 14px; font-weight: 600; color: var(--text-dark); margin-bottom: 6px; font-family: var(--font-body); }
+.fsc-title { font-size: 14px; font-weight: 600; color: var(--text-dark); margin-bottom: 6px; }
 .fsc-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; flex: 1; }
 .fsc-bar-wrap { height: 3px; background: var(--stroke-soft); border-radius: 2px; margin-top: 16px; overflow: hidden; }
 .fsc-bar { height: 100%; width: 0%; background: var(--text-dark); border-radius: 2px; }
 
 /* Feature card stack (animated install demo) */
-.feat-cards-stack {
-  width: 100%; max-width: 960px;
-  display: flex; flex-direction: column; gap: 40px;
-}
+.feat-cards-stack { width: 100%; max-width: 1240px; display: flex; flex-direction: column; gap: 100px; padding-bottom: 0; }
 .fc-card {
-  background: linear-gradient(180deg,rgba(255,255,255,0.92),rgba(255,255,255,0.82)),
-    var(--surface-card);
+  background: linear-gradient(180deg,rgba(255,255,255,0.82),rgba(255,255,255,0.72)),
+    var(--bg-mesh) center/cover no-repeat, var(--surface-card);
   border: 1px solid var(--stroke-soft); border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+  overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.05);
   height: 450px;
-  width: 100%;
+  position: sticky; top: 15vh; width: 100%;
   display: flex; flex-direction: column;
 }
 .fc1-layout { display: flex; height: 450px; }
 .fc1-left {
-  width: 340px; flex-shrink: 0;
-  padding: 24px 26px;
-  display: flex; flex-direction: column; gap: 16px;
-}
-.fc1-brand {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 11px; color: var(--text-muted); font-weight: 500;
-}
-.fc1-btn-wrap { position: relative; margin-top: 7px; }
+      width: 340px; flex-shrink: 0;
+      border-right: none;
+      padding: 24px 26px; display: flex; flex-direction: column; gap: 10px;
+    }
+.fc1-brand { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted); font-weight: 500; }
+.fc1-btn-wrap { position: relative; margin-top: 0; }
 .fc1-btn {
-  width: 100%; padding: 10px 16px; border-radius: 10px;
-  border: 1.5px solid var(--text-dark);
-  background: transparent; color: var(--text-dark);
-  font-size: 13px; font-weight: 600; font-family: var(--font-body);
-  text-align: center; display: block; cursor: pointer;
-  transition: border-color 0.35s, color 0.35s, transform 0.15s;
-  position: relative; overflow: hidden;
-}
+      width: 100%; padding: 10px 16px; border-radius: 10px;
+      border: 1.5px solid var(--text-dark);
+      background: transparent; color: var(--text-dark);
+      font-size: 13px; font-weight: 600; font-family: var(--font-body);
+      text-align: center;
+      display: block;
+      cursor: pointer;
+      transition: border-color 0.35s, color 0.35s, transform 0.15s;
+      position: relative; overflow: hidden;
+    }
 .fc1-btn.s-click   { transform: scale(0.97); }
 .fc1-btn.s-loading { border-color: var(--accent); color: var(--accent); }
 .fc1-btn.s-done    { border-color: #22c55e;      color: #22c55e; }
 .fc1-ripple {
-  position: absolute; border-radius: 50%;
-  background: rgba(0,0,0,0.1);
-  pointer-events: none;
-  animation: fc1Rpl 0.55s ease-out forwards;
-  transform: translate(-50%,-50%);
-}
+      position: absolute; border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      pointer-events: none;
+      animation: fc1Rpl 0.55s ease-out forwards;
+      transform: translate(-50%,-50%);
+    }
 @keyframes fc1Rpl {
-  from { width: 0; height: 0; opacity: 1; }
-  to   { width: 200px; height: 200px; opacity: 0; }
-}
+      from { width: 0; height: 0; opacity: 1; }
+      to   { width: 200px; height: 200px; opacity: 0; }
+    }
 .fc1-rows { display: flex; flex-direction: column; gap: 8px; }
 .fc1-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 12px; border-radius: 10px;
-  background: var(--bg-2); border: 1px solid var(--stroke-soft);
-  opacity: 0; transform: translateY(6px);
-  transition: opacity 0.45s ease, transform 0.45s ease;
-}
+      display: flex; align-items: center; gap: 10px;
+      padding: 16px 14px; border-radius: 10px; min-height: 56px;
+      background: #f5f5f5; border: 1px solid rgba(0,0,0,0.04);
+      opacity: 0; transform: translateY(6px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
 .fc1-row.fc1-vis { opacity: 1; transform: translateY(0); }
 .fc1-row.fc1-active .fc1-dot  { background: var(--text-dark); }
 .fc1-row.fc1-active .fc1-icon { color: var(--text-dark); }
-.fc1-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-faint); flex-shrink: 0; transition: background 0.4s; }
+.fc1-row {
+      transition: opacity 0.45s ease, transform 0.45s ease,
+                  box-shadow 0.35s ease, background 0.35s ease, border-color 0.35s ease;
+    }
+.fc1-row.fc1-pulse {
+      background: linear-gradient(180deg, #fefaf3 0%, #f7eed8 100%);
+      border-color: rgba(190, 142, 62, 0.42);
+      box-shadow: 0 0 0 1px rgba(190, 142, 62, 0.32), 0 6px 18px rgba(190, 142, 62, 0.18);
+    }
+.fc1-row.fc1-pulse .fc1-dot  { background: var(--accent); box-shadow: 0 0 0 3px rgba(190, 142, 62, 0.18); }
+.fc1-row.fc1-pulse .fc1-icon { color: var(--accent); }
+.fc1-row.fc1-pulse .fc1-rt   { color: var(--accent); }
+.fc1-dot { width: 8px; height: 8px; border-radius: 50%; background: #e2e2e2; flex-shrink: 0; transition: background 0.4s, box-shadow 0.35s ease; }
 .fc1-rc { flex: 1; }
-.fc1-rt { font-size: 11.5px; font-weight: 600; color: var(--text-dark); line-height: 1.3; }
-.fc1-rd { font-size: 9.5px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 2px; letter-spacing: 0.04em; }
-.fc1-icon { color: var(--text-faint); flex-shrink: 0; transition: color 0.4s; }
-
-.fc1-right {
-  flex: 1;
-  padding: 14px 16px 0;
-  display: flex; align-items: flex-start; justify-content: center;
-  gap: 14px; overflow: visible;
-}
-.fc1-side  { display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative; }
+.fc1-rt { font-size: 11.5px; font-weight: 600; color: var(--text-dark); line-height: 1.3; transition: color 0.35s ease; }
+.fc1-rd { font-size: 9.5px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
+.fc1-icon { color: #d4d4d8; flex-shrink: 0; transition: color 0.4s; }
+@media (prefers-reduced-motion: reduce) {
+  .fc1-row.fc1-pulse { box-shadow: none; background: #f5f5f5; }
+    }
+/* Right side — stacked cards + overflow bottom */
+.fc1-right { flex: 1; padding: 14px 16px 0; display: flex; align-items: flex-start; justify-content: center; gap: 0; overflow: visible; }
+.fc1-side  { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .fc1-col-top {
-  position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
-  font-size: 10px; font-weight: 600; letter-spacing: 0.04em;
-  text-transform: uppercase; white-space: nowrap;
-  padding: 4px 12px; border-radius: 100px; z-index: 10;
-}
+      position: absolute; top: -36px; left: 0;
+      font-size: 10px; font-weight: 500; letter-spacing: 0.02em;
+      text-transform: uppercase; white-space: nowrap;
+      padding: 4px 12px; border-radius: 100px; z-index: 10;
+    }
 .fc1-col-top.bad  {
-  color: #b85c52; background: #f2e8e6;
-  border: 1px solid #e8d5d2;
-}
+      color: #b85c52; background: #f2e8e6;
+      border: 1px solid #e8d5d2;
+    }
 .fc1-col-top.good {
-  color: #3d7a5c; background: #e4f0ea;
-  border: 1px solid #cce3d6;
-}
-.fc1-webstack { position: relative; width: 280px; height: 380px; flex-shrink: 0; margin-top: 46px; }
-.fc1-webcard  { position: absolute; width: 264px; height: 348px; border-radius: 12px; overflow: hidden; }
+      color: #3d7a5c; background: #e4f0ea;
+      border: 1px solid #cce3d6;
+    }
+.fc1-webstack { position: relative; width: 380px; height: 560px; flex-shrink: 0; margin-top: 46px; }
+.fc1-webcard  { position: absolute; width: 360px; height: 510px; border-radius: 12px; overflow: hidden; }
+/* Web card styling */
 .fc1-webcard { background: #fff; border: 1px solid rgba(0,0,0,0.09); box-shadow: 0 3px 14px rgba(0,0,0,0.07); }
 .fc1-wcb { top: 16px; left: 16px; z-index: 1; opacity: 0.38; filter: blur(0.5px); }
 .fc1-wcm { top: 8px;  left: 8px;  z-index: 2; opacity: 0.62; }
 .fc1-wcf { top: 0;    left: 0;    z-index: 3; opacity: 1; }
+@keyframes wcBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
 .fc1-wcbar {
-  height: 26px; background: #f4f4f4; border-bottom: 1px solid #ebebeb;
-  display: flex; align-items: center; gap: 4px; padding: 0 10px;
-}
-.fc1-wcdot { width: 7px; height: 7px; border-radius: 50%; background: #ddd; flex-shrink: 0; }
-.fc1-wcurl { flex: 1; height: 9px; background: #e6e6e6; border-radius: 3px; margin-left: 6px; }
-.fc1-wcbody { padding: 10px 10px 8px; display: flex; flex-direction: column; gap: 8px; }
-.fc1-wchero { height: 110px; background: linear-gradient(135deg, #f0ebe4, #e8e3db); border-radius: 7px; margin-bottom: 2px; }
-.fc1-wcl  { height: 8px; background: #ebebeb; border-radius: 3px; }
+      height: 32px; background: #f4f4f4; border-bottom: 1px solid #ebebeb;
+      display: flex; align-items: center; gap: 5px; padding: 0 12px;
+    }
+.fc1-wcdot { width: 8px; height: 8px; border-radius: 50%; background: #ddd; flex-shrink: 0; }
+.fc1-wcurl { flex: 1; height: 11px; background: #e6e6e6; border-radius: 3px; margin-left: 7px; }
+.fc1-wcbody { padding: 12px 12px 10px; display: flex; flex-direction: column; gap: 10px; }
+.fc1-wchero { height: 158px; background: linear-gradient(135deg, #f0ebe4, #e8e3db); border-radius: 8px; margin-bottom: 2px; }
+.fc1-wcl  { height: 10px; background: #ebebeb; border-radius: 3px; }
 .fc1-wcl.s  { width: 62%; }
 .fc1-wcl.xs { width: 38%; }
-.fc1-wcbtn  { height: 22px; width: 100px; background: #2c2c2c; border-radius: 5px; margin-top: 6px; }
-
-.fc1-agstack { position: relative; width: 280px; height: 380px; flex-shrink: 0; margin-top: 46px; }
+.fc1-wcbtn  { height: 27px; width: 120px; background: #2c2c2c; border-radius: 6px; margin-top: 7px; }
+/* Agent stack — mirrors webstack */
+.fc1-agstack { position: relative; width: 380px; height: 560px; flex-shrink: 0; margin-top: 46px; }
 .fc1-terminal {
-  position: absolute;
-  width: 264px; height: 348px;
-  background: #1e1e2e;
-  border-radius: 10px; overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.32), 0 2px 6px rgba(0,0,0,0.2);
-}
+      position: absolute;
+      width: 360px; height: 510px;
+      background: #1e1e2e;
+      border-radius: 10px; overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.32), 0 2px 6px rgba(0,0,0,0.2);
+    }
 .fc1-acb { top: 16px; left: 16px; z-index: 1; opacity: 0.3; }
 .fc1-acm { top: 8px;  left: 8px;  z-index: 2; opacity: 0.6; }
 .fc1-acf { top: 0;    left: 0;    z-index: 3; opacity: 1; }
+
 .fc1-term-bar {
-  height: 26px; background: #2a2a3e;
-  display: flex; align-items: center; gap: 5px; padding: 0 10px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.fc1-tdot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+      height: 32px; background: #2a2a3e;
+      display: flex; align-items: center; gap: 6px; padding: 0 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+.fc1-tdot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
 .td-r { background: #ff5f57; }
 .td-y { background: #febc2e; }
 .td-g { background: #28c840; }
 .fc1-term-title {
-  font-size: 9px; color: rgba(255,255,255,0.35);
-  font-family: 'JetBrains Mono', monospace; margin-left: 8px;
-}
+      font-size: 11px; color: rgba(255,255,255,0.35);
+      font-family: 'JetBrains Mono', monospace; margin-left: 9px;
+    }
 .fc1-term-body {
-  padding: 12px 16px 14px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px; line-height: 1.85; color: #cdd6f4;
-}
+      padding: 14px 18px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; line-height: 1.95; color: #cdd6f4;
+    }
 .fc1-tl { display: block; white-space: pre; }
 .tp { color: #cdd6f4; }
 .tk { color: #89b4fa; }
@@ -898,6 +941,51 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; color: var(--te
 .nb { color: #89dceb; }
 .fc1-cursor { color: #cba6f7; animation: curBlink 1s step-end infinite; }
 @keyframes curBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+/* Data flow — 3 dashed lines bridging web stack → agentic stack */
+.fc1-flow {
+      flex-shrink: 0;
+      width: 105px;
+      margin-top: 46px;
+      display: flex; align-items: stretch; justify-content: center;
+      align-self: stretch;
+    }
+.fc1-flow-svg { display: block; width: 100%; height: 560px; overflow: visible; }
+.fp-line {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2;
+      stroke-dasharray: 8 6;
+      stroke-linecap: round;
+      opacity: 0.55;
+    }
+@keyframes dashMove { to { stroke-dashoffset: -14; } }
+.fp-anim { stroke-dashoffset: 0; animation: dashMove 1.2s linear infinite; }
+.fp-a2   { animation-delay: -0.40s; }
+.fp-a3   { animation-delay: -0.80s; }
+/* Endpoint connection nodes */
+.fp-node {
+      fill: var(--accent);
+      opacity: 0.85;
+    }
+.fp-node.pulse {
+      animation: fp-pulse 1.6s ease-in-out infinite;
+    }
+@keyframes fp-pulse {
+      0%, 100% { opacity: 0.85; r: 3.2; }
+      50%      { opacity: 1;    r: 4.2; }
+    }
+@media (prefers-reduced-motion: reduce) {
+  .fp-anim, .fp-node.pulse { animation: none; }
+    }
+/* Bottom tags */
+.fc1-stag { font-size: 9px; font-weight: 600; padding: 3px 9px; border-radius: 6px; transition: opacity 0.5s; }
+.fc1-stag-bad  { color: #ef4444; background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.18); }
+.fc1-stag-good { color: #008060; background: rgba(0,128,96,0.07); border: 1px solid rgba(0,128,96,0.2); }
+.fc1-hidden { opacity: 0; }
+/* keep old classes for any fallback */
+.features-inner { display: none; }
+.features-left, .features-right { display: none; }
+
 
 /* ── PROBLEM ── */
 .problem { background: var(--bg-2); border-top: 1px solid var(--stroke-cream); border-bottom: 1px solid var(--stroke-cream); }
@@ -1048,7 +1136,7 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; color: var(--te
 .dc-mockup {
   position: relative;
   background: var(--surface-card);
-  border: 1px solid var(--stroke-soft);
+  border: 1px solid transparent;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 16px 48px rgba(120,90,50,0.10);
@@ -1387,7 +1475,7 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; color: var(--te
 }
 
 /* ── PRICING MODEL ── */
-.model { background: var(--bg-2); border-top: 1px solid var(--stroke-cream); border-bottom: 1px solid var(--stroke-cream); }
+.model { background: transparent; border-top: 1px solid var(--stroke-cream); border-bottom: 1px solid var(--stroke-cream); }
 .pricing-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
   max-width: 1240px; margin: 0 auto;
@@ -1654,7 +1742,7 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; color: var(--te
 /* ══════════════════════════════════════
    CUSTOMER STORIES — Tabbed carousel
    ══════════════════════════════════════ */
-.stories { padding: 100px 0; background: var(--bg-2); border-top: 1px solid var(--stroke-cream); border-bottom: 1px solid var(--stroke-cream); }
+.stories { padding: 100px 0; background: transparent; border-top: 1px solid var(--stroke-cream); border-bottom: 1px solid var(--stroke-cream); }
 .stories-cw { max-width: 1080px; margin: 0 auto; padding: 0 80px; }
 
 /* Tab strip */
@@ -1976,7 +2064,7 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; color: var(--te
 
 /* ── WAITLIST CTA ── */
 .waitlist {
-  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+  background: transparent;
   text-align: center;
   padding: 120px 0 100px;
 }
@@ -2162,6 +2250,46 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
   .faq-q { font-size: 16px; padding: 18px 20px; }
   .faq-a-inner { padding: 0 20px 20px; font-size: 14px; }
 }
+
+/* ── 拟态化玻璃效果 — 所有主要白色卡片 ── */
+.hf-store,
+.hf-hub,
+.app-store-card,
+.chat-mock,
+.dc-stage,
+.pipe-card,
+.pricing-card,
+.story-panel,
+.story-tab,
+.view-preview,
+.view-tokens,
+.views,
+.waitlist-form,
+.faq-item {
+  background: rgba(255, 252, 246, 0.58) !important;
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border-color: rgba(255, 255, 255, 0.72) !important;
+}
+/* 激活/高亮态保留 accent 边框，只改背景 */
+.hf-hub,
+.pricing-card.featured {
+  border-color: var(--accent) !important;
+}
+/* 顶部高光边 */
+.hf-store,
+.app-store-card,
+.chat-mock,
+.dc-mockup,
+.pipe-card,
+.pricing-card,
+.story-panel,
+.faq-item {
+  box-shadow:
+    0 20px 56px rgba(33,29,29,0.08),
+    0 2px 8px rgba(33,29,29,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.85);
+}
 </style>
 </head>
 <body>
@@ -2188,10 +2316,10 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
       <div class="nav-dropdown">
         <span class="nav-link">Industries / Cases</span>
         <div class="nav-dropdown-menu">
-          <a href="index.html#cta">Home &amp; Living</a>
-          <a href="index.html#cta">Electronics</a>
-          <a href="index.html#cta">Health &amp; Beauty</a>
-          <a href="index.html#cta">Fashion &amp; Apparel</a>
+          <a href="newpage/industries-cases%20home%26living.html">Home &amp; Living</a>
+          <a href="newpage/industries-cases%20electronics.html">Electronics</a>
+          <a href="newpage/industries-cases%20health%26beauty.html">Health &amp; Beauty</a>
+          <a href="newpage/industries-cases%20fashion%26apparel.html">Fashion &amp; Apparel</a>
         </div>
       </div>
       <div class="nav-dropdown">
@@ -2224,10 +2352,10 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
     <div class="nav-mobile-group">
       <span class="nav-mobile-group-title">Industries / Cases</span>
       <div class="nav-mobile-sub">
-        <a href="index.html#cta">Home &amp; Living</a>
-        <a href="index.html#cta">Electronics</a>
-        <a href="index.html#cta">Health &amp; Beauty</a>
-        <a href="index.html#cta">Fashion &amp; Apparel</a>
+        <a href="newpage/industries-cases%20home%26living.html">Home &amp; Living</a>
+        <a href="newpage/industries-cases%20electronics.html">Electronics</a>
+        <a href="newpage/industries-cases%20health%26beauty.html">Health &amp; Beauty</a>
+        <a href="newpage/industries-cases%20fashion%26apparel.html">Fashion &amp; Apparel</a>
       </div>
     </div>
     <div class="nav-mobile-group">
@@ -2257,7 +2385,7 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
         <h1>Your store is <em>invisible to AI.</em><br>We fix that.</h1>
         <p class="hero-sub">Deeplumen's Shopify app helps turn your product pages into AI-readable Agentic Pages, to bring new sales from AI channels.</p>
         <div class="hero-actions">
-          <a href="https://apps.shopify.com/deeplumen-ai-seo-optimizer" target="_blank" rel="noopener" class="btn-primary">Install Now →</a>
+          <a href="https://apps.shopify.com/deeplumen-ai-seo-optimizer" target="_blank" rel="noopener" class="btn-primary">Install Now <span class="btn-arrow-wrap"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
           <a href="#features" class="btn-ghost">See How It Works ↓</a>
         </div>
       </div>
@@ -2265,31 +2393,29 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
       <div class="hero-flow">
         <!-- Connecting lines (behind cards). Layout: 160 + 36 + 1fr + 36 + 140 (≈ 700 wide × 360 tall) -->
         <svg class="hf-lines" viewBox="0 0 700 360" preserveAspectRatio="none" aria-hidden="true">
-          <!-- Store → Hub (~36px gap) -->
-          <path class="hf-line" d="M 160,180 Q 178,180 196,180"/>
-          <!-- Hub → 4 AI pills (each pill centered ~at y = 60 / 140 / 220 / 300) -->
-          <path class="hf-line" d="M 524,180 Q 542,120 560,60"/>
-          <path class="hf-line" d="M 524,180 Q 542,160 560,140"/>
-          <path class="hf-line" d="M 524,180 Q 542,200 560,220"/>
-          <path class="hf-line" d="M 524,180 Q 542,260 560,300"/>
+          <!-- Store → Hub: straight line -->
+          <path class="hf-line" d="M 160,180 L 196,180"/>
+          <!-- Hub → 4 AI pills: cubic fan curves -->
+          <path class="hf-line" d="M 524,180 C 548,180 548,60  560,60"/>
+          <path class="hf-line" d="M 524,180 C 546,180 546,140 560,140"/>
+          <path class="hf-line" d="M 524,180 C 546,180 546,220 560,220"/>
+          <path class="hf-line" d="M 524,180 C 548,180 548,300 560,300"/>
         </svg>
 
         <!-- LEFT — Your Store -->
         <div class="hf-store">
           <div class="hf-store-head">
             <span class="hf-store-shopify" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M15.5 4.6c0-.1-.1-.2-.2-.2-.1 0-1.2-.1-1.2-.1s-.9-.9-1-.9c-.1-.1-.3 0-.3 0s-.2.1-.5.2c-.3-.8-.8-1.5-1.7-1.5h-.1c-.3-.3-.6-.5-1-.5-2.7 0-4 3.4-4.4 5.1L3.2 7.5c-.6.2-.6.2-.7.7-.1.4-1.5 11.7-1.5 11.7l11.3 2.1L18.5 21S15.5 4.7 15.5 4.6zm-3.4-.7l-.7.2c0-.1 0-.3-.1-.4 0-.4-.2-.7-.3-.9.5.1.8.6 1.1 1.1zm-1.4.4-1.5.5c.1-.6.4-1.2.7-1.6.1-.2.3-.3.5-.4.2.4.3 1 .3 1.5zM10 2.6h.1c.1 0 .2.1.3.1-.3.1-.5.3-.7.6-.4.5-.7 1.3-.8 2L7.7 5.7c.3-1.5 1.3-3.1 2.3-3.1z"/>
-              </svg>
+              <img src="logo/Shopify.svg" alt="Shopify" style="width:14px;height:14px;display:block;">
             </span>
             <span class="hf-store-label">Your Store</span>
           </div>
-          <div class="hf-store-img" style="background-image: url('logo/image/skincare.jpg');"></div>
+          <div class="hf-store-img" style="background-image: url('https://qbedding.com/cdn/shop/files/Gentle_Green_TENCEL__Fitted_Sheet.jpg?v=1773944954&width=700'); background-size: cover; background-position: center;"></div>
           <div class="hf-store-prod">
-            <div class="hf-store-prod-name">Vitamin C Serum</div>
+            <div class="hf-store-prod-name">TENCEL™ Fitted Sheet</div>
             <div class="hf-store-prod-meta">
-              <span class="hf-store-prod-brand">LUMÉ · Skincare</span>
-              <span class="hf-store-prod-price">$49</span>
+              <span class="hf-store-prod-brand">Qbedding · Bedding</span>
+              <span class="hf-store-prod-price">$58.50</span>
             </div>
           </div>
         </div>
@@ -2308,10 +2434,12 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
             </div>
             <div class="hf-hub-json">
               <span><span class="tp">{</span></span>
-              <span>  <span class="tk">"name"</span><span class="tp">: </span><span class="ts">"Vitamin C Serum"</span><span class="tp">,</span></span>
-              <span>  <span class="tk">"brand"</span><span class="tp">: </span><span class="ts">"Lumé"</span><span class="tp">,</span></span>
-              <span>  <span class="tk">"price"</span><span class="tp">: </span><span class="tn">49.00</span><span class="tp">,</span></span>
-              <span>  <span class="tk">"category"</span><span class="tp">: </span><span class="ts">"Skincare"</span><span class="tp">,</span></span>
+              <span>  <span class="tk">"name"</span><span class="tp">: </span><span class="ts">"TENCEL™ Fitted Sheet"</span><span class="tp">,</span></span>
+              <span>  <span class="tk">"brand"</span><span class="tp">: </span><span class="ts">"Qbedding"</span><span class="tp">,</span></span>
+              <span>  <span class="tk">"price"</span><span class="tp">: </span><span class="tn">58.50</span><span class="tp">,</span></span>
+              <span>  <span class="tk">"category"</span><span class="tp">: </span><span class="ts">"Bedding"</span><span class="tp">,</span></span>
+              <span>  <span class="tk">"rating"</span><span class="tp">: </span><span class="tn">4.9</span><span class="tp">,</span></span>
+              <span>  <span class="tk">"in_stock"</span><span class="tp">: </span><span class="nb">true</span><span class="tp">,</span></span>
               <span>  <span class="tk">"ai_ready"</span><span class="tp">: </span><span class="nb">true</span></span>
               <span><span class="tp">}</span></span>
             </div>
@@ -2322,19 +2450,19 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
         <div class="hf-ai">
           <div class="hf-ai-pill">
             <span class="hf-ai-pill-ico">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.28 9.82a5.92 5.92 0 0 0-.51-4.86 5.99 5.99 0 0 0-6.45-2.87A5.99 5.99 0 0 0 4.99 4.07a5.99 5.99 0 0 0-4 2.91 5.99 5.99 0 0 0 .74 7.02 5.93 5.93 0 0 0 .51 4.87 5.99 5.99 0 0 0 6.45 2.87 5.97 5.97 0 0 0 4.5 2.02 5.99 5.99 0 0 0 5.71-4.16 5.99 5.99 0 0 0 4-2.91 5.99 5.99 0 0 0-.74-7.02ZM13.19 21.5a4.4 4.4 0 0 1-2.84-1.03l.14-.08 4.71-2.72a.78.78 0 0 0 .39-.68v-6.65l1.99 1.15a.07.07 0 0 1 .04.05v5.5a4.43 4.43 0 0 1-4.43 4.43Zm-9.53-4.07a4.4 4.4 0 0 1-.53-2.97l.14.08 4.7 2.72a.78.78 0 0 0 .79 0l5.74-3.32V16.2c0 .03 0 .05-.03.06l-4.76 2.75a4.42 4.42 0 0 1-6.05-1.59ZM2.42 7.6a4.4 4.4 0 0 1 2.31-1.94v5.6a.78.78 0 0 0 .39.68l5.71 3.3-1.99 1.15a.06.06 0 0 1-.06 0L4.04 13.16a4.43 4.43 0 0 1-1.62-6.04Zm15.96 3.71L12.64 7.99l1.99-1.15a.06.06 0 0 1 .06 0l4.74 2.74a4.43 4.43 0 0 1-.67 8 4.43 4.43 0 0 1-.36-7.27Zm1.98-2.99-.14-.08-4.7-2.72a.78.78 0 0 0-.79 0L9 8.85V6.55a.07.07 0 0 1 .03-.06l4.76-2.75a4.42 4.42 0 0 1 6.57 4.59Zm-12.45 4.1L5.91 11.27a.06.06 0 0 1-.04-.05V5.72a4.43 4.43 0 0 1 7.27-3.4l-.14.08L8.29 5.12a.78.78 0 0 0-.39.68l-.01 6.62Zm1.08-2.33L12.55 8.5l2.55 1.46v2.94L12.56 14.4l-2.55-1.46V9.99Z"/></svg>
+              <img src="logo/FChatGPT.svg" alt="ChatGPT" style="width:16px;height:16px;display:block;">
             </span>
             ChatGPT
           </div>
           <div class="hf-ai-pill">
             <span class="hf-ai-pill-ico">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c0 6.627 5.373 12 12 12-6.627 0-12 5.373-12 12 0-6.627-5.373-12-12-12 6.627 0 12-5.373 12-12z"/></svg>
+              <img src="logo/Gemini.svg" alt="Gemini" style="width:16px;height:16px;display:block;">
             </span>
             Gemini
           </div>
           <div class="hf-ai-pill">
             <span class="hf-ai-pill-ico">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v6 M12 22v-6 M2 12h6 M22 12h-6 M4.93 4.93l4.24 4.24 M19.07 19.07l-4.24-4.24 M4.93 19.07l4.24-4.24 M19.07 4.93l-4.24 4.24"/></svg>
+              <img src="logo/Claude.svg" alt="Claude" style="width:16px;height:16px;display:block;">
             </span>
             Claude
           </div>
@@ -2480,62 +2608,50 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
      ══════════════════════════════════════ -->
 <section class="section-features" id="features">
   <div class="feat-cw">
-    <div class="feat-head">
+    <div class="feat-head fade-up">
       <div class="badge-orange"><span>The Shopify App</span></div>
       <div style="margin-top:14px;">
-        <span class="h2-dark">One-Click Install. </span>
-        <span class="h2-gradient">AI-Ready in 15 Minutes.</span>
+        <div class="h2-dark" style="white-space:nowrap;">One-Click Install.</div>
+        <div class="h2-gradient" style="white-space:nowrap;">AI-Ready in 15 Minutes.</div>
       </div>
       <p class="body-text feat-sub">No code. No migration. No SEO risk. Install from the Shopify App Store and we automatically generate Agentic Pages for every product in your store.</p>
     </div>
 
-    <div class="feat-steps-row">
+    <div class="feat-steps-row fade-up">
       <div class="feat-scard" id="fsc0">
-        <div class="fsc-top">
-          <span class="fsc-num">Step 1</span>
-          <span class="fsc-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </div>
+        <div class="fsc-top"><span class="fsc-num">Step 1</span><span class="fsc-check" id="fck0"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
         <div class="fsc-title">Install in one click</div>
         <div class="fsc-desc">Auto-scan your store and generate AI-optimized pages for every product.</div>
         <div class="fsc-bar-wrap"><div class="fsc-bar" id="fb0"></div></div>
       </div>
       <div class="feat-scard" id="fsc1">
-        <div class="fsc-top">
-          <span class="fsc-num">Step 2</span>
-          <span class="fsc-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </div>
+        <div class="fsc-top"><span class="fsc-num">Step 2</span><span class="fsc-check" id="fck1"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
         <div class="fsc-title">Real-time AI Health Score</div>
         <div class="fsc-desc">See how AI agents perceive your store across 4 dimensions.</div>
         <div class="fsc-bar-wrap"><div class="fsc-bar" id="fb1"></div></div>
       </div>
       <div class="feat-scard" id="fsc2">
-        <div class="fsc-top">
-          <span class="fsc-num">Step 3</span>
-          <span class="fsc-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </div>
+        <div class="fsc-top"><span class="fsc-num">Step 3</span><span class="fsc-check" id="fck2"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
         <div class="fsc-title">AI traffic analytics</div>
         <div class="fsc-desc">Track every visit from ChatGPT, Gemini, Perplexity, Claude.</div>
         <div class="fsc-bar-wrap"><div class="fsc-bar" id="fb2"></div></div>
       </div>
       <div class="feat-scard" id="fsc3">
-        <div class="fsc-top">
-          <span class="fsc-num">Step 4</span>
-          <span class="fsc-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </div>
+        <div class="fsc-top"><span class="fsc-num">Step 4</span><span class="fsc-check" id="fck3"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
         <div class="fsc-title">Zero SEO impact</div>
         <div class="fsc-desc">Canonical tags keep Google SEO intact. Only AI agents see the optimized version.</div>
         <div class="fsc-bar-wrap"><div class="fsc-bar" id="fb3"></div></div>
       </div>
     </div>
 
-    <div class="feat-cards-stack">
-      <!-- Card 1: Install demo with before → after preview -->
+    <div class="feat-cards-stack fade-up">
+      <!-- Card 1: One-click install + page conversion -->
       <div class="fc-card" id="fcCard0">
         <div class="fc1-layout">
           <!-- LEFT: install + process rows -->
           <div class="fc1-left">
             <div class="fc1-brand">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9.5 2.5s-.16.05-.43.13c-.05-.15-.11-.32-.21-.51-.3-.58-.75-.9-1.28-.9-.04 0-.07 0-.11.01-.02-.02-.04-.04-.05-.06-.23-.25-.54-.37-.9-.36-.7.02-1.39.52-1.95 1.42-.4.63-.7 1.42-.78 2.04L1.97 5.07c-.41.13-.42.14-.47.52-.07.29-1.13 8.48-1.13 8.48l8.79 1.52V2.48c-.05.01-.09.02-.16.03ZM7.27 4.81c-.47.14-.97.3-1.48.45.14-.54.42-1.09.74-1.45.13-.13.31-.28.5-.37.2.42.25.99.24 1.37ZM6.33 2.96c.16 0 .31.04.42.11-.18.09-.37.25-.55.42-.44.47-.78 1.22-.92 1.93-.42.13-.84.26-1.22.37.25-1.1 1.19-2.79 2.27-2.83Z" fill="var(--accent)"/></svg>
+              <img src="logo/Shopify.svg" alt="" style="width:16px;height:16px;opacity:0.6;">
               <span>DeepLumen · Shopify App</span>
             </div>
             <div class="fc1-btn-wrap">
@@ -2560,94 +2676,124 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
               <div class="fc1-row" id="fc1R3">
                 <div class="fc1-dot"></div>
                 <div class="fc1-rc"><div class="fc1-rt">Zero SEO Impact</div><div class="fc1-rd">Canonical tags keep your Google rankings intact</div></div>
-                <svg class="fc1-icon" width="16" height="16" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg class="fc1-icon" width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 1 0 0 16A8 8 0 0 0 10 2zm0 3v5l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
             </div>
           </div>
-          <!-- RIGHT: before → after stacks -->
-          <div class="fc1-right">
+          <!-- RIGHT: before → after -->
+          <div class="fc1-right" id="fc1Right">
+            <!-- Stacked webpage cards -->
             <div class="fc1-side">
-              <div class="fc1-col-top bad">~18,000 tokens · Hard for AI to read</div>
               <div class="fc1-webstack">
-                <div class="fc1-webcard fc1-wcb">
+                <!-- Back: blog layout -->
+                <div class="fc1-webcard fc1-wc fc1-wcb">
                   <div class="fc1-wcbar"><span class="fc1-wcdot"></span><span class="fc1-wcdot"></span><span class="fc1-wcdot"></span><span class="fc1-wcurl"></span></div>
                   <div class="fc1-wcbody">
-                    <div class="fc1-wcl" style="width:55%;height:9px;background:#d8d8d8;"></div>
-                    <div class="fc1-wcl xs"></div>
-                    <div class="fc1-wchero" style="height:80px;background:linear-gradient(135deg,#e8e8f0,#d8d8e8);"></div>
-                    <div class="fc1-wcl"></div>
+                    <div class="fc1-wcl" style="width:55%;height:9px;background:#d8d8d8;margin-bottom:4px;"></div>
+                    <div class="fc1-wcl xs" style="height:7px;"></div>
+                    <div class="fc1-wchero" style="height:80px;margin-top:6px;background:linear-gradient(135deg,#e8e8f0,#d8d8e8);"></div>
+                    <div class="fc1-wcl" style="margin-top:6px;"></div>
                     <div class="fc1-wcl s"></div>
                     <div class="fc1-wcl"></div>
+                    <div class="fc1-wcl xs"></div>
                   </div>
                 </div>
-                <div class="fc1-webcard fc1-wcm">
+                <!-- Middle: product card layout -->
+                <div class="fc1-webcard fc1-wc fc1-wcm">
                   <div class="fc1-wcbar"><span class="fc1-wcdot"></span><span class="fc1-wcdot"></span><span class="fc1-wcdot"></span><span class="fc1-wcurl"></span></div>
                   <div class="fc1-wcbody">
-                    <div class="fc1-wchero" style="height:90px;background:linear-gradient(135deg,#ede8f0,#e8e0d8);"></div>
-                    <div style="display:flex;gap:6px;">
+                    <div class="fc1-wchero" style="height:110px;background:linear-gradient(135deg,#ede8f0,#e8e0d8);"></div>
+                    <div style="display:flex;gap:6px;margin-top:6px;">
                       <div style="width:50%;height:8px;background:#e0e0e0;border-radius:3px;"></div>
                       <div style="width:28%;height:8px;background:#c8c8c8;border-radius:3px;margin-left:auto;"></div>
                     </div>
-                    <div class="fc1-wcl s"></div>
+                    <div class="fc1-wcl s" style="margin-top:5px;"></div>
                     <div class="fc1-wcl xs"></div>
-                    <div class="fc1-wcbtn" style="width:90px;"></div>
+                    <div class="fc1-wcbtn" style="width:90px;margin-top:8px;"></div>
                   </div>
                 </div>
-                <div class="fc1-webcard fc1-wcf">
+                <!-- Front: standard store layout -->
+                <div class="fc1-webcard fc1-wc fc1-wcf">
                   <div class="fc1-wcbar"><span class="fc1-wcdot"></span><span class="fc1-wcdot"></span><span class="fc1-wcdot"></span><span class="fc1-wcurl"></span></div>
-                  <div class="fc1-wcbody"><div class="fc1-wchero"></div><div class="fc1-wcl"></div><div class="fc1-wcl s"></div><div class="fc1-wcl"></div><div class="fc1-wcl xs"></div><div class="fc1-wcbtn"></div></div>
+                  <div class="fc1-wcbody"><div class="fc1-wchero" style="background:url('https://qbedding.com/cdn/shop/files/Gentle_Green_TENCEL__Fitted_Sheet.jpg?v=1773944954&width=700') center/cover no-repeat var(--bg-2);"></div><div class="fc1-wcl"></div><div class="fc1-wcl s"></div><div class="fc1-wcl"></div><div class="fc1-wcl xs"></div><div class="fc1-wcbtn"></div></div>
                 </div>
+                <div class="fc1-col-top bad">~18,000 tokens &nbsp;·&nbsp; Hard for AI to read</div>
               </div>
             </div>
+            <!-- Data flow connector — 3 dashed lines bridging web → agentic -->
+            <div class="fc1-flow" aria-hidden="true">
+              <svg class="fc1-flow-svg" viewBox="0 0 130 560" preserveAspectRatio="none">
+                <!-- Top line: bows DOWN toward center (pinched at midpoint) -->
+                <path class="fp-line fp-anim"      d="M 4,210 Q 65,245 126,210" />
+                <!-- Middle line: straight axis -->
+                <path class="fp-line fp-anim fp-a2" d="M 4,260 L 126,260" />
+                <!-- Bottom line: bows UP toward center -->
+                <path class="fp-line fp-anim fp-a3" d="M 4,310 Q 65,275 126,310" />
+                <!-- Endpoint nodes — shifted up 20px with the lines -->
+                <circle class="fp-node pulse" cx="4"   cy="210" r="3.2"/>
+                <circle class="fp-node"       cx="126" cy="210" r="3.2"/>
+                <circle class="fp-node pulse" cx="4"   cy="260" r="3.2" style="animation-delay:-0.5s"/>
+                <circle class="fp-node"       cx="126" cy="260" r="3.2"/>
+                <circle class="fp-node pulse" cx="4"   cy="310" r="3.2" style="animation-delay:-1s"/>
+                <circle class="fp-node"       cx="126" cy="310" r="3.2"/>
+              </svg>
+            </div>
+            <!-- Stacked terminal (agent page) -->
             <div class="fc1-side">
-              <div class="fc1-col-top good">~3,800 tokens · AI-readable</div>
               <div class="fc1-agstack">
                 <div class="fc1-terminal fc1-acb">
-                  <div class="fc1-term-bar"><span class="fc1-tdot td-r"></span><span class="fc1-tdot td-y"></span><span class="fc1-tdot td-g"></span><span class="fc1-term-title">agentic-page.json</span></div>
+                  <div class="fc1-term-bar"><span class="fc1-term-title">agentic-page.json</span></div>
                   <div class="fc1-term-body">
                     <div class="fc1-tl"><span class="tp">{</span></div>
-                    <div class="fc1-tl"><span class="tk">  "name"</span><span class="tp">: </span><span class="ts">"Classic Hoodie"</span><span class="tp">,</span></div>
-                    <div class="fc1-tl"><span class="tk">  "price"</span><span class="tp">: </span><span class="tn">89.00</span><span class="tp">,</span></div>
-                    <div class="fc1-tl"><span class="tk">  "ai_ready"</span><span class="tp">: </span><span class="nb">true</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"name"</span><span class="tp">: </span><span class="ts">"Classic Hoodie"</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"price"</span><span class="tp">: </span><span class="tn">89.00</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"category"</span><span class="tp">: </span><span class="ts">"Apparel"</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"rating"</span><span class="tp">: </span><span class="tn">4.7</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"in_stock"</span><span class="tp">: </span><span class="nb">true</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"ai_ready"</span><span class="tp">: </span><span class="nb">true</span></div>
                     <div class="fc1-tl"><span class="tp">}</span></div>
                   </div>
                 </div>
                 <div class="fc1-terminal fc1-acm">
-                  <div class="fc1-term-bar"><span class="fc1-tdot td-r"></span><span class="fc1-tdot td-y"></span><span class="fc1-tdot td-g"></span><span class="fc1-term-title">agentic-page.json</span></div>
+                  <div class="fc1-term-bar"><span class="fc1-term-title">agentic-page.json</span></div>
                   <div class="fc1-term-body">
                     <div class="fc1-tl"><span class="tp">{</span></div>
-                    <div class="fc1-tl"><span class="tk">  "name"</span><span class="tp">: </span><span class="ts">"Air Sneaker"</span><span class="tp">,</span></div>
-                    <div class="fc1-tl"><span class="tk">  "price"</span><span class="tp">: </span><span class="tn">129.00</span><span class="tp">,</span></div>
-                    <div class="fc1-tl"><span class="tk">  "rating"</span><span class="tp">: </span><span class="tn">4.8</span><span class="tp">,</span></div>
-                    <div class="fc1-tl"><span class="tk">  "ai_ready"</span><span class="tp">: </span><span class="nb">true</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"name"</span><span class="tp">: </span><span class="ts">"Air Sneaker"</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"price"</span><span class="tp">: </span><span class="tn">129.00</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"category"</span><span class="tp">: </span><span class="ts">"Footwear"</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"rating"</span><span class="tp">: </span><span class="tn">4.8</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"reviews"</span><span class="tp">: </span><span class="tn">892</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"in_stock"</span><span class="tp">: </span><span class="nb">true</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"ai_ready"</span><span class="tp">: </span><span class="nb">true</span></div>
                     <div class="fc1-tl"><span class="tp">}</span></div>
                   </div>
                 </div>
                 <div class="fc1-terminal fc1-acf">
                   <div class="fc1-term-bar">
-                    <span class="fc1-tdot td-r"></span>
-                    <span class="fc1-tdot td-y"></span>
-                    <span class="fc1-tdot td-g"></span>
                     <span class="fc1-term-title">agentic-page.json</span>
                   </div>
                   <div class="fc1-term-body">
                     <div class="fc1-tl"><span class="tp">{</span></div>
-                    <div class="fc1-tl"><span class="tk">  "name"</span><span class="tp">: </span><span class="ts">"Vitamin C Serum"</span><span class="tp">,</span></div>
-                    <div class="fc1-tl"><span class="tk">  "price"</span><span class="tp">: </span><span class="tn">49.00</span><span class="tp">,</span></div>
-                    <div class="fc1-tl"><span class="tk">  "brand"</span><span class="tp">: </span><span class="ts">"Lumé"</span><span class="tp">,</span></div>
-                    <div class="fc1-tl"><span class="tk">  "category"</span><span class="tp">: </span><span class="ts">"Skincare"</span><span class="tp">,</span></div>
-                    <div class="fc1-tl"><span class="tk">  "rating"</span><span class="tp">: </span><span class="tn">4.9</span><span class="tp">,</span></div>
-                    <div class="fc1-tl"><span class="tk">  "reviews"</span><span class="tp">: </span><span class="tn">1284</span><span class="tp">,</span></div>
-                    <div class="fc1-tl"><span class="tk">  "in_stock"</span><span class="tp">: </span><span class="nb">true</span><span class="tp">,</span></div>
-                    <div class="fc1-tl"><span class="tk">  "ai_ready"</span><span class="tp">: </span><span class="nb">true</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"name"</span><span class="tp">: </span><span class="ts">"Alpaca Boxy Knit Cardigan"</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"price"</span><span class="tp">: </span><span class="tn">219.00</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"brand"</span><span class="tp">: </span><span class="ts">"Merisoft"</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"category"</span><span class="tp">: </span><span class="ts">"Apparel"</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"rating"</span><span class="tp">: </span><span class="tn">4.7</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"reviews"</span><span class="tp">: </span><span class="tn">1428</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"tags"</span><span class="tp">: [</span><span class="ts">"alpaca"</span><span class="tp">, </span><span class="ts">"oversized"</span><span class="tp">, </span><span class="ts">"knit"</span><span class="tp">],</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"variants"</span><span class="tp">: [{ </span><span class="tk">"size"</span><span class="tp">: </span><span class="ts">"S"</span><span class="tp"> }, { </span><span class="tk">"size"</span><span class="tp">: </span><span class="ts">"M"</span><span class="tp"> }, { </span><span class="tk">"size"</span><span class="tp">: </span><span class="ts">"L"</span><span class="tp"> }],</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"in_stock"</span><span class="tp">: </span><span class="nb">true</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"ai_ready"</span><span class="tp">: </span><span class="nb">true</span></div>
                     <div class="fc1-tl"><span class="tp">}</span><span class="fc1-cursor">█</span></div>
                   </div>
                 </div>
+                <div class="fc1-col-top good">~3,800 tokens &nbsp;·&nbsp; AI-readable</div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -3313,45 +3459,50 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
 <!-- ── FOOTER ── -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <a href="index.html" class="footer-logo">
-          <img src="logo/logosvg.svg" alt="deeplumen" style="height:40px;width:auto;display:block;">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-logo">
+        <img src="logo/logocis001.svg" alt="DeepLumen" class="footer-logo-img" />
+      </a>
+      <p class="footer-desc">The AI visibility platform for Shopify brands. Building the infrastructure for agentic commerce — where brands are discovered and recommended by AI agents.</p>
+      <div class="footer-socials">
+        <a href="https://x.com/Deeplumen0922" target="_blank" class="social-icon" aria-label="X">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M9.16 6.77 14.08 1H12.9L8.62 6.01 5.22 1H1.5l5.17 7.52L1.5 15h1.18l4.52-5.25L10.78 15H14.5L9.16 6.77ZM7.79 9.09l-.52-.75L3.1 1.87h1.8l3.37 4.82.52.75 4.37 6.24h-1.8L7.79 9.09Z" fill="rgba(255,255,255,0.6)"/></svg>
         </a>
-        <p class="footer-desc">Deeplumen is an AI-first technology company focused on the intersection of AI agents and global commerce. As the pioneers of the M2AI (Marketing to AI) framework, Deeplumen builds the protocols, infrastructure, and connectors that allow brands to thrive in an era where machines represent the consumer.</p>
-        <div class="footer-socials">
-          <a href="https://x.com/Deeplumen0922" target="_blank" class="social-icon" aria-label="X / Twitter">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M9.16 6.77 14.08 1H12.9L8.62 6.01 5.22 1H1.5l5.17 7.52L1.5 15h1.18l4.52-5.25L10.78 15H14.5L9.16 6.77ZM7.79 9.09l-.52-.75L3.1 1.87h1.8l3.37 4.82.52.75 4.37 6.24h-1.8L7.79 9.09Z" fill="rgba(255,255,255,0.6)"/></svg>
-          </a>
-          <a href="https://www.linkedin.com/company/deeplumen/posts/?feedView=all" target="_blank" class="social-icon" aria-label="LinkedIn">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.5 5.5H5V14H2.5V5.5ZM3.75 4.5A1.25 1.25 0 1 1 3.75 2 1.25 1.25 0 0 1 3.75 4.5Z" fill="rgba(255,255,255,0.6)"/><path d="M6.5 5.5H9V6.7C9.4 6 10.3 5.3 11.6 5.3 14.4 5.3 14.5 7.1 14.5 9.5V14H12V10C12 9 11.9 7.8 10.4 7.8 8.9 7.8 8.5 8.8 8.5 9.8V14H6.5V5.5Z" fill="rgba(255,255,255,0.6)"/></svg>
-          </a>
-        </div>
-      </div>
-      <div class="footer-cols">
-        <div class="footer-col">
-          <div class="footer-col-title">Company</div>
-          <div class="footer-col-body">
-            <a href="About Us_page.html">About Us</a>
-            <a href="Contact_page.html">Contact</a>
-          </div>
-        </div>
-        <div class="footer-col">
-          <div class="footer-col-title">Product</div>
-          <div class="footer-col-body">
-            <a href="shopify-app.html">Shopify APP</a>
-            <a href="lumenshop.html">LumenShop</a>
-          </div>
-        </div>
+        <a href="https://www.linkedin.com/company/deeplumen/" target="_blank" class="social-icon" aria-label="LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.5 5.5H5V14H2.5V5.5ZM3.75 4.5A1.25 1.25 0 1 1 3.75 2 1.25 1.25 0 0 1 3.75 4.5Z" fill="rgba(255,255,255,0.6)"/><path d="M6.5 5.5H9V6.7C9.4 6 10.3 5.3 11.6 5.3 14.4 5.3 14.5 7.1 14.5 9.5V14H12V10C12 9 11.9 7.8 10.4 7.8 8.9 7.8 8.5 8.8 8.5 9.8V14H6.5V5.5Z" fill="rgba(255,255,255,0.6)"/></svg>
+        </a>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span class="footer-copy">© 2026 DeepLumen. All rights reserved.</span>
-      <div class="footer-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <div class="footer-col-title">Product</div>
+        <a href="shopify-app%28new%29.html">Shopify App</a>
+        <a href="shopify-app%28new%29.html">Agentic Page</a>
+        <a href="https://deeplumen.io/" target="_blank" rel="noopener">UCP Java</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Industries / Cases</div>
+        <a href="newpage/industries-cases%20home%26living.html">Home &amp; Living</a>
+        <a href="newpage/industries-cases%20electronics.html">Electronics</a>
+        <a href="newpage/industries-cases%20health%26beauty.html">Health &amp; Beauty</a>
+        <a href="newpage/industries-cases%20fashion%26apparel.html">Fashion &amp; Apparel</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Resources</div>
+        <a href="https://lumioi.com/blog" target="_blank" rel="noopener">Blog</a>
+        <a href="index.html#cta">SEOWeek</a>
+        <a href="index.html#cta">PR URL</a>
       </div>
     </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">&copy; 2026 DeepLumen. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
   </div>
 </footer>
 

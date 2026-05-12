@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Electronics — Nullport · DeepLumen</title>
+  <meta name="description" content="How Nullport, a USB-C accessory brand, turned its spec sheets into AI-friendly answers — and lifted AI-attributed sessions by 38.4% in thirty days." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ============================================================
+       1. FOUNDATIONS — DeepLumen 2026 spec §1.1
+       ============================================================ */
+    :root {
+      --bg: #fefaf3; --bg-2: #f5f0e8;
+      --surface-card: #ffffff; --surface-tag: #f5f1ea;
+      --text-dark: #211e1d; --text-dark-2: #2c2c2c;
+      --text-body: #585858; --text-muted: #8c8884; --text-faint: #b8b4b0;
+      --stroke: #d9d9d9; --stroke-soft: #211d1d1a; --stroke-cream: #e8e4de;
+      --accent: #be8e3e; --accent-soft: #ebe1ce; --accent-warm: #836431;
+      --brand-1: #ec7070; --brand-2: #f0863f;
+      --brand-grad: linear-gradient(180deg, #ec7070, #f0863f);
+      --font-heading: 'Playfair Display', Georgia, serif;
+      --font-body: 'Inter', 'Inter Fallback', Arial, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      --bg-linen-1: url("./neura-nova-assets/Hero_Bg_01.webp");
+      --bg-mesh-soft: url("./neura-nova-assets/CTA_3_BG.webp");
+      --bg-mesh-rich: url("./neura-nova-assets/Home_3_How_It_Work_BG.webp");
+    }
+
+    /* 2. BASE */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body); font-size: 16px; line-height: 1.65;
+      color: var(--text-body);
+      background:
+        linear-gradient(180deg, rgba(254,250,243,0.6), rgba(254,250,243,0.95)),
+        var(--bg-linen-1) center top / cover no-repeat,
+        var(--bg);
+      background-attachment: fixed;
+      -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
+
+    /* 3. PAGE FRAME */
+    .page-frame {
+      position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 1440px; height: 100vh;
+      border-left: 1px solid var(--stroke-cream); border-right: 1px solid var(--stroke-cream);
+      pointer-events: none; z-index: 9999;
+    }
+    .banner-mask {
+      position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 1440px; height: 40px;
+      border-left: 2px solid var(--bg); border-right: 2px solid var(--bg);
+      pointer-events: none; z-index: 10000;
+    }
+    .sec-divider { display: flex; justify-content: center; pointer-events: none; position: relative; z-index: 1; }
+    .sec-divider::before {
+      content: ''; display: block; width: 100%; max-width: 1440px;
+      height: 1px; background: var(--stroke-soft);
+    }
+    .page-wrapper {
+      width: 100%; max-width: 1440px; margin: 0 auto;
+      position: relative; isolation: isolate; z-index: 1; overflow: clip;
+    }
+
+    /* 4. NAV — verbatim from reference */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 10002;
+      background: rgba(254,250,243,0.85);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-bottom-color 0.3s ease;
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 80px; max-width: 1440px; margin: 0 auto;
+    }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo-img { height: 44px; width: auto; display: block; }
+    .nav-links { display: flex; align-items: center; gap: 24px; }
+    .nav-link { font-size: 14px; font-weight: 500; color: var(--text-body); text-decoration: none; transition: color 0.3s ease; position: relative; cursor: pointer; }
+    .nav-link:hover { color: var(--accent); }
+    .nav-link.has-new-badge { position: relative; }
+    .nav-badge-new {
+      position: absolute; top: -10px; right: -26px;
+      font-size: 9px; font-weight: 700; color: #fff;
+      letter-spacing: 0.04em; line-height: 1.3;
+      background: linear-gradient(180deg, var(--accent), var(--accent-warm));
+      border-radius: 100px; padding: 2px 6px;
+      box-shadow: 0 2px 6px rgba(190,142,62,0.40);
+      animation: nav-badge-bounce 1.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes nav-badge-bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+    @media (prefers-reduced-motion: reduce) { .nav-badge-new { animation: none; } }
+    .nav-dropdown { position: relative; cursor: pointer; }
+    .nav-dropdown-menu {
+      position: absolute; top: calc(100% + 12px); left: -12px;
+      min-width: 200px; background: #fff; border: 1px solid var(--stroke-soft);
+      border-radius: 12px; padding: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      opacity: 0; visibility: hidden; transform: translateY(6px);
+      transition: all 0.2s; z-index: 200;
+    }
+    .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-dropdown-menu a {
+      display: block; padding: 8px 14px; color: var(--text-body); font-size: 13px;
+      border-radius: 8px; transition: all 0.15s;
+    }
+    .nav-dropdown-menu a:hover { color: var(--accent); background: var(--bg-2); }
+    .nav-dropdown-menu a.is-current { color: var(--accent); background: var(--bg-2); }
+    .nav-mobile-group { display: flex; flex-direction: column; padding: 8px 0; border-bottom: 1px solid var(--stroke-soft); }
+    .nav-mobile-group-title { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; padding: 4px 0 8px; }
+    .nav-mobile-sub { display: flex; flex-direction: column; gap: 2px; padding-left: 12px; }
+    .nav-mobile-sub a { font-size: 14px; color: var(--text-body); padding: 6px 0; text-decoration: none; }
+    .nav-mobile-sub a:hover { color: var(--accent); }
+    .nav-mobile-sub a.is-current { color: var(--accent); }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .btn-demo-nav {
+      font-size: 14px; font-weight: 600; color: var(--text-dark);
+      background: var(--surface-card); border: 1px solid var(--stroke);
+      border-radius: 12px; padding: 10px 18px;
+      cursor: pointer; text-decoration: none;
+      transition: color 0.3s ease, border-color 0.3s ease;
+    }
+    .btn-demo-nav:hover { color: var(--accent); border-color: var(--accent); }
+    .btn-login-nav {
+      font-size: 14px; font-weight: 600; color: #fff;
+      background: var(--text-dark-2);
+      border: none; border-radius: 12px; padding: 10px 18px;
+      cursor: pointer; text-decoration: none;
+      transition: background-color 0.3s ease;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-login-nav:hover { background: var(--text-dark); }
+    .btn-arrow-wrap { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; }
+    .nav-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .nav-burger span { display: block; width: 22px; height: 2px; background: var(--text-dark); border-radius: 2px; transition: transform 0.25s, opacity 0.25s; }
+    .nav-burger.is-active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.is-active span:nth-child(2) { opacity: 0; }
+    .nav-burger.is-active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-mobile-menu { display: none; flex-direction: column; gap: 10px; padding: 16px 20px; border-top: 1px solid rgba(234,234,234,0.6); }
+    .nav-mobile-menu.is-open { display: flex; }
+
+    /* 5. HERO */
+    .ic-hero {
+      padding: 144px 80px 88px;
+      display: flex; flex-direction: column;
+      gap: 28px;
+      max-width: 1140px;
+    }
+    .ic-hero h1 {
+      font-family: var(--font-heading);
+      font-size: 64px; font-weight: 500;
+      color: var(--text-dark);
+      letter-spacing: -0.8px; line-height: 1.1;
+      max-width: 980px;
+    }
+    .ic-hero h1 em { font-style: italic; color: var(--accent); }
+    .ic-hero-sub { font-size: 18px; line-height: 1.7; color: var(--text-body); max-width: 760px; }
+    .ic-hero-sub em { font-style: italic; color: var(--accent); }
+    .ic-hero-meta {
+      display: flex; gap: 56px; margin-top: 12px; flex-wrap: wrap;
+    }
+    .ic-hero-meta-item { display: flex; flex-direction: column; gap: 6px; }
+    .ic-hero-meta-num {
+      font-family: var(--font-heading); font-style: italic;
+      font-size: 36px; color: var(--text-dark);
+      letter-spacing: -0.3px; line-height: 1;
+    }
+    .ic-hero-meta-lbl {
+      font-size: 13px; color: var(--text-body); line-height: 1.5;
+    }
+
+    /* 6. CONTEXT — "How [category] buyers ask AI" */
+    .ic-context {
+      padding: 100px 80px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.72), rgba(245,240,232,0.84)),
+        var(--bg-mesh-soft) center/cover no-repeat,
+        var(--bg-2);
+    }
+    .ic-context-inner {
+      max-width: 1240px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 48px;
+    }
+    .ic-context-head {
+      display: flex; flex-direction: column; gap: 18px;
+      max-width: 820px;
+    }
+    .ic-context-head h2 {
+      font-family: var(--font-heading);
+      font-size: 44px; font-weight: 500;
+      color: var(--text-dark);
+      letter-spacing: -0.3px; line-height: 1.15;
+      max-width: 780px;
+    }
+    .ic-context-head h2 em { font-style: italic; color: var(--accent); }
+    .ic-context-head p {
+      font-size: 16px; line-height: 1.78;
+      color: var(--text-body); max-width: 760px;
+    }
+    .ic-context-head p em { font-style: italic; color: var(--accent); }
+    .ic-context-head p strong { color: var(--text-dark); font-weight: 600; }
+    .ic-context-queries {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .ic-context-query {
+      display: flex; flex-direction: column; gap: 14px;
+      padding: 26px 24px;
+      background: var(--surface-card);
+      border: 1px solid var(--stroke-soft);
+      border-radius: 16px;
+      transition: border-color 0.3s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .ic-context-query:hover {
+      border-color: var(--accent-soft);
+      transform: translateY(-2px);
+    }
+    .ic-context-query-platform {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: 15px;
+      color: var(--accent);
+      letter-spacing: -0.1px;
+    }
+    .ic-context-query-platform::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .ic-context-query-text {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--text-dark);
+    }
+
+    /* 7. THE CASE */
+    .ic-case { padding: 100px 80px; }
+    .ic-case-inner {
+      max-width: 1240px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr; gap: 48px;
+    }
+    .ic-case-head { display: flex; flex-direction: column; gap: 16px; max-width: 920px; }
+    .ic-case h2 {
+      font-family: var(--font-heading);
+      font-size: 44px; font-weight: 500;
+      color: var(--text-dark);
+      letter-spacing: -0.3px; line-height: 1.15;
+      max-width: 900px;
+    }
+    .ic-case h2 em { font-style: italic; color: var(--accent); }
+    .ic-case-body {
+      display: grid; grid-template-columns: 1.05fr 0.95fr;
+      gap: 64px; align-items: start;
+    }
+    .ic-case-narrative { display: flex; flex-direction: column; gap: 18px; }
+    .ic-case-narrative p { font-size: 16px; line-height: 1.78; color: var(--text-body); }
+    .ic-case-narrative p em { font-style: italic; color: var(--accent); }
+    .ic-case-narrative p strong { color: var(--text-dark); font-weight: 600; }
+    .ic-case-panel {
+      position: relative;
+      padding: 36px 32px 32px;
+      background: var(--surface-card);
+      border: 1px solid var(--stroke-soft);
+      border-radius: 20px;
+      display: flex; flex-direction: column; gap: 28px;
+    }
+    .ic-case-panel-head { display: flex; flex-direction: column; gap: 4px; }
+    .ic-case-panel-eyebrow {
+      font-family: var(--font-heading); font-style: italic;
+      font-size: 14px; color: var(--accent); letter-spacing: -0.1px;
+    }
+    .ic-case-panel-title {
+      font-family: var(--font-heading); font-size: 22px; font-weight: 500;
+      color: var(--text-dark); letter-spacing: -0.2px;
+    }
+    .ic-case-metrics {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 24px 28px;
+    }
+    .ic-case-metric { display: flex; flex-direction: column; gap: 8px; }
+    .ic-case-metric-num {
+      font-family: var(--font-heading); font-style: italic;
+      font-size: 40px; font-weight: 500;
+      color: var(--text-dark);
+      letter-spacing: -0.3px; line-height: 1;
+    }
+    .ic-case-metric-lbl { font-size: 13px; color: var(--text-body); line-height: 1.5; }
+    .ic-case-metric-lbl em { color: var(--text-muted); font-style: italic; }
+    .ic-case-trend {
+      display: flex; flex-direction: column; gap: 10px;
+      padding-top: 22px; border-top: 1px solid var(--stroke-soft);
+    }
+    .ic-case-trend-svg { width: 100%; height: 44px; }
+    .ic-case-trend-base { stroke: var(--stroke-soft); }
+    .ic-case-trend-line {
+      fill: none; stroke: var(--accent);
+      stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+      opacity: 0.7;
+      stroke-dasharray: 500; stroke-dashoffset: 500;
+    }
+    .ic-case-trend-go .ic-case-trend-line {
+      animation: trendDraw 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+    }
+    @keyframes trendDraw { to { stroke-dashoffset: 0; } }
+    .ic-case-trend-foot {
+      display: flex; justify-content: space-between;
+      font-size: 12px; color: var(--text-muted); line-height: 1.4;
+    }
+
+    /* 8. TIMELINE */
+    .ic-timeline { padding: 100px 80px; }
+    .ic-timeline-inner {
+      max-width: 960px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 40px;
+    }
+    .ic-timeline-head { display: flex; flex-direction: column; gap: 16px; }
+    .ic-timeline-head h2 {
+      font-family: var(--font-heading);
+      font-size: 44px; font-weight: 500;
+      color: var(--text-dark);
+      letter-spacing: -0.3px; line-height: 1.15;
+    }
+    .ic-timeline-head h2 em { font-style: italic; color: var(--accent); }
+    .ic-timeline-head p {
+      font-size: 16px; line-height: 1.78;
+      color: var(--text-body); max-width: 760px;
+    }
+    .ic-timeline-list { display: flex; flex-direction: column; }
+    .ic-timeline-item {
+      display: grid; grid-template-columns: 160px 1fr;
+      gap: 36px; padding: 28px 0;
+      border-top: 1px solid var(--stroke-soft);
+    }
+    .ic-timeline-item:last-child { border-bottom: 1px solid var(--stroke-soft); }
+    .ic-timeline-day {
+      font-family: var(--font-heading); font-style: italic;
+      font-size: 28px; color: var(--text-dark);
+      letter-spacing: -0.3px; line-height: 1.1;
+    }
+    .ic-timeline-text { font-size: 16px; line-height: 1.78; color: var(--text-body); }
+    .ic-timeline-text em { font-style: italic; color: var(--accent); }
+    .ic-timeline-text strong { color: var(--text-dark); font-weight: 600; }
+
+    /* 9. RELATED INDUSTRIES */
+    .ic-related {
+      padding: 80px 80px 120px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.72), rgba(245,240,232,0.84)),
+        var(--bg-mesh-soft) center/cover no-repeat,
+        var(--bg-2);
+    }
+    .ic-related-inner {
+      max-width: 1240px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 40px;
+    }
+    .ic-related-head { display: flex; flex-direction: column; gap: 14px; max-width: 760px; }
+    .ic-related-head h2 {
+      font-family: var(--font-heading);
+      font-size: 40px; font-weight: 500;
+      color: var(--text-dark);
+      letter-spacing: -0.3px; line-height: 1.2;
+    }
+    .ic-related-head h2 em { font-style: italic; color: var(--accent); }
+    .ic-related-head p {
+      font-size: 16px; line-height: 1.7;
+      color: var(--text-body); max-width: 720px;
+    }
+    .ic-related-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .ic-idx-card {
+      position: relative;
+      display: flex; flex-direction: column; gap: 14px;
+      padding: 28px 24px 26px;
+      background: var(--surface-card);
+      border: 1px solid var(--stroke-soft);
+      border-radius: 20px;
+      transition: border-color 0.3s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      cursor: pointer; text-decoration: none;
+    }
+    .ic-idx-card:hover {
+      border-color: var(--accent); transform: translateY(-3px);
+    }
+    .ic-idx-card-cat {
+      font-family: var(--font-heading); font-style: italic;
+      font-size: 13px; color: var(--accent);
+      letter-spacing: -0.1px;
+    }
+    .ic-idx-card h3 {
+      font-family: var(--font-heading);
+      font-size: 24px; font-weight: 500;
+      color: var(--text-dark);
+      letter-spacing: -0.2px; line-height: 1.3;
+    }
+    .ic-idx-card-brand { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+    .ic-idx-card-stat {
+      display: flex; flex-direction: column; gap: 6px;
+      margin-top: 4px; padding-top: 18px;
+      border-top: 1px solid var(--stroke-soft);
+    }
+    .ic-idx-card-stat-num {
+      font-family: var(--font-heading); font-style: italic;
+      font-size: 30px; color: var(--text-dark);
+      letter-spacing: -0.3px; line-height: 1;
+    }
+    .ic-idx-card-stat-lbl { font-size: 13px; color: var(--text-body); line-height: 1.5; }
+    .ic-idx-card-link {
+      margin-top: auto;
+      font-size: 13px; font-weight: 600;
+      color: var(--accent); letter-spacing: 0.02em;
+      transition: color 0.3s ease;
+    }
+    .ic-idx-card:hover .ic-idx-card-link { color: var(--accent-warm); }
+
+    /* 10. FOOTER — verbatim from reference */
+    footer { background: #48443d; color: #fff; padding: 0; position: relative; z-index: 10000; }
+    .footer-inner { max-width: 1440px; width: 100%; margin: 0 auto; padding: 60px 80px 0; }
+    .footer-top { display: flex; justify-content: space-between; gap: 32px; padding-bottom: 40px; }
+    .footer-brand { display: flex; flex-direction: column; gap: 18px; max-width: 460px; }
+    .footer-logo { display: flex; align-items: center; text-decoration: none; }
+    .footer-logo-img { height: 40px; width: auto; display: block; filter: brightness(0) invert(1); }
+    .footer-desc { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7; }
+    .footer-socials { display: flex; gap: 10px; }
+    .social-icon {
+      width: 36px; height: 36px; background: rgba(255,255,255,0.08);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+    .social-icon:hover { background: rgba(255,255,255,0.15); }
+    .footer-cols { display: flex; gap: 72px; }
+    .footer-col { display: flex; flex-direction: column; gap: 12px; }
+    .footer-col-title { font-family: var(--font-heading); font-size: 16px; font-weight: 500; color: #fff; margin-bottom: 6px; letter-spacing: -0.1px; }
+    .footer-col a { font-size: 14px; color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.3s ease; }
+    .footer-col a:hover { color: var(--accent-soft); }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 32px;
+    }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,0.4); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.3s ease; }
+    .footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+    /* 11. ANIMATIONS */
+    .fade-up {
+      opacity: 0; transform: translateY(20px);
+      transition:
+        opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .fade-up.is-visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      .fade-up { opacity: 1; transform: none; transition: none; }
+      .ic-case-trend-line { stroke-dashoffset: 0; animation: none; }
+      html { scroll-behavior: auto; }
+    }
+
+    /* 12. RESPONSIVE */
+    @media (max-width: 1439px) {
+      .nav-inner { padding: 16px 40px; }
+      .ic-hero { padding: 128px 40px 80px; }
+      .ic-context, .ic-case, .ic-timeline { padding: 88px 40px; }
+      .ic-related { padding: 72px 40px 96px; }
+      .footer-inner { padding: 54px 40px 0; }
+    }
+    @media (max-width: 1100px) { .page-frame, .banner-mask { display: none; } }
+    @media (max-width: 1099px) {
+      .nav-inner { padding: 16px 36px; }
+      .ic-hero h1 { font-size: 48px; letter-spacing: -0.5px; }
+      .ic-context-head h2, .ic-case h2, .ic-timeline-head h2 { font-size: 36px; }
+      .ic-related-head h2 { font-size: 32px; }
+      .ic-context-queries { grid-template-columns: 1fr; }
+      .ic-case-body { grid-template-columns: 1fr; gap: 40px; }
+      .ic-case-metric-num { font-size: 34px; }
+      .ic-timeline-item { grid-template-columns: 110px 1fr; gap: 24px; }
+      .ic-timeline-day { font-size: 22px; }
+      .ic-related-grid { grid-template-columns: 1fr; }
+      .footer-cols { gap: 40px; }
+    }
+    @media (max-width: 900px) {
+      .ic-hero h1 { font-size: 38px; }
+      .ic-context-head h2, .ic-case h2, .ic-timeline-head h2 { font-size: 30px; }
+    }
+    @media (max-width: 767px) {
+      .nav-inner { padding: 14px 20px; }
+      .nav-links, .nav-actions { display: none; }
+      .nav-burger { display: flex; }
+      .ic-hero { padding: 92px 20px 56px; gap: 20px; }
+      .ic-hero h1 { font-size: 30px; letter-spacing: -0.3px; }
+      .ic-hero-sub { font-size: 15px; }
+      .ic-hero-meta { gap: 28px; }
+      .ic-hero-meta-num { font-size: 28px; }
+      .ic-context, .ic-case, .ic-timeline { padding: 64px 20px; }
+      .ic-related { padding: 56px 20px 72px; }
+      .ic-context-head h2, .ic-case h2, .ic-timeline-head h2, .ic-related-head h2 { font-size: 24px; }
+      .ic-case-metrics { grid-template-columns: 1fr 1fr; gap: 18px 16px; }
+      .ic-case-metric-num { font-size: 28px; }
+      .ic-case-panel { padding: 28px 22px 26px; }
+      .ic-timeline-item { grid-template-columns: 90px 1fr; gap: 16px; padding: 22px 0; }
+      .ic-timeline-day { font-size: 18px; }
+      .footer-inner { padding: 40px 20px 0; }
+      .footer-top { flex-direction: column; gap: 28px; }
+      .footer-cols { flex-direction: column; gap: 16px; }
+      .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .nav-inner { padding: 12px 16px; }
+      .nav-logo-img { height: 34px; }
+      .ic-hero { padding: 80px 14px 48px; }
+      .ic-hero h1 { font-size: 26px; }
+      .ic-context, .ic-case, .ic-timeline { padding: 56px 14px; }
+      .ic-related { padding: 48px 14px 64px; }
+      .footer-inner { padding: 32px 14px 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="https://lumioi.com/logo/logocis001.svg" alt="DeepLumen" class="nav-logo-img" />
+      </a>
+      <div class="nav-links">
+        <a href="shopify-app%28new%29.html" class="nav-link has-new-badge">Shopify App<span class="nav-badge-new">NEW</span></a>
+        <div class="nav-dropdown">
+          <span class="nav-link">Product</span>
+          <div class="nav-dropdown-menu">
+            <a href="shopify-app%28new%29.html">Agentic Page</a>
+            <a href="https://deeplumen.io/" target="_blank" rel="noopener">UCP Java</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <span class="nav-link" style="color: var(--accent);">Industries / Cases</span>
+          <div class="nav-dropdown-menu">
+            <a href="industries-cases%20home%26living.html">Home &amp; Living</a>
+            <a href="industries-cases%20electronics.html" class="is-current">Electronics</a>
+            <a href="industries-cases%20health%26beauty.html">Health &amp; Beauty</a>
+            <a href="industries-cases%20fashion%26apparel.html">Fashion &amp; Apparel</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <span class="nav-link">Resources</span>
+          <div class="nav-dropdown-menu">
+            <a href="https://lumioi.com/blog" target="_blank" rel="noopener">Blog</a>
+            <a href="#cta">SEOWeek</a>
+            <a href="#cta">PR URL</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a href="#cta" class="btn-demo-nav">Book a Demo</a>
+        <a href="#cta" class="btn-login-nav">Get Free AI Report <span class="btn-arrow-wrap"><svg width="8" height="8" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      </div>
+      <button class="nav-burger" id="nav-burger" aria-label="Menu"
+        onclick="(function(){var m=document.getElementById('nav-mobile-menu');var b=document.getElementById('nav-burger');m.classList.toggle('is-open');b.classList.toggle('is-active');})()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile-menu" id="nav-mobile-menu">
+      <a href="shopify-app%28new%29.html" class="nav-link has-new-badge" style="padding:10px 0;border-bottom:1px solid var(--stroke-soft);">Shopify App<span class="nav-badge-new">NEW</span></a>
+      <div class="nav-mobile-group">
+        <span class="nav-mobile-group-title">Product</span>
+        <div class="nav-mobile-sub">
+          <a href="shopify-app%28new%29.html">Agentic Page</a>
+          <a href="https://deeplumen.io/" target="_blank" rel="noopener">UCP Java</a>
+        </div>
+      </div>
+      <div class="nav-mobile-group">
+        <span class="nav-mobile-group-title">Industries / Cases</span>
+        <div class="nav-mobile-sub">
+          <a href="industries-cases%20home%26living.html">Home &amp; Living</a>
+          <a href="industries-cases%20electronics.html" class="is-current">Electronics</a>
+          <a href="industries-cases%20health%26beauty.html">Health &amp; Beauty</a>
+          <a href="industries-cases%20fashion%26apparel.html">Fashion &amp; Apparel</a>
+        </div>
+      </div>
+      <div class="nav-mobile-group">
+        <span class="nav-mobile-group-title">Resources</span>
+        <div class="nav-mobile-sub">
+          <a href="https://lumioi.com/blog" target="_blank" rel="noopener">Blog</a>
+          <a href="#cta">SEOWeek</a>
+          <a href="#cta">PR URL</a>
+        </div>
+      </div>
+      <a href="#cta" class="btn-demo-nav" style="width:100%;text-align:center;justify-content:center;">Book a Demo</a>
+      <a href="#cta" class="btn-login-nav" style="width:100%;text-align:center;justify-content:center;">Get Free AI Report</a>
+    </div>
+  </nav>
+
+  <div class="page-frame"></div>
+  <div class="banner-mask"></div>
+
+  <div class="page-wrapper">
+
+    <!-- HERO -->
+    <section class="ic-hero">
+      <h1 class="fade-up">
+        Nullport's 312 SKUs across <em>four AI search engines.</em>
+      </h1>
+      <p class="ic-hero-sub fade-up">
+        How a USB-C accessory brand turned its spec sheets into
+        <em>AI-friendly answers</em> — and lifted AI-attributed sessions by
+        38.4% in thirty days.
+      </p>
+      <div class="ic-hero-meta fade-up">
+        <div class="ic-hero-meta-item">
+          <span class="ic-hero-meta-num">7 days</span>
+          <span class="ic-hero-meta-lbl">From launch to first AI-driven session</span>
+        </div>
+        <div class="ic-hero-meta-item">
+          <span class="ic-hero-meta-num">1,820</span>
+          <span class="ic-hero-meta-lbl">ChatGPT real-time retrievals in 30 days</span>
+        </div>
+        <div class="ic-hero-meta-item">
+          <span class="ic-hero-meta-num">+38.4%</span>
+          <span class="ic-hero-meta-lbl">AI-attributed sessions vs control</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="sec-divider"></div>
+
+    <!-- CONTEXT -->
+    <section class="ic-context">
+      <div class="ic-context-inner">
+        <div class="ic-context-head fade-up">
+          <h2>Electronics buyers shop AI <em>like they read datasheets.</em></h2>
+          <p>
+            Tech shoppers no longer browse — they ask AI to compare. The
+            questions come back in port counts, sustained wattage, host
+            compatibility, monitor support. Generic lifestyle copy doesn't
+            survive that filter. AI assistants only cite a product when its
+            PDP exposes the <em>same facts in machine-readable structure</em>
+            — and most Shopify electronics PDPs hide their specs inside
+            JavaScript tabs, image-only infographics, or unscoped tables that
+            language models can't parse.
+          </p>
+        </div>
+        <div class="ic-context-queries">
+          <div class="ic-context-query fade-up">
+            <span class="ic-context-query-platform">ChatGPT — Apr 2026</span>
+            <span class="ic-context-query-text">"100W USB-C dock with MagSafe passthrough for M2 MacBook Air."</span>
+          </div>
+          <div class="ic-context-query fade-up">
+            <span class="ic-context-query-platform">Perplexity — Apr 2026</span>
+            <span class="ic-context-query-text">"Thunderbolt 4 hub that supports two 4K monitors under $200."</span>
+          </div>
+          <div class="ic-context-query fade-up">
+            <span class="ic-context-query-platform">ChatGPT — Apr 2026</span>
+            <span class="ic-context-query-text">"Best USB-C dock for a video editor with multiple SSD slots."</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="sec-divider"></div>
+
+    <!-- THE CASE -->
+    <section class="ic-case">
+      <div class="ic-case-inner">
+        <header class="ic-case-head fade-up">
+          <h2>
+            Surfacing 312 SKUs across <em>four AI search engines.</em>
+          </h2>
+        </header>
+
+        <div class="ic-case-body">
+          <div class="ic-case-narrative fade-up">
+            <p>
+              Nullport sells USB-C docks, Thunderbolt hubs, and charging
+              accessories — 312 SKUs across Shopify and a headless storefront.
+              Every product page held the facts a tech buyer needed: port
+              count, sustained wattage, host compatibility matrix. The
+              problem was that those facts lived behind a JavaScript-rendered
+              tab system. ChatGPT, Claude, Perplexity, and Gemini couldn't
+              reach them — so when shoppers asked AI for a "100W dock with
+              MagSafe passthrough," Nullport simply wasn't in the answer.
+            </p>
+            <p>
+              Agentic Page mirrored every Nullport PDP into a machine-readable
+              structure organized around the spec attributes that AI buyers
+              actually compare. Average token count per page dropped
+              <strong>79.7%</strong> — the AIs got the answer in fewer tokens,
+              and started surfacing it more often. Within twenty-four hours,
+              the first batch of 286 PDPs had been indexed by ChatGPT and
+              Claude. By <strong>day seven</strong>, the first live ChatGPT
+              conversation triggered a real-time fetch of a Nullport dock page.
+            </p>
+            <p>
+              Over the next three weeks, spec-query clusters started lighting
+              up. The <em>"USB-C dock for Mac"</em> family of questions began
+              consistently citing Nullport. By the end of the thirty-day
+              window, AI-attributed sessions ran <strong>+38.4%</strong> above
+              a matched control group — and the cited-recommendation rate on
+              "100W dock for Mac" hit roughly one in four answers. For the
+              first time, Nullport was reachable through the same surface its
+              buyers were actually using.
+            </p>
+          </div>
+
+          <aside class="ic-case-panel fade-up">
+            <div class="ic-case-panel-head">
+              <span class="ic-case-panel-eyebrow">30-day deployment report</span>
+              <span class="ic-case-panel-title">March 2026</span>
+            </div>
+
+            <div class="ic-case-metrics">
+              <div class="ic-case-metric">
+                <span class="ic-case-metric-num">7 days</span>
+                <span class="ic-case-metric-lbl">From launch to first AI-driven session</span>
+              </div>
+              <div class="ic-case-metric">
+                <span class="ic-case-metric-num">1,820</span>
+                <span class="ic-case-metric-lbl">ChatGPT real-time retrievals <em>(first 30 days)</em></span>
+              </div>
+              <div class="ic-case-metric">
+                <span class="ic-case-metric-num">+38.4%</span>
+                <span class="ic-case-metric-lbl">AI-attributed sessions vs control group</span>
+              </div>
+              <div class="ic-case-metric">
+                <span class="ic-case-metric-num">92.1</span>
+                <span class="ic-case-metric-lbl">AI Visibility Score <em>(100-pt diagnosis)</em></span>
+              </div>
+            </div>
+
+            <div class="ic-case-trend">
+              <svg class="ic-case-trend-svg" viewBox="0 0 400 44" preserveAspectRatio="none" aria-hidden="true">
+                <line class="ic-case-trend-base" x1="0" y1="43" x2="400" y2="43" stroke-width="1"/>
+                <path class="ic-case-trend-line" pathLength="500"
+                  d="M0,40 C25,37 50,34 75,30 C100,26 125,22 150,19 C175,16 200,14 225,12 C250,10 275,9 300,8 C325,7 350,6 375,5 C385,4 395,4 400,3"/>
+              </svg>
+              <div class="ic-case-trend-foot">
+                <span>Day 1</span>
+                <span>Day 15</span>
+                <span>Day 30 · baseline</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <div class="sec-divider"></div>
+
+    <!-- TIMELINE -->
+    <section class="ic-timeline">
+      <div class="ic-timeline-inner">
+        <div class="ic-timeline-head fade-up">
+          <h2>Thirty days, <em>five turning points.</em></h2>
+          <p>
+            The Nullport deployment followed the same arc every Agentic Page
+            project tends to follow — fast indexing, slower behavior change,
+            then a discrete moment when AI assistants start citing the brand
+            in real conversations.
+          </p>
+        </div>
+        <div class="ic-timeline-list">
+          <div class="ic-timeline-item fade-up">
+            <span class="ic-timeline-day">Day 0</span>
+            <p class="ic-timeline-text">
+              Agentic Page deployed across all 312 Nullport SKUs. Mirror pages
+              restructured around spec attributes: port count, sustained
+              wattage, host compatibility, monitor support.
+            </p>
+          </div>
+          <div class="ic-timeline-item fade-up">
+            <span class="ic-timeline-day">Day 2</span>
+            <p class="ic-timeline-text">
+              <strong>286 of 312 pages</strong> picked up by ChatGPT and Claude
+              indexing systems. Initial knowledge-base ingestion confirms the
+              new structure is machine-readable.
+            </p>
+          </div>
+          <div class="ic-timeline-item fade-up">
+            <span class="ic-timeline-day">Day 7</span>
+            <p class="ic-timeline-text">
+              First <em>ChatGPT real-time retrieval</em> detected. A user asks
+              for a 100W USB-C dock with MagSafe passthrough; ChatGPT fetches
+              a Nullport PDP mid-conversation to construct the answer.
+            </p>
+          </div>
+          <div class="ic-timeline-item fade-up">
+            <span class="ic-timeline-day">Day 14</span>
+            <p class="ic-timeline-text">
+              Spec-query clusters start surfacing Nullport in
+              <em>cited recommendations.</em> The "USB-C dock for Mac" family
+              becomes the most-cited product cluster, with 41% of ChatGPT
+              cited answers in that subset referencing a Nullport page.
+            </p>
+          </div>
+          <div class="ic-timeline-item fade-up">
+            <span class="ic-timeline-day">Day 30</span>
+            <p class="ic-timeline-text">
+              AI-attributed sessions stabilize at <strong>+38.4%</strong> above
+              the matched control group. Average token cost per PDP down
+              <strong>79.7%</strong>. AI Visibility Score reaches
+              <em>92.1 / 100.</em>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="sec-divider"></div>
+
+    <!-- RELATED -->
+    <section class="ic-related">
+      <div class="ic-related-inner">
+        <div class="ic-related-head fade-up">
+          <h2>Other industries, <em>same playbook.</em></h2>
+          <p>
+            Every category has its own buyer language. The mirror structure
+            adapts. See how the pattern plays out across the rest of the
+            DeepLumen portfolio.
+          </p>
+        </div>
+        <div class="ic-related-grid">
+          <a href="industries-cases%20home%26living.html" class="ic-idx-card fade-up">
+            <span class="ic-idx-card-cat">Home &amp; Living</span>
+            <h3>Qbedding</h3>
+            <span class="ic-idx-card-brand">Bedding · Shopify · 167 product pages</span>
+            <div class="ic-idx-card-stat">
+              <span class="ic-idx-card-stat-num">5 days</span>
+              <span class="ic-idx-card-stat-lbl">From launch to active AI retrieval</span>
+            </div>
+            <span class="ic-idx-card-link">Read case →</span>
+          </a>
+
+          <a href="industries-cases%20health%26beauty.html" class="ic-idx-card fade-up">
+            <span class="ic-idx-card-cat">Health &amp; Beauty</span>
+            <h3>Vermille</h3>
+            <span class="ic-idx-card-brand">Clean skincare · 84 SKUs</span>
+            <div class="ic-idx-card-stat">
+              <span class="ic-idx-card-stat-num">4.2&times;</span>
+              <span class="ic-idx-card-stat-lbl">AI traffic vs matched control</span>
+            </div>
+            <span class="ic-idx-card-link">Read case →</span>
+          </a>
+
+          <a href="industries-cases%20fashion%26apparel.html" class="ic-idx-card fade-up">
+            <span class="ic-idx-card-cat">Fashion &amp; Apparel</span>
+            <h3>Atelier Vauclair</h3>
+            <span class="ic-idx-card-brand">Outerwear · 124 seasonal SKUs</span>
+            <div class="ic-idx-card-stat">
+              <span class="ic-idx-card-stat-num">528 / day</span>
+              <span class="ic-idx-card-stat-lbl">AI retrievals at month-end baseline</span>
+            </div>
+            <span class="ic-idx-card-link">Read case →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo">
+            <img src="logo/logocis001.svg" alt="DeepLumen" class="footer-logo-img" />
+          </a>
+          <p class="footer-desc">The AI visibility platform for Shopify brands. Building the infrastructure for agentic commerce — where brands are discovered and recommended by AI agents.</p>
+          <div class="footer-socials">
+            <a href="https://x.com/Deeplumen0922" target="_blank" class="social-icon" aria-label="X">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M9.16 6.77 14.08 1H12.9L8.62 6.01 5.22 1H1.5l5.17 7.52L1.5 15h1.18l4.52-5.25L10.78 15H14.5L9.16 6.77ZM7.79 9.09l-.52-.75L3.1 1.87h1.8l3.37 4.82.52.75 4.37 6.24h-1.8L7.79 9.09Z" fill="rgba(255,255,255,0.6)"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/deeplumen/" target="_blank" class="social-icon" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.5 5.5H5V14H2.5V5.5ZM3.75 4.5A1.25 1.25 0 1 1 3.75 2 1.25 1.25 0 0 1 3.75 4.5Z" fill="rgba(255,255,255,0.6)"/><path d="M6.5 5.5H9V6.7C9.4 6 10.3 5.3 11.6 5.3 14.4 5.3 14.5 7.1 14.5 9.5V14H12V10C12 9 11.9 7.8 10.4 7.8 8.9 7.8 8.5 8.8 8.5 9.8V14H6.5V5.5Z" fill="rgba(255,255,255,0.6)"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-cols">
+          <div class="footer-col">
+            <div class="footer-col-title">Product</div>
+            <a href="shopify-app%28new%29.html">Shopify App</a>
+            <a href="shopify-app%28new%29.html">Agentic Pages</a>
+            <a href="shopify-app%28new%29.html">How It Works</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Resources</div>
+            <a href="https://lumioi.com/blog" target="_blank" rel="noopener">Blog</a>
+            <a href="#">FAQ</a>
+            <a href="industries-cases%20home%26living.html">Case Studies</a>
+            <a href="#">Events</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Company</div>
+            <a href="#cta">Contact Us</a>
+            <a href="#cta">Partner with Us</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">&copy; 2026 DeepLumen. All rights reserved.</span>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var nav = document.querySelector('nav');
+      if (!nav) return;
+      function updateBorder() {
+        nav.style.borderBottomColor = window.scrollY > 10 ? 'rgba(234,234,234,0.6)' : 'transparent';
+      }
+      window.addEventListener('scroll', updateBorder, { passive: true });
+      updateBorder();
+    })();
+    (function () {
+      var els = document.querySelectorAll('.fade-up');
+      if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('is-visible'); }); return; }
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); } });
+      }, { threshold: 0.15 });
+      els.forEach(function (el) { obs.observe(el); });
+    })();
+    (function () {
+      var cases = document.querySelectorAll('.ic-case');
+      if (!('IntersectionObserver' in window)) { cases.forEach(function (c) { c.classList.add('ic-case-trend-go'); }); return; }
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('ic-case-trend-go'); obs.unobserve(e.target); } });
+      }, { threshold: 0.35 });
+      cases.forEach(function (c) { obs.observe(c); });
+    })();
+  </script>
+</body>
+</html>
