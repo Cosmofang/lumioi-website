@@ -1175,22 +1175,13 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; color: var(--te
 .dc-product-img {
   height: 220px;
   border-radius: 12px;
-  background: transparent;
+  background: var(--bg-2);
   position: relative;
   overflow: hidden;
 }
-.dc-product-img::after {
-  content: ''; position: absolute; inset: 30%;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle, rgba(190,142,62,0.4), transparent 70%);
-}
-.dc-product-img::before {
-  content: ''; position: absolute; left: 50%; top: 50%;
-  width: 60px; height: 110px; transform: translate(-50%, -50%);
-  background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(190,142,62,0.5));
-  border-radius: 14px;
-  box-shadow: inset 0 -20px 40px rgba(0,0,0,0.1), 0 8px 24px rgba(0,0,0,0.12);
+.dc-product-img img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
 }
 .dc-pi-brand {
   font-size: 10px; font-weight: 700;
@@ -2342,7 +2333,7 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
     </div>
     <div class="nav-actions">
       <a href="newpage/book-a-demo.html" class="btn-demo-nav">Book a Demo</a>
-      <a href="newpage/book-a-demo.html" class="btn-login-nav">Get Started <span class="btn-arrow-wrap" style="width:18px;height:18px;"><svg width="8" height="8" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a href="https://apps.shopify.com/deeplumen-ai-seo-optimizer?locale=zh-CN" class="btn-login-nav" target="_blank" rel="noopener">Get Started <span class="btn-arrow-wrap" style="width:18px;height:18px;"><svg width="8" height="8" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
     </div>
     <button class="nav-burger" id="nav-burger" aria-label="Menu"
       onclick="(function(){var m=document.getElementById('nav-mobile-menu');var b=document.getElementById('nav-burger');m.classList.toggle('is-open');b.classList.toggle('is-active');})()">
@@ -2376,7 +2367,7 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
       </div>
     </div>
     <a href="newpage/book-a-demo.html" class="btn-demo-nav" style="width:100%;text-align:center;justify-content:center;">Book a Demo</a>
-    <a href="newpage/book-a-demo.html" class="btn-login-nav" style="width:100%;text-align:center;justify-content:center;">Get Started</a>
+    <a href="https://apps.shopify.com/deeplumen-ai-seo-optimizer?locale=zh-CN" class="btn-login-nav" style="width:100%;text-align:center;justify-content:center;" target="_blank" rel="noopener">Get Started</a>
   </div>
 </nav>
 
@@ -2852,9 +2843,9 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
           <span class="vp-line">&lt;<span class="k">meta</span> role=<span class="s">"agent-optimized"</span>&gt;</span>
           <span class="vp-line">&lt;<span class="k">script</span> type=<span class="s">"application/ld+json"</span>&gt;</span>
           <span class="vp-line">  <span class="k">"@type"</span>: <span class="s">"Product"</span>,</span>
-          <span class="vp-line">  <span class="k">"name"</span>: <span class="s">"Vitamin C Serum"</span>,</span>
-          <span class="vp-line">  <span class="k">"price"</span>: <span class="s">"49.00"</span>,</span>
-          <span class="vp-line">  <span class="k">"benefits"</span>: [<span class="s">"antioxidant"</span>, ...]</span>
+          <span class="vp-line">  <span class="k">"name"</span>: <span class="s">"Theta Lilac Purple Pattern Cotton Fitted Sheet"</span>,</span>
+          <span class="vp-line">  <span class="k">"price"</span>: <span class="s">"32.50"</span>,</span>
+          <span class="vp-line">  <span class="k">"materials"</span>: [<span class="s">"cotton"</span>, <span class="s">"200tc"</span>, ...]</span>
           <span class="vp-line">&lt;/<span class="k">script</span>&gt;<span class="vp-cursor"></span></span>
         </div>
         <div class="view-status ok">✓ Full coverage · AI recommends your product confidently</div>
@@ -3006,27 +2997,29 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
           <div class="dc-mockup" id="dcMockup">
             <div class="dc-browser-bar">
               <span class="dc-bdot"></span><span class="dc-bdot"></span><span class="dc-bdot"></span>
-              <div class="dc-url">yourstore.com/products/vitamin-c-serum</div>
+              <div class="dc-url">qbedding.com/products/theta-lilac-purple-pattern-cotton-fitted-sheet</div>
             </div>
             <div class="dc-page-body">
-              <div class="dc-product-img"></div>
+              <div class="dc-product-img">
+                <img src="https://qbedding.com/cdn/shop/products/2X1.5-3767.jpg?v=1677593767&amp;width=1200" alt="Theta Lilac Purple Pattern Cotton Fitted Sheet" loading="lazy" />
+              </div>
               <div class="dc-product-info">
-                <div class="dc-pi-brand">LUMÉ · SKINCARE</div>
-                <h3 class="dc-pi-title">Vitamin C Serum</h3>
+                <div class="dc-pi-brand">QBEDDING · BEDDING</div>
+                <h3 class="dc-pi-title">Theta Lilac Purple Pattern Cotton Fitted Sheet</h3>
                 <div class="dc-pi-rating">
                   <span class="dc-pi-stars">★★★★★</span>
                   <span>4.9 · 1,284 reviews</span>
                 </div>
-                <div class="dc-pi-price">$49.00</div>
-                <div class="dc-pi-desc">Brightening serum with stable vitamin C and ferulic acid for daily glow.</div>
+                <div class="dc-pi-price">$32.50</div>
+                <div class="dc-pi-desc">Lilac purple pattern, 100% cotton, 200 thread count — soft, breathable, elastic-corner fit.</div>
                 <button class="dc-pi-btn" type="button">Add to cart</button>
               </div>
             </div>
             <div class="dc-scan-beam"></div>
             <div class="dc-scan-line"></div>
-            <span class="dc-extract dc-extract-1" id="dcEx1">image_alt: "vitamin c serum"</span>
-            <span class="dc-extract dc-extract-2" id="dcEx2">name: "Vitamin C Serum"</span>
-            <span class="dc-extract dc-extract-3" id="dcEx3">price: 49.00</span>
+            <span class="dc-extract dc-extract-1" id="dcEx1">image_alt: "theta lilac purple fitted sheet"</span>
+            <span class="dc-extract dc-extract-2" id="dcEx2">name: "Theta Lilac Purple Pattern Cotton Fitted Sheet"</span>
+            <span class="dc-extract dc-extract-3" id="dcEx3">price: 32.50</span>
             <span class="dc-extract dc-extract-4" id="dcEx4">rating: 4.9</span>
           </div>
         </div>
@@ -3097,7 +3090,7 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
         Live
       </span>
       <span class="discovery-feed-line" id="dcFeedLine">
-        <span class="tn">[12:04:23]</span>&nbsp;&nbsp;<span class="tk">GPTBot</span>&nbsp;&nbsp;<span class="tg">200</span>&nbsp;&nbsp;<span class="ts">→ /products/vitamin-c-serum</span>
+        <span class="tn">[12:04:23]</span>&nbsp;&nbsp;<span class="tk">GPTBot</span>&nbsp;&nbsp;<span class="tg">200</span>&nbsp;&nbsp;<span class="ts">→ /products/theta-lilac-purple-pattern-cotton-fitted-sheet</span>
       </span>
     </div>
   </div>
@@ -3698,7 +3691,7 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
   var feedLine = document.getElementById('dcFeedLine');
   if (!feedLine) return;
   var feedEntries = [
-    { t: '12:04:23', bot: 'GPTBot',          status: '200', path: '/products/vitamin-c-serum' },
+    { t: '12:04:23', bot: 'GPTBot',          status: '200', path: '/products/theta-lilac-purple-pattern-cotton-fitted-sheet' },
     { t: '12:04:51', bot: 'PerplexityBot',   status: '200', path: '/collections/skincare' },
     { t: '12:05:18', bot: 'ClaudeBot',       status: '200', path: '/products/night-cream' },
     { t: '12:05:42', bot: 'Google-Extended', status: '200', path: '/products/cleanser' },

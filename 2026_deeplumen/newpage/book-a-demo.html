@@ -685,8 +685,7 @@
       <!-- Desktop CTA buttons -->
       <div class="nav-actions">
         <a href="book-a-demo.html" class="btn-demo-nav">Book a Demo</a>
-        <a href="#" target="_blank" rel="noopener" class="btn-login-nav">
-          Get Started
+        <a href="https://apps.shopify.com/deeplumen-ai-seo-optimizer?locale=zh-CN" target="_blank" rel="noopener" class="btn-login-nav">Get Started
           <span class="btn-arrow-wrap">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M2.917 7h8.166M7.583 4.083 10.5 7l-2.917 2.917" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -730,7 +729,7 @@
       </div>
       <div class="nav-mobile-actions">
         <a href="book-a-demo.html" class="btn-demo-nav">Book a Demo</a>
-        <a href="#" target="_blank" rel="noopener" class="btn-login-nav">Get Started</a>
+        <a href="https://apps.shopify.com/deeplumen-ai-seo-optimizer?locale=zh-CN" target="_blank" rel="noopener" class="btn-login-nav">Get Started</a>
       </div>
     </div>
   </nav>
@@ -1146,12 +1145,12 @@
       });
     })();
 
-    // ── Form: open user's mail client pre-filled to contact@deeplumen.io ──
+    // ── Form: POST to deeplumen.com /api/v1/contact (same backend as deeplumen.com/book-a-demo) ──
     const form = document.getElementById('demo-form');
     const status = document.getElementById('form-status');
-    const RECIPIENT = 'contact@deeplumen.io';
+    const API_URL = 'https://www.deeplumen.com/api/v1/contact';
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       // Honeypot — silently drop bots
@@ -1159,6 +1158,8 @@
       if (hp) return;
 
       const btn = form.querySelector('.btn-continue');
+      const origText = btn.textContent;
+
       const fd = new FormData(form);
       const fullName = (fd.get('full_name')   || '').toString().trim();
       const email    = (fd.get('email')       || '').toString().trim();
@@ -1176,37 +1177,41 @@
         return;
       }
 
-      const subject = '[Demo Request] ' + company + ' — ' + fullName;
-      const bodyLines = [
-        'Hi DeepLumen team,',
-        '',
-        "I'd like to book a demo. Here are my details:",
-        '',
-        'Full name:      ' + fullName,
-        'Work email:     ' + email,
-        'Company:        ' + company,
-        'Company size:   ' + size,
-        'Preferred date: ' + (date || '(any)'),
-        'Agency:         ' + (isAgency ? 'Yes' : 'No'),
-        '',
-        'Thanks!',
-      ];
-      const mailto = 'mailto:' + RECIPIENT
-        + '?subject=' + encodeURIComponent(subject)
-        + '&body='   + encodeURIComponent(bodyLines.join('\n'));
-
-      btn.textContent = 'Opening your email…';
+      btn.textContent = 'Submitting…';
       btn.disabled = true;
-      if (status) status.textContent = 'Your email app should open — please click Send to finish the request.';
+      if (status) status.textContent = '';
 
-      // Trigger the mail client. Most browsers handle this synchronously.
-      window.location.href = mailto;
+      const payload = {
+        name:         fullName,
+        email:        email,
+        company:      company,
+        company_size: size,
+        requirements: '',
+        is_agency:    isAgency,
+        type:         'book',
+        book_date:    date ? new Date(date).toISOString() : new Date().toISOString(),
+      };
 
-      // Re-enable button after a short delay in case the user wants to retry
-      setTimeout(() => {
-        btn.textContent = 'Continue';
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const body = await res.json().catch(() => ({}));
+        if (!res.ok || body.error) {
+          throw new Error(body.error || ('http ' + res.status));
+        }
+        btn.textContent = 'Request received!';
+        btn.style.background = 'var(--accent)';
+        if (status) status.textContent = body.message || "Thanks — we'll be in touch shortly.";
+      } catch (err) {
+        console.error('Book-a-Demo submit failed', err);
+        btn.textContent = origText;
         btn.disabled = false;
-      }, 2500);
+        btn.style.background = '';
+        if (status) status.textContent = "Couldn't send right now. Please try again, or email contact@deeplumen.io directly.";
+      }
     });
   </script>
 </body>

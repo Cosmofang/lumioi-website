@@ -1310,8 +1310,9 @@
       transition: background-color 0.3s ease; white-space: nowrap;
     }
     .cta-submit:hover { background: var(--text-dark); }
-    .cta-note { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
-    .cta-perks { display: flex; justify-content: center; gap: 32px; margin-top: 20px; flex-wrap: wrap; }
+    .cta-actions { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 4px; }
+    .cta-note { font-size: 13px; color: var(--text-muted); margin-top: 0; }
+    .cta-perks { display: flex; justify-content: center; gap: 32px; margin-top: 0; flex-wrap: wrap; }
     .cta-perk { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-body); }
     .cta-perk-icon { color: var(--accent); font-weight: 700; }
     /* Green-circle check (matches shopify "Ready to be discovered?" style) */
@@ -1327,7 +1328,7 @@
       background: var(--surface-card); border: 1px solid var(--accent); border-radius: 12px;
       color: var(--accent-warm); font-weight: 500; font-size: 15px; max-width: 520px; margin: 0 auto;
     }
-    .cta-contact { display: flex; align-items: center; gap: 10px; font-size: 14px; margin-top: 8px; }
+    .cta-contact { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 14px; margin-top: 0; }
     .cta-contact-lbl { color: var(--text-muted); }
     .cta-contact-email { color: var(--accent); font-weight: 500; transition: color 0.3s ease; }
     .cta-contact-email:hover { color: var(--accent-warm); }
@@ -3013,7 +3014,7 @@
     </div>
     <div class="nav-actions">
       <a href="newpage/book-a-demo.html" class="btn-demo-nav">Book a Demo</a>
-      <a href="newpage/book-a-demo.html" class="btn-login-nav">Get Started <span class="btn-arrow-wrap" style="width:18px;height:18px;"><svg width="8" height="8" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a href="https://apps.shopify.com/deeplumen-ai-seo-optimizer?locale=zh-CN" class="btn-login-nav" target="_blank" rel="noopener">Get Started <span class="btn-arrow-wrap" style="width:18px;height:18px;"><svg width="8" height="8" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
     </div>
     <button class="nav-burger" id="nav-burger" aria-label="Menu"
       onclick="(function(){var m=document.getElementById('nav-mobile-menu');var b=document.getElementById('nav-burger');m.classList.toggle('is-open');b.classList.toggle('is-active');})()">
@@ -3047,7 +3048,7 @@
       </div>
     </div>
     <a href="newpage/book-a-demo.html" class="btn-demo-nav" style="width:100%;text-align:center;justify-content:center;">Book a Demo</a>
-    <a href="newpage/book-a-demo.html" class="btn-login-nav" style="width:100%;text-align:center;justify-content:center;">Get Started</a>
+    <a href="https://apps.shopify.com/deeplumen-ai-seo-optimizer?locale=zh-CN" class="btn-login-nav" style="width:100%;text-align:center;justify-content:center;" target="_blank" rel="noopener">Get Started</a>
   </div>
 </nav>
 
@@ -3072,7 +3073,7 @@
         </p>
       </div>
       <div class="hero-actions">
-        <a href="#cta" class="btn-primary btn-letter-anim">Get Free AI Report <span class="btn-arrow-wrap"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a href="https://apps.shopify.com/deeplumen-ai-seo-optimizer?locale=zh-CN" class="btn-primary btn-letter-anim" target="_blank" rel="noopener">Get Started <span class="btn-arrow-wrap"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
         <a href="newpage/book-a-demo.html" class="btn-ghost btn-letter-anim">Book a Demo</a>
       </div>
       <div class="hero-stats">
@@ -3502,10 +3503,6 @@
         </div>
         <p>Install from the Shopify App Store and automatically transform every product page into an AI-readable Agentic Page. No code. No migration. Your store becomes AI-visible in 15 minutes.</p>
         <div class="product-cta-row">
-          <a class="product-link" href="#cta">
-            Get Free AI Score
-            <svg width="12" height="12" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
           <a class="product-link" href="shopify-app%28new%29.html">
             Shopify App
             <svg width="12" height="12" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -4092,21 +4089,21 @@
     <p class="body-text" style="text-align:center;margin:0 auto;">
       Install from the Shopify App Store. Early access, priority onboarding, and white-glove specialist support.
     </p>
-    <div style="margin-top: 4px;">
+    <div class="cta-actions">
       <a href="https://apps.shopify.com/deeplumen-ai-seo-optimizer" target="_blank" rel="noopener" class="btn-primary" style="padding: 14px 28px; font-size: 15px;">
         Install Now
         <span class="btn-arrow-wrap"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.917 7h8.166M7.583 4.083 10.5 7l-2.917 2.917" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       </a>
-    </div>
-    <div class="cta-note">No credit card required · Setup in 15 minutes · We respect your inbox</div>
-    <div class="cta-perks">
-      <div class="cta-perk"><span class="cta-perk-icon cta-perk-icon--check">&#10003;</span> Built for Shopify</div>
-      <div class="cta-perk"><span class="cta-perk-icon cta-perk-icon--check">&#10003;</span> Free AI visibility audit</div>
-      <div class="cta-perk"><span class="cta-perk-icon cta-perk-icon--check">&#10003;</span> Direct founder access</div>
-    </div>
-    <div class="cta-contact">
-      <span class="cta-contact-lbl">Contact us at</span>
-      <a href="mailto:contact@deeplumen.com" class="cta-contact-email">contact@deeplumen.com</a>
+      <div class="cta-note">No credit card required · Setup in 15 minutes · We respect your inbox</div>
+      <div class="cta-perks">
+        <div class="cta-perk"><span class="cta-perk-icon cta-perk-icon--check">&#10003;</span> Built for Shopify</div>
+        <div class="cta-perk"><span class="cta-perk-icon cta-perk-icon--check">&#10003;</span> Free AI visibility audit</div>
+        <div class="cta-perk"><span class="cta-perk-icon cta-perk-icon--check">&#10003;</span> Direct founder access</div>
+      </div>
+      <div class="cta-contact">
+        <span class="cta-contact-lbl">Contact us at</span>
+        <a href="mailto:contact@deeplumen.com" class="cta-contact-email">contact@deeplumen.com</a>
+      </div>
     </div>
   </div>
 </section>
