@@ -1175,9 +1175,7 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; color: var(--te
 .dc-product-img {
   height: 220px;
   border-radius: 12px;
-  background:
-    radial-gradient(circle at 35% 30%, rgba(255,255,255,0.55), transparent 60%),
-    linear-gradient(135deg, var(--accent-soft), #d8c8a8);
+  background: transparent;
   position: relative;
   overflow: hidden;
 }
@@ -1589,12 +1587,23 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; color: var(--te
   gap: 24px;
   align-items: center;
   padding: 24px 28px;
-  background: var(--surface-card);
-  border: 1px solid var(--stroke-soft);
+  background: rgba(255, 252, 246, 0.58);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.72);
   border-radius: 16px;
-  transition: border-color 0.3s, transform 0.3s;
+  box-shadow:
+    0 8px 24px rgba(33,29,29,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.85);
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
-.why-row:hover { border-color: var(--accent); transform: translateY(-1px); }
+.why-row:hover {
+  border-color: rgba(190,142,62,0.55);
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 40px rgba(190,142,62,0.10),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+}
 .why-row-idx {
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px; font-weight: 600;
@@ -2257,7 +2266,6 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
 .hf-hub,
 .app-store-card,
 .chat-mock,
-.dc-stage,
 .pipe-card,
 .pricing-card,
 .story-panel,
@@ -2333,7 +2341,7 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
       </div>
     </div>
     <div class="nav-actions">
-      <a href="index.html#cta" class="btn-demo-nav">Book a Demo</a>
+      <a href="newpage/book-a-demo.html" class="btn-demo-nav">Book a Demo</a>
       <a href="newpage/book-a-demo.html" class="btn-login-nav">Get Started <span class="btn-arrow-wrap" style="width:18px;height:18px;"><svg width="8" height="8" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
     </div>
     <button class="nav-burger" id="nav-burger" aria-label="Menu"
@@ -2367,7 +2375,7 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
         <a href="index.html#cta">PR URL</a>
       </div>
     </div>
-    <a href="index.html#cta" class="btn-demo-nav" style="width:100%;text-align:center;justify-content:center;">Book a Demo</a>
+    <a href="newpage/book-a-demo.html" class="btn-demo-nav" style="width:100%;text-align:center;justify-content:center;">Book a Demo</a>
     <a href="newpage/book-a-demo.html" class="btn-login-nav" style="width:100%;text-align:center;justify-content:center;">Get Started</a>
   </div>
 </nav>
@@ -2426,7 +2434,7 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
           <div class="hf-hub">
             <div class="hf-hub-head">
               <div class="hf-hub-icon">
-                <img src="logo/shopify-app-icon.png" alt="Deeplumen" />
+                <img src="logo/deeplumen01.svg" alt="Deeplumen" />
               </div>
               <div>
                 <div class="hf-hub-name">Deeplumen</div>
@@ -2711,7 +2719,16 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
                 <!-- Front: standard store layout -->
                 <div class="fc1-webcard fc1-wc fc1-wcf">
                   <div class="fc1-wcbar"><span class="fc1-wcdot"></span><span class="fc1-wcdot"></span><span class="fc1-wcdot"></span><span class="fc1-wcurl"></span></div>
-                  <div class="fc1-wcbody"><div class="fc1-wchero" style="background:url('https://qbedding.com/cdn/shop/files/Gentle_Green_TENCEL__Fitted_Sheet.jpg?v=1773944954&width=700') center/cover no-repeat var(--bg-2);"></div><div class="fc1-wcl"></div><div class="fc1-wcl s"></div><div class="fc1-wcl"></div><div class="fc1-wcl xs"></div><div class="fc1-wcbtn"></div></div>
+                  <div class="fc1-wcbody">
+                    <div class="fc1-wchero" style="background:url('https://qbedding.com/cdn/shop/files/Mousse_Brown_Premium_Cotton_Fitted_Sheet.jpg?v=1773859227&width=700') center/cover no-repeat var(--bg-2);"></div>
+                    <div style="font-size:10px;font-weight:700;color:var(--text-dark);line-height:1.3;margin-top:2px;">Mousse Brown Premium Cotton Fitted Sheet</div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:3px;">
+                      <span style="font-size:12px;font-weight:700;color:var(--text-dark);">$45.50</span>
+                      <span style="font-size:9px;color:#be8e3e;font-weight:600;">★★★★★ <span style="color:#8c8884;">4.9</span></span>
+                    </div>
+                    <div style="font-size:8.5px;color:#8c8884;line-height:1.4;margin-top:2px;">100% long staple cotton · 330TC sateen · cooling finish</div>
+                    <div class="fc1-wcbtn" style="margin-top:6px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;letter-spacing:0.04em;">Buy Now</div>
+                  </div>
                 </div>
                 <div class="fc1-col-top bad">~18,000 tokens &nbsp;·&nbsp; Hard for AI to read</div>
               </div>
@@ -2738,7 +2755,7 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
             <div class="fc1-side">
               <div class="fc1-agstack">
                 <div class="fc1-terminal fc1-acb">
-                  <div class="fc1-term-bar"><span class="fc1-term-title">agentic-page.json</span></div>
+                  <div class="fc1-term-bar"><span class="fc1-tdot td-r"></span><span class="fc1-tdot td-y"></span><span class="fc1-tdot td-g"></span><span class="fc1-term-title">agentic-page.json</span></div>
                   <div class="fc1-term-body">
                     <div class="fc1-tl"><span class="tp">{</span></div>
                     <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"name"</span><span class="tp">: </span><span class="ts">"Classic Hoodie"</span><span class="tp">,</span></div>
@@ -2751,7 +2768,7 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
                   </div>
                 </div>
                 <div class="fc1-terminal fc1-acm">
-                  <div class="fc1-term-bar"><span class="fc1-term-title">agentic-page.json</span></div>
+                  <div class="fc1-term-bar"><span class="fc1-tdot td-r"></span><span class="fc1-tdot td-y"></span><span class="fc1-tdot td-g"></span><span class="fc1-term-title">agentic-page.json</span></div>
                   <div class="fc1-term-body">
                     <div class="fc1-tl"><span class="tp">{</span></div>
                     <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"name"</span><span class="tp">: </span><span class="ts">"Air Sneaker"</span><span class="tp">,</span></div>
@@ -2766,6 +2783,9 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
                 </div>
                 <div class="fc1-terminal fc1-acf">
                   <div class="fc1-term-bar">
+                    <span class="fc1-tdot td-r"></span>
+                    <span class="fc1-tdot td-y"></span>
+                    <span class="fc1-tdot td-g"></span>
                     <span class="fc1-term-title">agentic-page.json</span>
                   </div>
                   <div class="fc1-term-body">

@@ -45,12 +45,18 @@
    ============================================ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; background: var(--bg); }
 
 body {
   font-family: var(--font-body);
   color: var(--text-body);
-  background: var(--bg);
+  background:
+    url('../neura-nova-assets/Hero_Bg_01.webp'),
+    var(--bg);
+  background-attachment: fixed, fixed;
+  background-size: cover, auto;
+  background-position: center top, center top;
+  background-repeat: no-repeat, no-repeat;
   font-size: 16px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
@@ -747,47 +753,35 @@ h3 { font-family: var(--font-heading); }
    ============================================ */
 footer {
   background: #48443d;
-  padding: 60px 80px 32px;
-  color: rgba(255,255,255,0.6);
-  z-index: 10000; position: relative;
+  color: #fff; padding: 0; position: relative; z-index: 10000;
 }
-.footer-inner {
-  max-width: 1190px; margin: 0 auto;
-  display: flex; justify-content: space-between;
-  align-items: flex-start; gap: 40px;
+.footer-inner { max-width: 1440px; width: 100%; margin: 0 auto; padding: 60px 80px 0; }
+.footer-top { display: flex; justify-content: space-between; gap: 32px; padding-bottom: 40px; }
+.footer-brand { display: flex; flex-direction: column; gap: 18px; max-width: 460px; }
+.footer-logo { display: flex; align-items: center; text-decoration: none; }
+.footer-logo-img { height: 40px; width: auto; display: block; filter: brightness(0) invert(1); }
+.footer-desc { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7; }
+.footer-socials { display: flex; gap: 10px; }
+.social-icon {
+  width: 36px; height: 36px; background: rgba(255,255,255,0.08);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; text-decoration: none;
+  transition: background-color 0.3s ease;
 }
-.footer-brand {
-  font-family: var(--font-heading);
-  font-size: 20px; font-weight: 600;
-  color: #fff; margin-bottom: 12px;
-}
-.footer-brand span { color: var(--accent); }
-.footer-desc {
-  font-size: 13px; color: rgba(255,255,255,0.55);
-  line-height: 1.65; max-width: 280px;
-}
-.footer-cols { display: flex; gap: 48px; }
-.footer-col h4 {
-  font-size: 12px; font-weight: 600;
-  color: rgba(255,255,255,0.4);
-  letter-spacing: 0.08em; text-transform: uppercase;
-  margin-bottom: 14px;
-}
-.footer-col a {
-  display: block; font-size: 13px;
-  color: rgba(255,255,255,0.6);
-  margin-bottom: 8px;
-  transition: color 0.3s ease;
-}
-.footer-col a:hover { color: #fff; }
-
+.social-icon:hover { background: rgba(255,255,255,0.15); }
+.footer-cols { display: flex; gap: 72px; }
+.footer-col { display: flex; flex-direction: column; gap: 12px; }
+.footer-col-title { font-family: var(--font-heading); font-size: 16px; font-weight: 500; color: #fff; margin-bottom: 6px; letter-spacing: -0.1px; }
+.footer-col a { font-size: 14px; color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.3s ease; }
+.footer-col a:hover { color: var(--accent-soft); }
 .footer-bottom {
-  max-width: 1190px; margin: 40px auto 0;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  display: flex; justify-content: space-between;
-  font-size: 12px; color: rgba(255,255,255,0.4);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 32px;
 }
+.footer-copy { font-size: 13px; color: rgba(255,255,255,0.4); }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { font-size: 13px; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.3s ease; }
+.footer-links a:hover { color: rgba(255,255,255,0.7); }
 
 /* ============================================
    ANIMATIONS
@@ -1315,39 +1309,50 @@ footer {
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div>
-      <div class="footer-brand">Deep<span>Lumen</span></div>
-      <p class="footer-desc">AI visibility intelligence for brands that refuse to be invisible.</p>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="../index.html" class="footer-logo">
+        <img src="../logo/logocis001.svg" alt="DeepLumen" class="footer-logo-img" />
+      </a>
+      <p class="footer-desc">Deeplumen is an AI-first technology company focused on the intersection of AI agents and agentic commerce. As the pioneers of the M2AI framework, Deeplumen builds the protocols and infrastructure that allow brands to thrive in the agentic economy.</p>
+      <div class="footer-socials">
+        <a href="https://x.com/Deeplumen0922" target="_blank" class="social-icon" aria-label="X">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M9.16 6.77 14.08 1H12.9L8.62 6.01 5.22 1H1.5l5.17 7.52L1.5 15h1.18l4.52-5.25L10.78 15H14.5L9.16 6.77ZM7.79 9.09l-.52-.75L3.1 1.87h1.8l3.37 4.82.52.75 4.37 6.24h-1.8L7.79 9.09Z" fill="rgba(255,255,255,0.6)"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/deeplumen/" target="_blank" class="social-icon" aria-label="LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.5 5.5H5V14H2.5V5.5ZM3.75 4.5A1.25 1.25 0 1 1 3.75 2 1.25 1.25 0 0 1 3.75 4.5Z" fill="rgba(255,255,255,0.6)"/><path d="M6.5 5.5H9V6.7C9.4 6 10.3 5.3 11.6 5.3 14.4 5.3 14.5 7.1 14.5 9.5V14H12V10C12 9 11.9 7.8 10.4 7.8 8.9 7.8 8.5 8.8 8.5 9.8V14H6.5V5.5Z" fill="rgba(255,255,255,0.6)"/></svg>
+        </a>
+      </div>
     </div>
     <div class="footer-cols">
       <div class="footer-col">
-        <h4>Product</h4>
-        <a href="#">AI Visibility Audit</a>
-        <a href="#">Brand Monitor</a>
-        <a href="#">GEO Analytics</a>
-        <a href="#">Agent Readiness</a>
+        <div class="footer-col-title">Product</div>
+        <a href="../shopify-app%28new%29.html">Shopify App</a>
+        <a href="../shopify-app%28new%29.html">Agentic Page</a>
+        <a href="https://deeplumen.io/" target="_blank" rel="noopener">UCP Java</a>
       </div>
       <div class="footer-col">
-        <h4>Resources</h4>
-        <a href="#">Documentation</a>
-        <a href="#">Blog</a>
-        <a href="#">Case Studies</a>
-        <a href="#">SEO Week Report</a>
+        <div class="footer-col-title">Cases</div>
+        <a href="industries-cases%20home%26living.html">Home &amp; Living</a>
+        <a href="industries-cases%20electronics.html">Electronics</a>
+        <a href="industries-cases%20health%26beauty.html">Health &amp; Beauty</a>
+        <a href="industries-cases%20fashion%26apparel.html">Fashion &amp; Apparel</a>
       </div>
       <div class="footer-col">
-        <h4>Company</h4>
-        <a href="#">About Us</a>
-        <a href="#">Contact</a>
-        <a href="#">Careers</a>
+        <div class="footer-col-title">Resources</div>
+        <a href="https://lumioi.com/blog" target="_blank" rel="noopener">Blog</a>
+        <a href="SEOWeek_agenda.html">SEOWeek</a>
+        <a href="../index.html#cta">PR URL</a>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>&copy; 2026 DeepLumen. All rights reserved.</span>
-    <span>
-      <a href="#" style="color:rgba(255,255,255,0.5);">Privacy</a> &middot;
-      <a href="#" style="color:rgba(255,255,255,0.5);">Terms</a>
-    </span>
+    <span class="footer-copy">&copy; 2026 DeepLumen. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
   </div>
 </footer>
 

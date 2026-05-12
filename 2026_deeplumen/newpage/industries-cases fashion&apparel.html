@@ -36,15 +36,17 @@
 
     /* 2. BASE */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; background: var(--bg); }
     body {
       font-family: var(--font-body); font-size: 16px; line-height: 1.65;
       color: var(--text-body);
       background:
-        linear-gradient(180deg, rgba(254,250,243,0.6), rgba(254,250,243,0.95)),
-        var(--bg-linen-1) center top / cover no-repeat,
+        var(--bg-linen-1),
         var(--bg);
-      background-attachment: fixed;
+      background-attachment: fixed, fixed;
+      background-size: cover, auto;
+      background-position: center top, center top;
+      background-repeat: no-repeat, no-repeat;
       -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
     }
     a { color: inherit; text-decoration: none; }
@@ -571,7 +573,7 @@
         </div>
       </div>
       <div class="nav-actions">
-        <a href="#cta" class="btn-demo-nav">Book a Demo</a>
+        <a href="book-a-demo.html" class="btn-demo-nav">Book a Demo</a>
         <a href="book-a-demo.html" class="btn-login-nav">Get Started <span class="btn-arrow-wrap"><svg width="8" height="8" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
       </div>
       <button class="nav-burger" id="nav-burger" aria-label="Menu"
@@ -605,7 +607,7 @@
           <a href="#cta">PR URL</a>
         </div>
       </div>
-      <a href="#cta" class="btn-demo-nav" style="width:100%;text-align:center;justify-content:center;">Book a Demo</a>
+      <a href="book-a-demo.html" class="btn-demo-nav" style="width:100%;text-align:center;justify-content:center;">Book a Demo</a>
       <a href="book-a-demo.html" class="btn-login-nav" style="width:100%;text-align:center;justify-content:center;">Get Started</a>
     </div>
   </nav>
@@ -901,22 +903,21 @@
           <div class="footer-col">
             <div class="footer-col-title">Product</div>
             <a href="../shopify-app%28new%29.html">Shopify App</a>
-            <a href="../shopify-app%28new%29.html">Agentic Pages</a>
-            <a href="../shopify-app%28new%29.html">How It Works</a>
+            <a href="../shopify-app%28new%29.html">Agentic Page</a>
+            <a href="https://deeplumen.io/" target="_blank" rel="noopener">UCP Java</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Cases</div>
+            <a href="industries-cases%20home%26living.html">Home &amp; Living</a>
+            <a href="industries-cases%20electronics.html">Electronics</a>
+            <a href="industries-cases%20health%26beauty.html">Health &amp; Beauty</a>
+            <a href="industries-cases%20fashion%26apparel.html">Fashion &amp; Apparel</a>
           </div>
           <div class="footer-col">
             <div class="footer-col-title">Resources</div>
             <a href="https://lumioi.com/blog" target="_blank" rel="noopener">Blog</a>
-            <a href="#">FAQ</a>
-            <a href="industries-cases%20home%26living.html">Case Studies</a>
-            <a href="#">Events</a>
-          </div>
-          <div class="footer-col">
-            <div class="footer-col-title">Company</div>
-            <a href="#cta">Contact Us</a>
-            <a href="#cta">Partner with Us</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms</a>
+            <a href="SEOWeek_agenda.html">SEOWeek</a>
+            <a href="../index.html#cta">PR URL</a>
           </div>
         </div>
       </div>
