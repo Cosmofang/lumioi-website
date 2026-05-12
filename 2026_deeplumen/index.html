@@ -2498,4 +2498,1412 @@
   .search-mock-bar {
     display: flex;
     align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.55);
+    border-radius: 8px;
+    padding: 6px 8px;
+    margin-bottom: 9px;
+    border: 1px solid rgba(255,255,255,0.7);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+  }
+  .search-mock-bar.ai {
+    background: rgba(255,255,255,0.5);
+    border-color: rgba(255,255,255,0.65);
+  }
+  .ai-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--brand-grad);
+    flex-shrink: 0;
+    box-shadow: 0 0 5px rgba(240,134,63,0.5);
+  }
+  .search-mock-query {
+    font-size: 9.5px;
+    color: var(--text-body);
+    line-height: 1.3;
+  }
+  .search-mock-query.ai { color: var(--text-dark); font-weight: 500; }
+  .search-mock-results { display: flex; flex-direction: column; gap: 3px; }
+  .smr-item {
+    font-size: 10px;
+    padding: 3px 6px;
+    border-radius: 5px;
+  }
+  .smr-dim {
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(255,255,255,0.65);
+    color: var(--text-muted);
+  }
+  .smr-fade {
+    color: var(--text-faint);
+    font-style: italic;
+    font-size: 9.5px;
+    padding-left: 6px;
+  }
+  .smr-ai {
+    background: rgba(190,142,62,0.08);
+    color: var(--accent-warm);
+    font-weight: 500;
+  }
+  .smr-ai-shine {
+    font-size: 9.5px;
+    color: var(--accent);
+    font-style: italic;
+    padding-left: 6px;
+  }
+
+  /* ── Result chips with tick animation ───────────────── */
+  .result-chips-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding: 4px 0 2px;
+  }
+  .result-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #5d4fc7;
+    background: rgba(124,106,247,0.08);
+    border: 1px solid rgba(124,106,247,0.2);
+    border-radius: 20px;
+    padding: 3px 9px 3px 5px;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.38s cubic-bezier(0.22,1,0.36,1), transform 0.38s cubic-bezier(0.22,1,0.36,1);
+  }
+  .result-chip.chip-on {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .rc-tick {
+    stroke-dasharray: 12;
+    stroke-dashoffset: 12;
+    transition: stroke-dashoffset 0.3s ease-out;
+  }
+  .result-chip.chip-on .rc-tick { stroke-dashoffset: 0; }
+  /* typewriter cursor */
+  .tw-cursor {
+    display: inline-block;
+    color: #7c6af7;
+    font-weight: 300;
+    animation: twBlink 0.8s step-end infinite;
+    margin-left: 1px;
+  }
+  @keyframes twBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* ── Agent Card (AI-Powered Search) ─────────────────── */
+  .agent-card {
+    width: 100%;
+    border-radius: 16px;
+    padding: 12px 14px 14px;
+    background: rgba(248,248,252,0.32);
+    border: 1px solid rgba(255,255,255,0.6);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    box-shadow: 0 4px 28px rgba(80,80,180,0.09), 0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.85);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow: visible;
+  }
+  /* carousel inside agent card — breaks out left/right */
+  .agent-carousel-break {
+    margin: 4px -60px !important;
+    width: calc(100% + 120px) !important;
+    height: 300px !important;
+  }
+  .agent-card-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #7c6af7;
+  }
+  .agent-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .agent-logos-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .agent-logo-wm {
+    width: 18px;
+    height: 18px;
+    opacity: 0.15;
+    filter: grayscale(1);
+    flex-shrink: 0;
+    transition: opacity 0.4s ease, filter 0.4s ease;
+    animation: logoLight 4s ease-in-out infinite;
+  }
+  .alm-1 { animation-delay: 0.0s; }
+  .alm-2 { animation-delay: 0.6s; }
+  .alm-3 { animation-delay: 1.2s; }
+  .alm-4 { animation-delay: 1.8s; }
+  @keyframes logoLight {
+    0%,  18% { opacity: 0.13; filter: grayscale(1); }
+    25%, 40%  { opacity: 0.9;  filter: grayscale(0) drop-shadow(0 0 4px currentColor); }
+    50%, 100% { opacity: 0.13; filter: grayscale(1); }
+  }
+  .agent-bubble-wrap { display: flex; justify-content: flex-end; }
+  .agent-bubble-user {
+    background: rgba(255,255,255,0.65);
+    border: 1px solid rgba(255,255,255,0.75);
+    box-shadow: 0 2px 8px rgba(80,80,180,0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+    border-radius: 10px 10px 3px 10px;
+    font-size: 9.5px;
+    color: var(--text-dark);
+    padding: 5px 9px;
+    max-width: 90%;
+    line-height: 1.4;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .agent-reply {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .agent-reply-icon {
+    width: 16px; height: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .agent-reply-lines {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .agent-chip {
+    display: inline-block;
+    font-size: 9.5px;
+    font-weight: 500;
+    color: #5d4fc7;
+    background: rgba(124,106,247,0.09);
+    border: 1px solid rgba(124,106,247,0.18);
+    border-radius: 6px;
+    padding: 2px 7px;
+  }
+  /* Rainbow input */
+  .agent-input-wrap {
+    position: relative;
+    border-radius: 10px;
+    padding: 1px;
+    background: conic-gradient(
+      from 180deg at 50% 50%,
+      rgba(147,197,253,0.55) 0deg,
+      rgba(196,181,253,0.5) 72deg,
+      rgba(252,211,77,0.3)  144deg,
+      rgba(134,239,172,0.4) 216deg,
+      rgba(248,113,113,0.3) 288deg,
+      rgba(147,197,253,0.55) 360deg
+    );
+    animation: shadowDrift 6s ease-in-out infinite;
+  }
+  @keyframes shadowDrift {
+    0%, 100% {
+      box-shadow:
+        -8px  2px 22px rgba(147,197,253,0.35),
+         6px  6px 18px rgba(196,181,253,0.22),
+         0px  8px 28px rgba(134,239,172,0.15);
+    }
+    33% {
+      box-shadow:
+         8px -4px 22px rgba(196,181,253,0.32),
+        -4px  8px 18px rgba(248,113,113,0.18),
+         2px -6px 28px rgba(252,211,77,0.15);
+    }
+    66% {
+      box-shadow:
+         4px  8px 22px rgba(134,239,172,0.28),
+        -8px -2px 18px rgba(147,197,253,0.25),
+         6px -4px 28px rgba(196,181,253,0.18);
+    }
+  }
+  .agent-input-box {
+    background: rgba(255,255,255,0.72);
+    border-radius: 9px;
+    padding: 12px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .agent-input-text {
+    font-size: 11.5px;
+    color: var(--text-body);
+    flex: 1;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .agent-input-logo {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    opacity: 0.85;
+  }
+  .agent-input-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .agent-icon { opacity: 0.55; }
+  .agent-send-btn {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#7c6af7,#60a5fa);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ── Shopping Card Carousel ─────────────────────────── */
+  .sc-wrap {
+    position: relative;
+    width: 100%;
+    height: 480px;
+    perspective: 1200px;
+  }
+  .sc-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .sc-card {
+    position: absolute;
+    width: 248px;
+    background: var(--surface-card);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(33,30,29,0.09), 0 1px 4px rgba(33,30,29,0.05);
+    overflow: hidden;
+    transition:
+      transform 0.7s cubic-bezier(0.22,1,0.36,1),
+      filter   0.7s cubic-bezier(0.22,1,0.36,1),
+      opacity  0.7s cubic-bezier(0.22,1,0.36,1),
+      box-shadow 0.5s ease;
+    cursor: pointer;
+    top: 50%;
+    left: 50%;
+    transform-origin: center center;
+    will-change: transform, opacity, filter;
+  }
+  /* Active — sharp, glowing focal point */
+  .sc-card[data-state="active"] {
+    z-index: 3;
+    transform: translate(-50%, -50%) scale(1) rotateY(0deg);
+    animation: scFloat 3.4s ease-in-out infinite;
+    filter: none;
+    box-shadow:
+      0 20px 56px rgba(33,30,29,0.16),
+      0 4px 12px rgba(33,30,29,0.08),
+      0 0 0 2px rgba(190,142,62,0.16),
+      0 0 44px rgba(190,142,62,0.24);
+  }
+  /* Prev — exiting card, soft fade */
+  .sc-card[data-state="prev"] {
+    z-index: 2;
+    transform: translate(calc(-50% - 232px), -47%) scale(0.86) rotateY(14deg);
+    filter: brightness(0.93) blur(2px);
+    animation: scFloat 3.4s ease-in-out 0.6s infinite;
+  }
+  /* Next — incoming card, strong depth-of-field blur */
+  .sc-card[data-state="next"] {
+    z-index: 2;
+    transform: translate(calc(-50% + 232px), -47%) scale(0.86) rotateY(-14deg);
+    filter: brightness(0.82) blur(7px);
+    animation: scFloat 3.4s ease-in-out 1.2s infinite;
+  }
+  /* Prev2 — fading further, heavier blur */
+  .sc-card[data-state="prev2"] {
+    z-index: 1;
+    transform: translate(calc(-50% - 380px), -45%) scale(0.7) rotateY(22deg);
+    filter: brightness(0.78) blur(5px);
+    opacity: 0.6;
+  }
+  /* Next2 — RIGHT-MOST visible card, deepest fog */
+  .sc-card[data-state="next2"] {
+    z-index: 1;
+    transform: translate(calc(-50% + 380px), -45%) scale(0.68) rotateY(-22deg);
+    filter: brightness(0.62) blur(14px);
+    opacity: 0.45;
+  }
+  .sc-card[data-state="hidden-left"] {
+    z-index: 0;
+    transform: translate(calc(-50% - 560px), -45%) scale(0.55) rotateY(30deg);
+    filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .sc-card[data-state="hidden-right"] {
+    z-index: 0;
+    transform: translate(calc(-50% + 560px), -45%) scale(0.55) rotateY(-30deg);
+    filter: blur(20px);
+    opacity: 0;
+    pointer-events: none;
+  }
+  @keyframes scFloat {
+    0%, 100% { margin-top: 0px; }
+    50%       { margin-top: -10px; }
+  }
+  .sc-img-wrap {
+    width: 248px;
+    height: 240px;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sc-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  .sc-card[data-state="active"] .sc-img-wrap img { transform: scale(1.06); }
+  /* Metallic shine sweep — only on active card */
+  .sc-img-wrap::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(120deg,
+      transparent 35%,
+      rgba(255,255,255,0.40) 50%,
+      transparent 65%);
+    transform: translateX(-110%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  .sc-card[data-state="active"] .sc-img-wrap::after {
+    opacity: 1;
+    animation: scShine 5s ease-in-out infinite;
+  }
+  @keyframes scShine {
+    0%, 72%, 100% { transform: translateX(-110%); }
+    86%           { transform: translateX(110%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sc-card { animation: none !important; transition: none; }
+    .sc-img-wrap::after { animation: none; }
+  }
+  .sc-info { padding: 11px 13px 13px; }
+  .sc-brand {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 5px;
+  }
+  .sc-name {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-dark);
+    line-height: 1.35;
+    margin-bottom: 8px;
+    font-family: var(--font-heading);
+  }
+  .sc-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sc-price {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-dark);
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .sc-rating {
+    font-size: 9.5px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .sc-star { color: #f0863f; }
+  .sc-add {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: var(--brand-grad);
+    color: #fff;
+    font-size: 17px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .sc-add:hover { transform: scale(1.13); }
+  .sc-dots  { display: none; }
+  .sc-arrows { display: none; }
+
+  </style>
+</head>
+<body>
+
+<div class="page-frame"></div>
+<div class="banner-mask"></div>
+
+<!-- ── NAV (Kanban: Shopify App | Industries | Pricing | Customers | Resources | About Us) ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="https://lumioi.com/logo/logocis001.svg" alt="DeepLumen" class="nav-logo-img" />
+    </a>
+    <div class="nav-links">
+      <a href="shopify-app%28new%29.html" class="nav-link has-new-badge">Shopify App<span class="nav-badge-new">NEW</span></a>
+      <div class="nav-dropdown">
+        <span class="nav-link">Product</span>
+        <div class="nav-dropdown-menu">
+          <a href="shopify-app%28new%29.html">Agentic Page</a>
+          <a href="https://deeplumen.io/" target="_blank" rel="noopener">UCP Java</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <span class="nav-link">Cases</span>
+        <div class="nav-dropdown-menu">
+          <a href="newpage/industries-cases%20home%26living.html">Home &amp; Living</a>
+          <a href="newpage/industries-cases%20electronics.html">Electronics</a>
+          <a href="newpage/industries-cases%20health%26beauty.html">Health &amp; Beauty</a>
+          <a href="newpage/industries-cases%20fashion%26apparel.html">Fashion &amp; Apparel</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <span class="nav-link">Resources</span>
+        <div class="nav-dropdown-menu">
+          <a href="https://lumioi.com/blog" target="_blank" rel="noopener">Blog</a>
+          <a href="newpage/SEOWeek_agenda.html">SEOWeek</a>
+          <a href="#cta">PR URL</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="#cta" class="btn-demo-nav">Book a Demo</a>
+      <a href="newpage/book-a-demo.html" class="btn-login-nav">Get Started <span class="btn-arrow-wrap" style="width:18px;height:18px;"><svg width="8" height="8" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+    </div>
+    <button class="nav-burger" id="nav-burger" aria-label="Menu"
+      onclick="(function(){var m=document.getElementById('nav-mobile-menu');var b=document.getElementById('nav-burger');m.classList.toggle('is-open');b.classList.toggle('is-active');})()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="shopify-app%28new%29.html" class="nav-link has-new-badge" style="padding:10px 0;border-bottom:1px solid var(--stroke-soft);">Shopify App<span class="nav-badge-new">NEW</span></a>
+    <div class="nav-mobile-group">
+      <span class="nav-mobile-group-title">Product</span>
+      <div class="nav-mobile-sub">
+        <a href="shopify-app%28new%29.html">Agentic Page</a>
+        <a href="https://deeplumen.io/" target="_blank" rel="noopener">UCP Java</a>
+      </div>
+    </div>
+    <div class="nav-mobile-group">
+      <span class="nav-mobile-group-title">Cases</span>
+      <div class="nav-mobile-sub">
+        <a href="newpage/industries-cases%20home%26living.html">Home &amp; Living</a>
+        <a href="newpage/industries-cases%20electronics.html">Electronics</a>
+        <a href="newpage/industries-cases%20health%26beauty.html">Health &amp; Beauty</a>
+        <a href="newpage/industries-cases%20fashion%26apparel.html">Fashion &amp; Apparel</a>
+      </div>
+    </div>
+    <div class="nav-mobile-group">
+      <span class="nav-mobile-group-title">Resources</span>
+      <div class="nav-mobile-sub">
+        <a href="https://lumioi.com/blog" target="_blank" rel="noopener">Blog</a>
+        <a href="newpage/SEOWeek_agenda.html">SEOWeek</a>
+        <a href="#cta">PR URL</a>
+      </div>
+    </div>
+    <a href="#cta" class="btn-demo-nav" style="width:100%;text-align:center;justify-content:center;">Book a Demo</a>
+    <a href="newpage/book-a-demo.html" class="btn-login-nav" style="width:100%;text-align:center;justify-content:center;">Get Started</a>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+
+<!-- ══════════════════════════════════════
+     1. HERO HEADER
+     ══════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-2col">
+    <!-- LEFT: title + sub + buttons + stats -->
+    <div class="hero-left">
+      <div class="hero-content">
+        <div>
+          <div class="hero-h1-dark">Your Next Sales Channel:</div>
+          <div class="hero-h1-gradient">Agentic Commerce.</div>
+        </div>
+        <p class="hero-sub">
+          DeepLumen helps brands win the $200B Agentic Commerce opportunity by transforming
+          traditional e-commerce assets into Marketing-to-AI (M2AI) ready infrastructure —
+          ensuring your brand is natively discoverable by AI agents.
+        </p>
+      </div>
+      <div class="hero-actions">
+        <a href="#cta" class="btn-primary btn-letter-anim">Get Free AI Report <span class="btn-arrow-wrap"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a href="#cta" class="btn-ghost btn-letter-anim">Book a Demo</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><span class="hero-stat-num">100+</span><span class="hero-stat-lbl">Shopify stores</span></div>
+        <div class="hero-stat-div"></div>
+        <div class="hero-stat"><span class="hero-stat-num"><span style="font-family:var(--font-body);font-style:normal;">$</span>240k</span><span class="hero-stat-lbl">AI referrals tracked</span></div>
+        <div class="hero-stat-div"></div>
+        <div class="hero-stat"><span class="hero-stat-num">4.2x</span><span class="hero-stat-lbl">avg AI traffic lift</span></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: phone mockup + floating product cards -->
+    <div class="hero-right">
+      <div class="hero-phone-scene fade-up" id="heroPhoneScene">
+        <div class="hero-phone-stage" id="heroPhoneStage">
+        <!-- decorative sparkles (heart outlines) -->
+        <span class="float-spark fs-1" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-4.35-9.5-9C1.5 10 1.5 7 4 5.5S9 5 12 8c3-3 5.5-3 8-2.5S22.5 10 21.5 12C19 16.65 12 21 12 21z"/></svg>
+        </span>
+        <span class="float-spark fs-2" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-4.35-9.5-9C1.5 10 1.5 7 4 5.5S9 5 12 8c3-3 5.5-3 8-2.5S22.5 10 21.5 12C19 16.65 12 21 12 21z"/></svg>
+        </span>
+        <span class="float-spark fs-3" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-4.35-9.5-9C1.5 10 1.5 7 4 5.5S9 5 12 8c3-3 5.5-3 8-2.5S22.5 10 21.5 12C19 16.65 12 21 12 21z"/></svg>
+        </span>
+        <span class="float-spark fs-4" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-4.35-9.5-9C1.5 10 1.5 7 4 5.5S9 5 12 8c3-3 5.5-3 8-2.5S22.5 10 21.5 12C19 16.65 12 21 12 21z"/></svg>
+        </span>
+        <span class="float-spark fs-5" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M5 19l3-3M16 8l3-3"/></svg>
+        </span>
+        <span class="float-spark fs-6" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M5 19l3-3M16 8l3-3"/></svg>
+        </span>
+
+        <!-- Phone frame with shopping app inside -->
+        <div class="hero-phone-frame">
+          <div class="hero-phone-screen">
+            <div class="hero-phone-notch"></div>
+
+            <!-- Chat header bar -->
+            <div class="hp-chat-bar">
+              <span class="hp-chat-back" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              </span>
+              <span class="hp-chat-title"><em>deeplumen</em></span>
+              <span class="hp-chat-status">live</span>
+            </div>
+
+            <!-- Conversation -->
+            <div class="hp-chat-body">
+              <!-- User asks -->
+              <div class="hp-msg hp-msg-user">
+                <div class="hp-bubble hp-bubble-user">Find running shoes under $120</div>
+              </div>
+
+              <!-- AI text reply -->
+              <div class="hp-msg hp-msg-ai">
+                <span class="hp-avatar" aria-hidden="true">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L8 6 L8 14 L4 18 L8 22"/><path d="M12 2 L16 6 L16 14 L20 18 L16 22"/></svg>
+                </span>
+                <div class="hp-bubble hp-bubble-ai">Top match for your run style ↓</div>
+              </div>
+
+              <!-- AI product card -->
+              <div class="hp-prod-card">
+                <div class="hpc-img"><img src="logo/image/Shoesnew1.png" alt=""></div>
+                <div class="hpc-meta">
+                  <div class="hpc-name">Volt Runner V2 · Aeolus</div>
+                  <div class="hpc-priceline">
+                    <span class="hpc-price">$109</span>
+                    <span class="hpc-rating">★ 4.9 · 3.2k</span>
+                  </div>
+                  <button class="hpc-buy">Buy</button>
+                </div>
+              </div>
+
+              <!-- AI delivery confirm -->
+              <div class="hp-status-line">Order placed via <strong>Deeplumen</strong> · ships 2-day</div>
+            </div>
+
+            <!-- Bottom agent composer -->
+            <div class="hp-chat-input">
+              <!-- Tool / slash-command chips: agent knows these primitives -->
+              <div class="hp-chat-tools">
+                <span class="hp-tool-chip is-active">/find</span>
+                <span class="hp-tool-chip">/compare</span>
+                <span class="hp-tool-chip">/buy</span>
+                <span class="hp-tool-chip">/track</span>
+                <span class="hp-tool-chip">/return</span>
+              </div>
+              <!-- Composer line -->
+              <div class="hp-chat-composer">
+                <span class="hp-agent-mark" aria-hidden="true">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z"/></svg>
+                </span>
+                <span class="hp-chat-field">Ask the agent<span class="hp-cursor"></span></span>
+                <span class="hp-chat-mic" aria-hidden="true">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><line x1="12" y1="18" x2="12" y2="22"/></svg>
+                </span>
+                <span class="hp-chat-send" aria-hidden="true">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="4"/><polyline points="5 11 12 4 19 11"/></svg>
+                </span>
+              </div>
+              <div class="hp-chat-footer">powered by <strong>Deeplumen</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating product cards orbiting the phone -->
+        <div class="float-card fc-1">
+          <div class="fc-img"><img src="logo/shopimage/微信图片_20260506135854.png" alt=""></div>
+          <div class="fc-info">
+            <div class="fc-name">Studio Monitor Speaker</div>
+            <div class="fc-foot"><span class="fc-price">$299</span><span class="fc-rating">★ 4.9</span></div>
+          </div>
+        </div>
+        <div class="float-card fc-2">
+          <div class="fc-img"><img src="logo/shopimage/微信图片_20260506140007.png" alt=""></div>
+          <div class="fc-info">
+            <div class="fc-name">Wooden Building Blocks</div>
+            <div class="fc-foot"><span class="fc-price">$62</span><span class="fc-rating">★ 4.9</span></div>
+          </div>
+        </div>
+        <div class="float-card fc-3">
+          <div class="fc-img"><img src="logo/shopimage/O1CN01qa9CQS1aDA1RZQ1pW__2218279093295.webp" alt=""></div>
+          <div class="fc-info">
+            <div class="fc-name">Espresso Shot Glass</div>
+            <div class="fc-foot"><span class="fc-price">$115</span><span class="fc-rating">★ 4.8</span></div>
+          </div>
+        </div>
+        <div class="float-card fc-4">
+          <div class="fc-img"><img src="logo/shopimage/微信图片_20260506135937.png" alt=""></div>
+          <div class="fc-info">
+            <div class="fc-name">Cashmere Blanket</div>
+            <div class="fc-foot"><span class="fc-price">$189</span><span class="fc-rating">★ 4.9</span></div>
+          </div>
+        </div>
+        <div class="float-card fc-5">
+          <div class="fc-img"><img src="logo/shopimage/微信图片_20260506140010.jpg" alt=""></div>
+          <div class="fc-info">
+            <div class="fc-name">White Puff-Sleeve Dress</div>
+            <div class="fc-foot"><span class="fc-price">$165</span><span class="fc-rating">★ 4.8</span></div>
+          </div>
+        </div>
+        <div class="float-card fc-6">
+          <div class="fc-img"><img src="logo/shopimage/微信图片_20260506140003.png" alt=""></div>
+          <div class="fc-info">
+            <div class="fc-name">Skincare Cream Set</div>
+            <div class="fc-foot"><span class="fc-price">$76</span><span class="fc-rating">★ 4.7</span></div>
+          </div>
+        </div>
+        <div class="float-card fc-7">
+          <div class="fc-img"><img src="logo/shopimage/10_c2717fcc-f454-4090-aa52-4db2e8e922bd.webp" alt=""></div>
+          <div class="fc-info">
+            <div class="fc-name">Oat Milk Latte Set</div>
+            <div class="fc-foot"><span class="fc-price">$34</span><span class="fc-rating">★ 4.6</span></div>
+          </div>
+        </div>
+        </div><!-- /.hero-phone-stage -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LOGO WALL (Trusted by selected brands) ── -->
+<section class="section-logowall">
+  <div class="logowall-cw">
+    <div class="logowall-label"><span>Trusted by selected brands and partners across the globe</span></div>
+    <div class="logowall-marquee fade-up" aria-label="Brand logos">
+      <div class="logowall-track" aria-hidden="true">
+        <!-- Set 1 -->
+        <img src="logo/brands%20logo/Qbedding.svg"         alt="Qbedding"    class="lw-logo">
+        <img src="logo/brands%20logo/Dymestry.svg"         alt="Dymestry"    class="lw-logo">
+        <img src="logo/brands%20logo/looktech.svg"         alt="Looktech"    class="lw-logo">
+        <img src="logo/brands%20logo/magarri.svg"          alt="Magarri"     class="lw-logo">
+        <img src="logo/brands%20logo/moseeker.svg"         alt="Moseeker"    class="lw-logo">
+        <img src="logo/brands%20logo/NEW/yahoo.svg"        alt="Yahoo"       class="lw-logo">
+        <img src="logo/brands%20logo/NEW/MORNINGSTAR.svg"  alt="Morningstar" class="lw-logo">
+        <img src="logo/brands%20logo/NEW/PRNEWSWIRE.svg"   alt="PR Newswire" class="lw-logo">
+        <img src="logo/brands%20logo/NEW/LIFFTOFF.svg"     alt="Liftoff"     class="lw-logo">
+        <img src="logo/brands%20logo/NEW/VELOCITY.svg"     alt="Velocity"    class="lw-logo">
+        <img src="logo/brands%20logo/NEW/两个黑色.svg"      alt=""            class="lw-logo">
+        <!-- Set 2 — duplicate for seamless loop -->
+        <img src="logo/brands%20logo/Qbedding.svg"         alt="" class="lw-logo">
+        <img src="logo/brands%20logo/Dymestry.svg"         alt="" class="lw-logo">
+        <img src="logo/brands%20logo/looktech.svg"         alt="" class="lw-logo">
+        <img src="logo/brands%20logo/magarri.svg"          alt="" class="lw-logo">
+        <img src="logo/brands%20logo/moseeker.svg"         alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW/yahoo.svg"        alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW/MORNINGSTAR.svg"  alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW/PRNEWSWIRE.svg"   alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW/LIFFTOFF.svg"     alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW/VELOCITY.svg"     alt="" class="lw-logo">
+        <img src="logo/brands%20logo/NEW/两个黑色.svg"      alt="" class="lw-logo">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+<!-- ══════════════════════════════════════
+     2. WHAT IS DEEPLUMEN
+     ══════════════════════════════════════ -->
+<section class="section-what" id="what">
+  <div class="what-inner is-centered">
+    <div class="what-left fade-up">
+      <div class="badge-orange"><span>THE PROBLEM</span></div>
+      <div>
+        <div class="h2-dark">Your Customers Are Asking AI,</div>
+        <div class="h2-gradient">Not Google.</div>
+      </div>
+    </div>
+
+    <div class="what-right fade-up">
+      <!-- Search comparison mockups -->
+      <div class="search-compare-row">
+        <div class="search-mock search-mock-trad">
+          <div class="search-mock-label">Traditional Search</div>
+          <div class="search-mock-bar">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style="flex-shrink:0"><circle cx="5.5" cy="5.5" r="4" stroke="#b8b4b0" stroke-width="1.4"/><line x1="8.7" y1="8.7" x2="11.5" y2="11.5" stroke="#b8b4b0" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <span class="search-mock-query">Google Search: &ldquo;running shoes&rdquo;</span>
+          </div>
+          <div class="smr-row">
+            <div class="smr-pill smr-pill-1">1. Nike Official Site</div>
+            <div class="smr-pill smr-pill-2">2. Adidas Store</div>
+            <div class="smr-pill smr-pill-3">3. New Balance</div>
+          </div>
+          <div class="smr-tag">…big brands dominate</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-header-row">
+            <div class="agent-card-label">AI-Powered Search</div>
+            <div class="agent-logos-row">
+              <img src="logo/FChatGPT.svg" class="agent-logo-wm alm-1" alt="ChatGPT" />
+              <img src="logo/Gemini.svg"   class="agent-logo-wm alm-2" alt="Gemini" />
+              <img src="logo/Claude.svg"   class="agent-logo-wm alm-3" alt="Claude" />
+              <svg class="agent-logo-wm alm-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Perplexity"><rect x="2" y="2" width="20" height="20" rx="4" fill="#20808D"/><path d="M8 7h5.5a3.5 3.5 0 0 1 0 7H10v3H8V7zm2 2v3h3.5a1.5 1.5 0 1 0 0-3H10z" fill="#fff"/></svg>
+            </div>
+          </div>
+          <!-- product carousel — overflows card edges -->
+          <div class="sc-wrap agent-carousel-break">
+            <div class="sc-track" id="scTrack"></div>
+            <div class="sc-arrows">
+              <button class="sc-arrow" id="scPrev">&#8249;</button>
+              <button class="sc-arrow" id="scNext">&#8250;</button>
+            </div>
+            <div class="sc-dots" id="scDots"></div>
+          </div>
+          <!-- result chips — animate in sequentially below carousel -->
+          <div class="result-chips-row">
+            <span class="result-chip rc-1">
+              <svg class="rc-check" width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5.5" fill="none" stroke="rgba(124,106,247,0.25)" stroke-width="1"/><path class="rc-tick" d="M3.5 6.2l1.8 1.8 3.2-3.6" fill="none" stroke="#7c6af7" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Hoka One One
+            </span>
+            <span class="result-chip rc-2">
+              <svg class="rc-check" width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5.5" fill="none" stroke="rgba(124,106,247,0.25)" stroke-width="1"/><path class="rc-tick" d="M3.5 6.2l1.8 1.8 3.2-3.6" fill="none" stroke="#7c6af7" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              On Running
+            </span>
+            <span class="result-chip rc-3">
+              <svg class="rc-check" width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5.5" fill="none" stroke="rgba(124,106,247,0.25)" stroke-width="1"/><path class="rc-tick" d="M3.5 6.2l1.8 1.8 3.2-3.6" fill="none" stroke="#7c6af7" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Allbirds
+            </span>
+          </div>
+          <!-- rainbow input box -->
+          <div class="agent-input-wrap">
+
+            <div class="agent-input-box">
+              <span class="agent-input-text">
+                <img src="logo/FChatGPT.svg" class="agent-input-logo" alt="ChatGPT" />
+                <span id="typewriterText"></span><span class="tw-cursor">|</span>
+              </span>
+              <div class="agent-input-actions">
+                <svg class="agent-icon" width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="11" height="11" rx="2.5" stroke="#b8b4b0" stroke-width="1.2"/><path d="M1 9l3-3 2.5 2.5 2-2 2.5 2.5" stroke="#b8b4b0" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg class="agent-icon" width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v7M3 5l3.5 3.5L10 5" stroke="#b8b4b0" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="1" y="10" width="11" height="2" rx="1" fill="#b8b4b0" opacity=".4"/></svg>
+                <div class="agent-send-btn">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 8V2M2 5l3-3 3 3" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+<!-- ══════════════════════════════════════
+     3. CORE FEATURES — Discovery → Intent → Deal
+     ══════════════════════════════════════ -->
+<section class="section-core" id="core">
+  <div class="core-inner">
+    <div style="text-align:center;">
+      <div class="badge-orange"><span>Agentic Commerce Infrastructure</span></div>
+      <div style="margin-top:16px;">
+        <span class="h2-dark">Discovery</span>
+        <span class="h2-dark"> &rarr; </span>
+        <span class="h2-dark">Intent</span>
+        <span class="h2-dark"> &rarr; </span>
+        <span class="h2-dark">Deal</span>
+      </div>
+      <p class="body-text" style="margin:16px auto 0;text-align:center;">The complete infrastructure for brands to be visible, matched, and transacted in the AI world.</p>
+    </div>
+
+    <div class="core-grid">
+      <div class="core-card fade-up">
+        <div class="core-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+        <div class="core-step">STEP 01</div>
+        <h3>Discovery</h3>
+        <div class="core-product">Agentic Page</div>
+        <p>AI-readable endpoint deployed on your domain. Every LLM and agent can discover your brand. 15 min install via Shopify App.</p>
+      </div>
+      <div class="core-card fade-up">
+        <div class="core-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div class="core-step">STEP 02</div>
+        <h3>Intent</h3>
+        <div class="core-product">Matching Engine</div>
+        <p>Real-time semantic matching between consumer needs and your products. Not keyword search — true intent understanding.</p>
+      </div>
+      <div class="core-card fade-up">
+        <div class="core-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div class="core-step">STEP 03</div>
+        <h3>Deal</h3>
+        <div class="core-product">OCP Protocol</div>
+        <p>AI agents complete secure transactions through the Open Commerce Protocol. You stay Merchant of Record. We never touch your funds.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+<!-- ══════════════════════════════════════
+     5. AGENTIC COMMERCE PRODUCTS — AP + UCP Java
+     ══════════════════════════════════════ -->
+<section class="section-products" id="products">
+  <div class="products-cw">
+    <div class="products-head fade-up">
+      <div class="badge-orange"><span>Products</span></div>
+      <div>
+        <span class="h2-dark">Two Products. </span><span class="h2-gradient">One Mission.</span>
+      </div>
+      <p class="body-text">
+        Making every brand discoverable, recommendable, and transactable in the agentic commerce era.
+      </p>
+    </div>
+  </div>
+
+  <!-- Rail 1 — full-bleed divider beneath the heading paragraph -->
+  <div class="products-divider" aria-hidden="true"></div>
+
+  <!-- Product carousel -->
+  <div class="products-cw">
+    <!-- Tab switcher -->
+    <div class="prod-tabs fade-up" role="tablist">
+      <button class="prod-tab is-active" role="tab" data-tab="0">UCP for Java</button>
+      <button class="prod-tab" role="tab" data-tab="1">Agentic Page for Shopify</button>
+    </div>
+
+    <!-- Floating card carousel -->
+    <div class="prod-carousel">
+
+    <!-- Slide 0: UCP for Java -->
+    <article class="product-block prod-slide is-active" role="tabpanel" data-slide="0">
+      <div class="product-block-text">
+        <div class="product-head">
+          <div class="product-name">UCP for Java<span class="product-tag product-tag-sm">Protocol</span></div>
+          <div class="product-code">Universal Commerce Protocol</div>
+        </div>
+        <p>The open protocol that makes any Java-based e-commerce platform — from custom builds to enterprise stacks — natively readable and transactable by AI agents. Platform-agnostic. Zero vendor lock-in.</p>
+        <div class="product-cta-row">
+          <a class="product-link" href="https://deeplumen.io/" target="_blank" rel="noopener">
+            Learn More
+            <svg width="12" height="12" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="product-foot">For enterprise &amp; custom e-commerce platforms</div>
+        </div>
+      </div>
+      <ul class="product-feats flip-feats">
+        <li class="flip-row"><div class="flip-stack">
+          <div class="flip-leaf is-current">Works with any Java e-commerce framework</div>
+          <div class="flip-leaf is-next">Compatible with any Java commerce stack</div>
+        </div></li>
+        <li class="flip-row"><div class="flip-stack">
+          <div class="flip-leaf is-current">Standardized AI-agent communication layer</div>
+          <div class="flip-leaf is-next">Unified AI-agent communication layer</div>
+        </div></li>
+        <li class="flip-row"><div class="flip-stack">
+          <div class="flip-leaf is-current">Secure transaction handling via OCP</div>
+          <div class="flip-leaf is-next">OCP-secured transaction layer</div>
+        </div></li>
+        <li class="flip-row"><div class="flip-stack">
+          <div class="flip-leaf is-current">Open protocol — no platform lock-in</div>
+          <div class="flip-leaf is-next">Open spec · no vendor lock-in</div>
+        </div></li>
+      </ul>
+      <div class="prod-card-bar" aria-hidden="true"><span></span></div>
+    </article>
+
+    <!-- Slide 1: Agentic Page for Shopify -->
+    <article class="product-block prod-slide" role="tabpanel" data-slide="1">
+      <div class="product-block-text">
+        <div class="product-head">
+          <div class="product-name">Agentic Page for Shopify<span class="product-tag product-tag-sm">Shopify App</span></div>
+          <div class="product-code">One-Click AI Visibility</div>
+        </div>
+        <p>Install from the Shopify App Store and automatically transform every product page into an AI-readable Agentic Page. No code. No migration. Your store becomes AI-visible in 15 minutes.</p>
+        <div class="product-cta-row">
+          <a class="product-link" href="#cta">
+            Get Free AI Score
+            <svg width="12" height="12" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="product-link" href="shopify-app%28new%29.html">
+            Shopify App
+            <svg width="12" height="12" viewBox="0 0 10 10" fill="none"><path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="product-foot">For Shopify merchants &amp; DTC brands</div>
+        </div>
+      </div>
+      <ul class="product-feats flip-feats">
+        <li class="flip-row"><div class="flip-stack">
+          <div class="flip-leaf is-current">One-click Shopify App Store install</div>
+          <div class="flip-leaf is-next">One-click install from Shopify Store</div>
+        </div></li>
+        <li class="flip-row"><div class="flip-stack">
+          <div class="flip-leaf is-current">Auto-generate Agentic Pages for all products</div>
+          <div class="flip-leaf is-next">Auto-generate Agentic Pages for every SKU</div>
+        </div></li>
+        <li class="flip-row"><div class="flip-stack">
+          <div class="flip-leaf is-current">Real-time AI Health Score dashboard</div>
+          <div class="flip-leaf is-next">Live AI Health Score dashboard</div>
+        </div></li>
+        <li class="flip-row"><div class="flip-stack">
+          <div class="flip-leaf is-current">Zero SEO impact — canonical tags intact</div>
+          <div class="flip-leaf is-next">SEO-safe · canonical tags preserved</div>
+        </div></li>
+      </ul>
+      <div class="prod-card-bar" aria-hidden="true"><span></span></div>
+    </article>
+
+    </div><!-- /prod-carousel -->
+  </div><!-- /products-cw -->
+</section>
+
+<div class="sec-divider"></div>
+<!-- ══════════════════════════════════════
+     6. FEATURES & BENEFITS — Shopify App / One-Click Install
+     ══════════════════════════════════════ -->
+<section class="section-features" id="features">
+  <div class="feat-cw">
+    <div class="feat-head fade-up">
+      <div class="badge-orange"><span>The Shopify App</span></div>
+      <div style="margin-top:14px;">
+        <div class="h2-dark" style="white-space:nowrap;">One-Click Install.</div>
+        <div class="h2-gradient" style="white-space:nowrap;">AI-Ready in 15 Minutes.</div>
+      </div>
+      <p class="body-text feat-sub">No code. No migration. No SEO risk. Install from the Shopify App Store and we automatically generate Agentic Pages for every product in your store.</p>
+    </div>
+
+    <div class="feat-steps-row fade-up">
+      <div class="feat-scard" id="fsc0">
+        <div class="fsc-top"><span class="fsc-num">Step 1</span><span class="fsc-check" id="fck0"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div class="fsc-title">Install in one click</div>
+        <div class="fsc-desc">Auto-scan your store and generate AI-optimized pages for every product.</div>
+        <div class="fsc-bar-wrap"><div class="fsc-bar" id="fb0"></div></div>
+      </div>
+      <div class="feat-scard" id="fsc1">
+        <div class="fsc-top"><span class="fsc-num">Step 2</span><span class="fsc-check" id="fck1"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div class="fsc-title">Real-time AI Health Score</div>
+        <div class="fsc-desc">See how AI agents perceive your store across 4 dimensions.</div>
+        <div class="fsc-bar-wrap"><div class="fsc-bar" id="fb1"></div></div>
+      </div>
+      <div class="feat-scard" id="fsc2">
+        <div class="fsc-top"><span class="fsc-num">Step 3</span><span class="fsc-check" id="fck2"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div class="fsc-title">AI traffic analytics</div>
+        <div class="fsc-desc">Track every visit from ChatGPT, Gemini, Perplexity, Claude.</div>
+        <div class="fsc-bar-wrap"><div class="fsc-bar" id="fb2"></div></div>
+      </div>
+      <div class="feat-scard" id="fsc3">
+        <div class="fsc-top"><span class="fsc-num">Step 4</span><span class="fsc-check" id="fck3"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div class="fsc-title">Zero SEO impact</div>
+        <div class="fsc-desc">Canonical tags keep Google SEO intact. Only AI agents see the optimized version.</div>
+        <div class="fsc-bar-wrap"><div class="fsc-bar" id="fb3"></div></div>
+      </div>
+    </div>
+
+    <div class="feat-cards-stack fade-up">
+      <!-- Card 1: One-click install + page conversion -->
+      <div class="fc-card" id="fcCard0">
+        <div class="fc1-layout">
+          <!-- LEFT: install + process rows -->
+          <div class="fc1-left">
+            <div class="fc1-brand">
+              <img src="logo/Shopify.svg" alt="" style="width:16px;height:16px;opacity:0.6;">
+              <span>DeepLumen · Shopify App</span>
+            </div>
+            <div class="fc1-btn-wrap">
+              <button class="fc1-btn" id="fc1Btn">Add to Shopify</button>
+            </div>
+            <div class="fc1-rows" id="fc1Rows">
+              <div class="fc1-row" id="fc1R0">
+                <div class="fc1-dot"></div>
+                <div class="fc1-rc"><div class="fc1-rt">Store Content Scan</div><div class="fc1-rd">Scanning product listings &amp; metadata</div></div>
+                <svg class="fc1-icon" width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 3v2M10 15v2M3 10H1M19 10h-2M5.22 5.22L3.81 3.81M16.19 16.19l-1.41-1.41M5.22 14.78l-1.41 1.41M16.19 3.81l-1.41 1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.4"/></svg>
+              </div>
+              <div class="fc1-row" id="fc1R1">
+                <div class="fc1-dot"></div>
+                <div class="fc1-rc"><div class="fc1-rt">AI Health Analysis</div><div class="fc1-rd">Evaluating SEO &amp; content quality</div></div>
+                <svg class="fc1-icon" width="16" height="16" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M10 6.5v4l2.5 1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="fc1-row" id="fc1R2">
+                <div class="fc1-dot"></div>
+                <div class="fc1-rc"><div class="fc1-rt">Agentic Page Generation</div><div class="fc1-rd">Building optimized page variants</div></div>
+                <svg class="fc1-icon" width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M11 3L5 11h5l-1 6 6-8h-5l1-6z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="fc1-row" id="fc1R3">
+                <div class="fc1-dot"></div>
+                <div class="fc1-rc"><div class="fc1-rt">Zero SEO Impact</div><div class="fc1-rd">Canonical tags keep your Google rankings intact</div></div>
+                <svg class="fc1-icon" width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 1 0 0 16A8 8 0 0 0 10 2zm0 3v5l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+          </div>
+          <!-- RIGHT: before → after -->
+          <div class="fc1-right" id="fc1Right">
+            <!-- Stacked webpage cards -->
+            <div class="fc1-side">
+              <div class="fc1-webstack">
+                <!-- Back: blog layout -->
+                <div class="fc1-webcard fc1-wc fc1-wcb">
+                  <div class="fc1-wcbar"><span class="fc1-wcdot"></span><span class="fc1-wcdot"></span><span class="fc1-wcdot"></span><span class="fc1-wcurl"></span></div>
+                  <div class="fc1-wcbody">
+                    <div class="fc1-wcl" style="width:55%;height:9px;background:#d8d8d8;margin-bottom:4px;"></div>
+                    <div class="fc1-wcl xs" style="height:7px;"></div>
+                    <div class="fc1-wchero" style="height:80px;margin-top:6px;background:linear-gradient(135deg,#e8e8f0,#d8d8e8);"></div>
+                    <div class="fc1-wcl" style="margin-top:6px;"></div>
+                    <div class="fc1-wcl s"></div>
+                    <div class="fc1-wcl"></div>
+                    <div class="fc1-wcl xs"></div>
+                  </div>
+                </div>
+                <!-- Middle: product card layout -->
+                <div class="fc1-webcard fc1-wc fc1-wcm">
+                  <div class="fc1-wcbar"><span class="fc1-wcdot"></span><span class="fc1-wcdot"></span><span class="fc1-wcdot"></span><span class="fc1-wcurl"></span></div>
+                  <div class="fc1-wcbody">
+                    <div class="fc1-wchero" style="height:110px;background:linear-gradient(135deg,#ede8f0,#e8e0d8);"></div>
+                    <div style="display:flex;gap:6px;margin-top:6px;">
+                      <div style="width:50%;height:8px;background:#e0e0e0;border-radius:3px;"></div>
+                      <div style="width:28%;height:8px;background:#c8c8c8;border-radius:3px;margin-left:auto;"></div>
+                    </div>
+                    <div class="fc1-wcl s" style="margin-top:5px;"></div>
+                    <div class="fc1-wcl xs"></div>
+                    <div class="fc1-wcbtn" style="width:90px;margin-top:8px;"></div>
+                  </div>
+                </div>
+                <!-- Front: standard store layout -->
+                <div class="fc1-webcard fc1-wc fc1-wcf">
+                  <div class="fc1-wcbar"><span class="fc1-wcdot"></span><span class="fc1-wcdot"></span><span class="fc1-wcdot"></span><span class="fc1-wcurl"></span></div>
+                  <div class="fc1-wcbody">
+                    <div class="fc1-wchero" style="background:url('https://qbedding.com/cdn/shop/files/Mousse_Brown_Premium_Cotton_Fitted_Sheet.jpg?v=1773859227&width=700') center/cover no-repeat var(--bg-2);"></div>
+                    <div style="font-size:10px;font-weight:700;color:var(--text-dark);line-height:1.3;margin-top:2px;">Mousse Brown Premium Cotton Fitted Sheet</div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:3px;">
+                      <span style="font-size:12px;font-weight:700;color:var(--text-dark);">$45.50</span>
+                      <span style="font-size:9px;color:#be8e3e;font-weight:600;">★★★★★ <span style="color:#8c8884;">4.9</span></span>
+                    </div>
+                    <div style="font-size:8.5px;color:#8c8884;line-height:1.4;margin-top:2px;">100% long staple cotton · 330TC sateen · cooling finish</div>
+                    <div class="fc1-wcbtn" style="margin-top:6px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;letter-spacing:0.04em;">Buy Now</div>
+                  </div>
+                </div>
+                <div class="fc1-col-top bad">~18,000 tokens &nbsp;·&nbsp; Hard for AI to read</div>
+              </div>
+            </div>
+            <!-- Data flow connector — 3 dashed lines bridging web → agentic -->
+            <div class="fc1-flow" aria-hidden="true">
+              <svg class="fc1-flow-svg" viewBox="0 0 130 560" preserveAspectRatio="none">
+                <!-- Top line: bows DOWN toward center (pinched at midpoint) -->
+                <path class="fp-line fp-anim"      d="M 4,210 Q 65,245 126,210" />
+                <!-- Middle line: straight axis -->
+                <path class="fp-line fp-anim fp-a2" d="M 4,260 L 126,260" />
+                <!-- Bottom line: bows UP toward center -->
+                <path class="fp-line fp-anim fp-a3" d="M 4,310 Q 65,275 126,310" />
+                <!-- Endpoint nodes — shifted up 20px with the lines -->
+                <circle class="fp-node pulse" cx="4"   cy="210" r="3.2"/>
+                <circle class="fp-node"       cx="126" cy="210" r="3.2"/>
+                <circle class="fp-node pulse" cx="4"   cy="260" r="3.2" style="animation-delay:-0.5s"/>
+                <circle class="fp-node"       cx="126" cy="260" r="3.2"/>
+                <circle class="fp-node pulse" cx="4"   cy="310" r="3.2" style="animation-delay:-1s"/>
+                <circle class="fp-node"       cx="126" cy="310" r="3.2"/>
+              </svg>
+            </div>
+            <!-- Stacked terminal (agent page) -->
+            <div class="fc1-side">
+              <div class="fc1-agstack">
+                <div class="fc1-terminal fc1-acb">
+                  <div class="fc1-term-bar"><span class="fc1-tdot td-r"></span><span class="fc1-tdot td-y"></span><span class="fc1-tdot td-g"></span><span class="fc1-term-title">agentic-page.json</span></div>
+                  <div class="fc1-term-body">
+                    <div class="fc1-tl"><span class="tp">{</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"name"</span><span class="tp">: </span><span class="ts">"Classic Hoodie"</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"price"</span><span class="tp">: </span><span class="tn">89.00</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"category"</span><span class="tp">: </span><span class="ts">"Apparel"</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"rating"</span><span class="tp">: </span><span class="tn">4.7</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"in_stock"</span><span class="tp">: </span><span class="nb">true</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"ai_ready"</span><span class="tp">: </span><span class="nb">true</span></div>
+                    <div class="fc1-tl"><span class="tp">}</span></div>
+                  </div>
+                </div>
+                <div class="fc1-terminal fc1-acm">
+                  <div class="fc1-term-bar"><span class="fc1-tdot td-r"></span><span class="fc1-tdot td-y"></span><span class="fc1-tdot td-g"></span><span class="fc1-term-title">agentic-page.json</span></div>
+                  <div class="fc1-term-body">
+                    <div class="fc1-tl"><span class="tp">{</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"name"</span><span class="tp">: </span><span class="ts">"Air Sneaker"</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"price"</span><span class="tp">: </span><span class="tn">129.00</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"category"</span><span class="tp">: </span><span class="ts">"Footwear"</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"rating"</span><span class="tp">: </span><span class="tn">4.8</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"reviews"</span><span class="tp">: </span><span class="tn">892</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"in_stock"</span><span class="tp">: </span><span class="nb">true</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"ai_ready"</span><span class="tp">: </span><span class="nb">true</span></div>
+                    <div class="fc1-tl"><span class="tp">}</span></div>
+                  </div>
+                </div>
+                <div class="fc1-terminal fc1-acf">
+                  <div class="fc1-term-bar">
+                    <span class="fc1-tdot td-r"></span>
+                    <span class="fc1-tdot td-y"></span>
+                    <span class="fc1-tdot td-g"></span>
+                    <span class="fc1-term-title">agentic-page.json</span>
+                  </div>
+                  <div class="fc1-term-body">
+                    <div class="fc1-tl"><span class="tp">{</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"name"</span><span class="tp">: </span><span class="ts">"Alpaca Boxy Knit Cardigan"</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"price"</span><span class="tp">: </span><span class="tn">219.00</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"brand"</span><span class="tp">: </span><span class="ts">"Merisoft"</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"category"</span><span class="tp">: </span><span class="ts">"Apparel"</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"rating"</span><span class="tp">: </span><span class="tn">4.7</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"reviews"</span><span class="tp">: </span><span class="tn">1428</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"tags"</span><span class="tp">: [</span><span class="ts">"alpaca"</span><span class="tp">, </span><span class="ts">"oversized"</span><span class="tp">, </span><span class="ts">"knit"</span><span class="tp">],</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"variants"</span><span class="tp">: [{ </span><span class="tk">"size"</span><span class="tp">: </span><span class="ts">"S"</span><span class="tp"> }, { </span><span class="tk">"size"</span><span class="tp">: </span><span class="ts">"M"</span><span class="tp"> }, { </span><span class="tk">"size"</span><span class="tp">: </span><span class="ts">"L"</span><span class="tp"> }],</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"in_stock"</span><span class="tp">: </span><span class="nb">true</span><span class="tp">,</span></div>
+                    <div class="fc1-tl"><span class="tk">&nbsp;&nbsp;"ai_ready"</span><span class="tp">: </span><span class="nb">true</span></div>
+                    <div class="fc1-tl"><span class="tp">}</span><span class="fc1-cursor">█</span></div>
+                  </div>
+                </div>
+                <div class="fc1-col-top good">~3,800 tokens &nbsp;·&nbsp; AI-readable</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="sec-divider"></div>
+
+<!-- ══════════════════════════════════════
+     7. TWO VIEWS — One store. Two views. (Human View vs Agentic Page)
+     ══════════════════════════════════════ -->
+<section class="section-views-standalone" id="views">
+  <div class="section-views-cw">
+    <!-- Two Views -->
+    <div class="views-wrap fade-up">
+      <div class="views-title">
+        <div class="badge-orange" style="margin:0 auto 12px;"><span>One store. Two views.</span></div>
+        <div><span class="h2-dark">Human View vs. </span><span class="h2-gradient">Agentic Page.</span></div>
+      </div>
+      <!-- View labels -->
+      <div class="view-labels-row">
+        <div class="view-lbl view-lbl-human" id="vLblHuman">HUMAN VIEW</div>
+        <div class="view-lbl view-lbl-ai"    id="vLblAi">AGENTIC PAGE</div>
+      </div>
+
+      <!-- Split canvas -->
+      <div class="view-canvas" id="viewCanvas">
+
+        <!-- AI Panel (back) -->
+        <div class="v-panel v-ai-panel">
+          <div class="v-scan-line"></div>
+          <div class="v-ai-nav">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="v-ai-logo">Qbedding</span>
+              <span class="v-ai-chip v-chip-brand">BRAND·0.99</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="v-ai-chip v-chip-ok">AI_READY</span>
+              <span class="v-ai-chip v-chip-key">TOKENS:3,858</span>
+            </div>
+          </div>
+          <div class="v-ai-body" style="padding:10px 14px;display:flex;flex-direction:column;gap:8px;height:calc(100% - 40px - 32px);overflow:hidden;">
+            <div class="v-ai-meta" style="flex-shrink:0;">// PRODUCT_LISTING · model:deeplumen-v2 · latency:12ms · items:3 · intent:browse+purchase</div>
+            <!-- Three code blocks side by side -->
+            <div style="display:flex;gap:7px;flex:1;min-height:0;">
+              <!-- Product 1 -->
+              <div class="v-ai-code" style="flex:1;font-size:9.5px;line-height:1.6;overflow:hidden;padding:9px 10px;">
+                <span class="vt-c">// Product 1</span><br>
+                <span class="vt-p">{</span><br>
+                &nbsp;<span class="vt-k">"name"</span><span class="vt-p">:</span> <span class="vt-s">"TENCEL Fitted Sheet"</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"price"</span><span class="vt-p">:</span> <span class="vt-n">58.50</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"brand"</span><span class="vt-p">:</span> <span class="vt-s">"Qbedding"</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"rating"</span><span class="vt-p">:</span> <span class="vt-n">4.9</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"reviews"</span><span class="vt-p">:</span> <span class="vt-n">1847</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"category"</span><span class="vt-p">:</span> <span class="vt-s">"sheet"</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"tags"</span><span class="vt-p">: [</span><span class="vt-s">"lyocell"</span><span class="vt-p">,</span> <span class="vt-s">"cooling"</span><span class="vt-p">],</span><br>
+                &nbsp;<span class="vt-k">"sizes"</span><span class="vt-p">: [</span><span class="vt-s">"Twin"</span><span class="vt-p">,</span><span class="vt-s">"Queen"</span><span class="vt-p">,</span><span class="vt-s">"King"</span><span class="vt-p">],</span><br>
+                &nbsp;<span class="vt-k">"in_stock"</span><span class="vt-p">:</span> <span class="vt-b">true</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"ai_ready"</span><span class="vt-p">:</span> <span class="vt-b">true</span><br>
+                <span class="vt-p">}</span>
+              </div>
+              <!-- Product 2 -->
+              <div class="v-ai-code" style="flex:1;font-size:9.5px;line-height:1.6;overflow:hidden;padding:9px 10px;">
+                <span class="vt-c">// Product 2</span><br>
+                <span class="vt-p">{</span><br>
+                &nbsp;<span class="vt-k">"name"</span><span class="vt-p">:</span> <span class="vt-s">"Goose Down Pillow"</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"price"</span><span class="vt-p">:</span> <span class="vt-n">105.95</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"brand"</span><span class="vt-p">:</span> <span class="vt-s">"PiloMio"</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"rating"</span><span class="vt-p">:</span> <span class="vt-n">4.8</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"reviews"</span><span class="vt-p">:</span> <span class="vt-n">942</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"category"</span><span class="vt-p">:</span> <span class="vt-s">"pillow"</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"tags"</span><span class="vt-p">: [</span><span class="vt-s">"goose-down"</span><span class="vt-p">,</span> <span class="vt-s">"hotel"</span><span class="vt-p">],</span><br>
+                &nbsp;<span class="vt-k">"sizes"</span><span class="vt-p">: [</span><span class="vt-s">"Standard"</span><span class="vt-p">,</span><span class="vt-s">"King"</span><span class="vt-p">],</span><br>
+                &nbsp;<span class="vt-k">"in_stock"</span><span class="vt-p">:</span> <span class="vt-b">true</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"ai_ready"</span><span class="vt-p">:</span> <span class="vt-b">true</span><br>
+                <span class="vt-p">}</span>
+              </div>
+              <!-- Product 3 -->
+              <div class="v-ai-code" style="flex:1;font-size:9.5px;line-height:1.6;overflow:hidden;padding:9px 10px;">
+                <span class="vt-c">// Product 3</span><br>
+                <span class="vt-p">{</span><br>
+                &nbsp;<span class="vt-k">"name"</span><span class="vt-p">:</span> <span class="vt-s">"Memory Foam Pillow"</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"price"</span><span class="vt-p">:</span> <span class="vt-n">88.95</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"brand"</span><span class="vt-p">:</span> <span class="vt-s">"PiloMio"</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"rating"</span><span class="vt-p">:</span> <span class="vt-n">4.7</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"reviews"</span><span class="vt-p">:</span> <span class="vt-n">658</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"category"</span><span class="vt-p">:</span> <span class="vt-s">"pillow"</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"tags"</span><span class="vt-p">: [</span><span class="vt-s">"memory-foam"</span><span class="vt-p">,</span> <span class="vt-s">"cooling"</span><span class="vt-p">],</span><br>
+                &nbsp;<span class="vt-k">"sizes"</span><span class="vt-p">: [</span><span class="vt-s">"Standard"</span><span class="vt-p">,</span><span class="vt-s">"King"</span><span class="vt-p">],</span><br>
+                &nbsp;<span class="vt-k">"in_stock"</span><span class="vt-p">:</span> <span class="vt-b">true</span><span class="vt-p">,</span><br>
+                &nbsp;<span class="vt-k">"ai_ready"</span><span class="vt-p">:</span> <span class="vt-b">true</span><br>
+                <span class="vt-p">}</span>
+              </div>
+            </div>
+            <!-- Stat cards row -->
+            <div class="v-ai-cards" style="flex-shrink:0;">
+              <div class="v-ai-card">
+                <div class="v-ai-card-label">INTENT</div>
+                <div class="v-ai-card-val">Browse+Buy</div>
+              </div>
+              <div class="v-ai-card">
+                <div class="v-ai-card-label">PRODUCTS</div>
+                <div class="v-ai-card-val">3 items</div>
+              </div>
+              <div class="v-ai-card">
+                <div class="v-ai-card-label">TOKENS</div>
+                <div class="v-ai-card-val">4,290</div>
+              </div>
+            </div>
+          </div>
+          <div class="v-ai-footer">
+            <span>4,290 tokens · 3 products · structured</span>
+            <span class="v-ai-footer-ok">AI-readable ✓</span>
+          </div>
+        </div>
+
+        <!-- Human Panel (front, clipped) -->
+        <div class="v-panel v-human-panel" id="vHumanPanel">
+          <div class="v-h-nav">
+            <span class="v-h-logo">Qbedding</span>
+            <div class="v-h-nav-links">
+              <span class="v-h-nav-link">Shop</span>
+              <span class="v-h-nav-link">About</span>
+              <span class="v-h-nav-link">Blog</span>
+            </div>
+            <button style="font-size:11px;font-weight:600;background:var(--text-dark);color:#fff;border:none;padding:7px 16px;border-radius:7px;cursor:pointer;">Shop Now</button>
+          </div>
+          <div class="v-h-body" style="padding:10px 14px;height:calc(100% - 40px - 32px);overflow:hidden;">
+            <div class="v-h-breadcrumb" style="margin-bottom:8px;">Home &rsaquo; Bedding &rsaquo; All Products</div>
+            <!-- Three products side by side -->
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;height:calc(100% - 22px);">
+
+              <!-- Product 1: TENCEL Fitted Sheet -->
+              <div style="background:#fff;border:1px solid var(--stroke-cream);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">
+                <div style="position:relative;height:220px;overflow:hidden;flex-shrink:0;">
+                  <img src="https://cdn.shopify.com/s/files/1/0281/1196/2246/files/Gentle_Green_TENCEL__Fitted_Sheet.jpg?v=1773944954&width=700"
+                    alt="Gentle Green TENCEL Fitted Sheet" style="width:100%;height:100%;object-fit:cover;"/>
+                  <div style="position:absolute;top:8px;left:8px;background:#2c2924;color:#fff;font-size:7px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:0.06em;">BEST SELLER</div>
+                  <div style="position:absolute;top:8px;right:8px;width:24px;height:24px;background:rgba(255,255,255,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text-muted);cursor:pointer;">♡</div>
+                </div>
+                <div style="padding:10px 11px;flex:1;display:flex;flex-direction:column;gap:5px;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <span style="font-size:8px;color:var(--accent);font-weight:700;letter-spacing:0.07em;text-transform:uppercase;background:var(--accent-soft);padding:1px 6px;border-radius:3px;">Sheets</span>
+                    <span style="font-size:8px;color:#6aaa6a;font-weight:600;">✓ In Stock</span>
+                  </div>
+                  <div style="font-family:var(--font-heading);font-size:12.5px;font-weight:700;color:var(--text-dark);line-height:1.25;">Gentle Green TENCEL™ Fitted Sheet</div>
+                  <div style="font-size:8.5px;color:var(--text-body);line-height:1.5;">Cooling lyocell · breathable weave · soft hand-feel for all seasons.</div>
+                  <div style="font-size:8.5px;color:var(--accent);">&#9733;&#9733;&#9733;&#9733;&#9733; <span style="color:var(--text-muted);">4.9 · 1,847 reviews</span></div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
+                    <div style="display:flex;align-items:baseline;gap:4px;flex-shrink:0;">
+                      <span style="font-size:15px;font-weight:700;color:var(--text-dark);">$58.50</span>
+                      <span style="font-size:9px;color:var(--text-faint);text-decoration:line-through;">$78</span>
+                      <span style="font-size:8px;color:#e05050;font-weight:700;background:#fef0f0;padding:1px 4px;border-radius:3px;">–25%</span>
+                    </div>
+                    <div style="display:flex;gap:3px;">
+                      <div style="padding:3px 7px;border-radius:4px;border:1.5px solid var(--text-dark);font-size:8px;font-weight:600;color:var(--text-dark);">Twin</div>
+                      <div style="padding:3px 7px;border-radius:4px;border:1px solid var(--stroke-cream);font-size:8px;color:var(--text-muted);">Queen</div>
+                      <div style="padding:3px 7px;border-radius:4px;border:1px solid var(--stroke-cream);font-size:8px;color:var(--text-muted);">King</div>
+                    </div>
+                  </div>
+                  <button style="width:100%;background:var(--text-dark);color:#fff;border:none;padding:7px 0;border-radius:7px;font-size:10px;font-weight:700;cursor:pointer;margin-top:auto;">Add to Cart</button>
+                </div>
+              </div>
+
+              <!-- Product 2: Goose Down Pillow -->
+              <div style="background:#fff;border:1px solid var(--stroke-cream);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">
+                <div style="position:relative;height:220px;overflow:hidden;flex-shrink:0;">
+                  <img src="https://cdn.shopify.com/s/files/1/0281/1196/2246/files/PiloMio_Ultra_Soft_Goose_Down_Pillow_3.jpg"
+                    alt="PiloMio Goose Down Pillow" style="width:100%;height:100%;object-fit:cover;"/>
+                  <div style="position:absolute;top:8px;left:8px;background:#3a7a50;color:#fff;font-size:7px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:0.06em;">NEW</div>
+                  <div style="position:absolute;top:8px;right:8px;width:24px;height:24px;background:rgba(255,255,255,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text-muted);cursor:pointer;">♡</div>
+                </div>
+                <div style="padding:10px 11px;flex:1;display:flex;flex-direction:column;gap:5px;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <span style="font-size:8px;color:#5a9a70;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;background:#eaf5ee;padding:1px 6px;border-radius:3px;">Pillow</span>
+                    <span style="font-size:8px;color:#6aaa6a;font-weight:600;">✓ In Stock</span>
+                  </div>
+                  <div style="font-family:var(--font-heading);font-size:12.5px;font-weight:700;color:var(--text-dark);line-height:1.25;">PiloMio® Goose Down Pillow</div>
+                  <div style="font-size:8.5px;color:var(--text-body);line-height:1.5;">Plush goose down · gentle neck support · hotel-grade comfort.</div>
+                  <div style="font-size:8.5px;color:var(--accent);">&#9733;&#9733;&#9733;&#9733;&#9733; <span style="color:var(--text-muted);">4.8 · 942 reviews</span></div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
+                    <div style="display:flex;align-items:baseline;gap:4px;flex-shrink:0;">
+                      <span style="font-size:15px;font-weight:700;color:var(--text-dark);">$105.95</span>
+                      <span style="font-size:9px;color:var(--text-faint);text-decoration:line-through;">$128</span>
+                      <span style="font-size:8px;color:#e05050;font-weight:700;background:#fef0f0;padding:1px 4px;border-radius:3px;">–17%</span>
+                    </div>
+                    <div style="display:flex;gap:3px;">
+                      <div style="padding:3px 7px;border-radius:4px;border:1.5px solid var(--text-dark);font-size:8px;font-weight:600;color:var(--text-dark);">Std</div>
+                      <div style="padding:3px 7px;border-radius:4px;border:1px solid var(--stroke-cream);font-size:8px;color:var(--text-muted);">King</div>
+                    </div>
+                  </div>
+                  <button style="width:100%;background:var(--text-dark);color:#fff;border:none;padding:7px 0;border-radius:7px;font-size:10px;font-weight:700;cursor:pointer;margin-top:auto;">Add to Cart</button>
+                </div>
+              </div>
+
+              <!-- Product 3: Memory Foam Pillow -->
+              <div style="background:#fff;border:1px solid var(--stroke-cream);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">
+                <div style="position:relative;height:220px;overflow:hidden;flex-shrink:0;">
+                  <img src="https://cdn.shopify.com/s/files/1/0281/1196/2246/files/Z8A0773_5080f1f8-c1ef-4996-96b2-f94c90295b07.jpg"
 </body></html>
