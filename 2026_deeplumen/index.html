@@ -4733,4 +4733,63 @@ function submitCTA() {
 (function() {
   const arcEl   = document.getElementById('fc2Arc');
   const numEl   = document.getElementById('fc2Num');
+  const gaugeWrap = document.getElementById('fc2GaugeWrap');
+  const waveSvg = document.getElementById('fc2WaveSvg');
+
+  function countUp(el, target, duration) {
+    const t0 = performance.now();
+    function tick(now) {
+      const p = Math.min((now - t0) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(ease * target);
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      if (e.target === gaugeWrap) {
+        arcEl && arcEl.classList.add('fc2-arc-go');
+        numEl && countUp(numEl, 72, 1200);
+        obs.unobserve(gaugeWrap);
+      }
+      if (e.target === waveSvg) {
+        waveSvg.classList.add('wv-anim');
+        obs.unobserve(waveSvg);
+      }
+    });
+  }, { threshold: 0.35 });
+
+  if (gaugeWrap) obs.observe(gaugeWrap);
+  if (waveSvg)   obs.observe(waveSvg);
+})();
+
+/* ── Proof card trend line animations ── */
+(function() {
+  const lines = document.querySelectorAll('.proof-trend-line');
+  if (!lines.length) return;
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('proof-trend-go');
+      obs.unobserve(e.target);
+    });
+  }, { threshold: 0.5 });
+  lines.forEach(l => obs.observe(l));
+})();
+
+/* ── Hero 3D scene: mouse-parallax tilt ────────────────────
+   Tracks pointer over the phone scene and tilts the .hero-phone-stage
+   on rotateY (horizontal) and rotateX (vertical) with eased lerping.
+   Skips on touch / reduced-motion contexts. */
+(function () {
+  var scene = document.getElementById('heroPhoneScene');
+  var stage = document.getElementById('heroPhoneStage');
+  if (!scene || !stage) return;
+
+  // Skip on touch-primary devices and reduced motion
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia && window.matchMedia('(hover: none)').matches) return;
 </body></html>
