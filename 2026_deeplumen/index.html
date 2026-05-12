@@ -4842,6 +4842,8 @@ function submitCTA() {
   });
 
   scene.addEventListener('mouseleave', function () {
+    inside = false;
+    scene.classList.remove('is-tracking');
   });
 })();
 
