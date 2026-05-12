@@ -4844,7 +4844,7 @@ function submitCTA() {
   scene.addEventListener('mouseleave', function () {
     inside = false;
     scene.classList.remove('is-tracking');
-    targetMx = 0; targetMy = 0;
+    ensureLoop();
   });
 })();
 
