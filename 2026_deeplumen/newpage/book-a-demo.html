@@ -1008,6 +1008,65 @@
   <!-- ============================================================
        JAVASCRIPT
        ============================================================ -->
-  <script></script>
+  <script>
+    // ── Nav: scroll border ──
+    const mainNav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        mainNav.classList.add('scrolled');
+      } else {
+        mainNav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // ── Nav: mobile burger toggle ──
+    const burger = document.getElementById('nav-burger');
+    const mobileMenu = document.getElementById('nav-mobile-menu');
+    burger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('is-open');
+      burger.classList.toggle('is-active', isOpen);
+      burger.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // ── Fade-up entrance via IntersectionObserver ──
+    const fadeTargets = [
+      document.getElementById('demo-left'),
+      document.getElementById('demo-right')
+    ];
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.08 }
+      );
+      fadeTargets.forEach((el) => { if (el) observer.observe(el); });
+    } else {
+      // Fallback: show immediately
+      fadeTargets.forEach((el) => { if (el) el.classList.add('visible'); });
+    }
+
+
+    // ── Form: basic client-side submit ──
+    const form = document.getElementById('demo-form');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('.btn-continue');
+      btn.textContent = 'Submitting…';
+      btn.disabled = true;
+
+      // Simulate async submission
+      setTimeout(() => {
+        btn.textContent = 'Request received!';
+        btn.style.background = 'var(--accent)';
+      }, 1200);
+    });
+  </script>
 </body>
 </html>
