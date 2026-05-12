@@ -4615,4 +4615,122 @@ function submitCTA() {
         var s = document.createElement('span');
         s.className = 'blt';
         s.style.setProperty('--i', idx);
+        s.textContent = ch === ' ' ? ' ' : ch;
+        row.appendChild(s);
+      });
+      return row;
+    }
+    var wrapper = document.createElement('span');
+    wrapper.className = 'blt-wrapper';
+    wrapper.appendChild(makeRow('blt-row-top'));
+    wrapper.appendChild(makeRow('blt-row-bot'));
+    btn.replaceChild(wrapper, textNode);
+  });
+})();
+
+/* ── Human View vs. Agentic Page split-panel ── */
+(function() {
+  const canvas      = document.getElementById('viewCanvas');
+  const humanPanel  = document.getElementById('vHumanPanel');
+  const divider     = document.getElementById('vDivider');
+  const lblHuman    = document.getElementById('vLblHuman');
+  const lblAi       = document.getElementById('vLblAi');
+  const metTokenEl  = document.getElementById('metTokenNum');
+  const metReadEl   = document.getElementById('metReadNum');
+  if (!canvas) return;
+
+  /* Metrics: default always show full-AI values; update only on mouse interaction */
+  function resetMetrics() {
+    if (!metTokenEl || !metReadEl) return;
+    metTokenEl.textContent = '-79.7%';
+    metReadEl.textContent  = '3.0x';
+  }
+  function updateMetricsByRatio(ratio) {
+    if (!metTokenEl || !metReadEl) return;
+    // ratio 0 = far left (full AI) → -79.7%, 3.0x
+    // ratio 1 = far right (full Human) → 0%, 0x
+    const aiRatio  = Math.max(0, Math.min(1, 1 - ratio));
+    const tokenVal = -79.7 * aiRatio;
+    const readVal  =   3.0 * aiRatio;
+    metTokenEl.textContent = Math.abs(tokenVal) < 0.05 ? '0%'  : tokenVal.toFixed(1) + '%';
+    metReadEl.textContent  = readVal < 0.05             ? '0x'  : readVal.toFixed(1)  + 'x';
+  }
+
+  function setSplit(pct) {
+    pct = Math.max(5, Math.min(95, pct));
+    const W = canvas.offsetWidth;
+    const x = W * pct / 100;
+    divider.style.left = x + 'px';
+    humanPanel.style.clipPath = `inset(0 ${W - x}px 0 0)`;
+    const zone = 15;
+    const t = Math.max(0, Math.min(1, (pct - (50 - zone)) / (zone * 2)));
+    lblHuman.style.opacity = t;
+    lblAi.style.opacity    = 1 - t;
+    /* Metrics NOT updated here — driven by mouse position only */
+  }
+
+  const MOVE = 820, PAUSE = 500;
+  let timers = [], dragging = false;
+
+  function setTrans(on) {
+    const v = on ? `left ${MOVE}ms cubic-bezier(0.45,0,0.2,1)` : '';
+    const c = on ? `clip-path ${MOVE}ms cubic-bezier(0.45,0,0.2,1)` : '';
+    divider.style.transition    = v;
+    humanPanel.style.transition = c;
+  }
+
+  function cancelAuto() { timers.forEach(clearTimeout); timers = []; setTrans(false); }
+
+  function runAuto() {
+    const stops = [20, 80, 20, 80, 50];
+    setTrans(true);
+    let delay = 600;
+    stops.forEach((p, i) => {
+      const t = setTimeout(() => {
+        setSplit(p);
+        if (i === stops.length - 1) {
+          const c = setTimeout(() => setTrans(false), MOVE + 100);
+          timers.push(c);
+        }
+      }, delay);
+      timers.push(t);
+      delay += MOVE + PAUSE;
+    });
+  }
+
+  resetMetrics();
+  setSplit(50);
+  runAuto();
+
+  /* Divider drag — metrics follow divider position, reset on release */
+  divider.addEventListener('mousedown', e => { cancelAuto(); dragging = true; e.preventDefault(); });
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const rect  = canvas.getBoundingClientRect();
+    const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    setSplit(ratio * 100);
+    updateMetricsByRatio(ratio);
+  });
+  document.addEventListener('mouseup', () => {
+    if (dragging) { dragging = false; resetMetrics(); }
+  });
+
+  /* Touch support */
+  divider.addEventListener('touchstart', e => { cancelAuto(); dragging = true; e.preventDefault(); }, {passive:false});
+  document.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    const rect  = canvas.getBoundingClientRect();
+    const ratio = Math.max(0, Math.min(1, (e.touches[0].clientX - rect.left) / rect.width));
+    setSplit(ratio * 100);
+    updateMetricsByRatio(ratio);
+  }, {passive:true});
+  document.addEventListener('touchend', () => {
+    if (dragging) { dragging = false; resetMetrics(); }
+  });
+})();
+
+/* ── Gauge arc + wave micro-animations ── */
+(function() {
+  const arcEl   = document.getElementById('fc2Arc');
+  const numEl   = document.getElementById('fc2Num');
 </body></html>
