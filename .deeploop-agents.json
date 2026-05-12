@@ -1,0 +1,6 @@
+{
+  "url": "http://localhost:3000",
+  "agentName": "[claude] Opus 4.7 (1M context)",
+  "roleDescription": "全栈设计 / 前端 / 文案",
+  "projects": ["W15K1X"]
+}

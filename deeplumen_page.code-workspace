@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"name": "cosmowork",
+			"path": ".."
+		},
+		{
+			"name": "chatgpt_cosmo",
+			"path": "../chatgpt_cosmo"
+		},
+		{
+			"name": "openclaw_cosmo",
+			"path": "../openclaw_cosmo"
+		},
+		{
+			"name": "shopify-marketing",
+			"path": "../shopify-marketing"
+		}
+	],
+	"settings": {}
+}

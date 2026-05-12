@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LumenShop – Agentic commerce layer | DeepLumen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', 'Inter Fallback', Arial, Helvetica, sans-serif;
+  font-size: 16px; font-weight: 400; line-height: 1.5;
+  background: #faf8f4; color: #5a5855;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+.mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+.page-wrapper { width: calc(100% - 40px); max-width: 1440px; margin: 0 auto; background: #faf8f4; }
+
+/* ── NAV (copied from index) ── */
+nav {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 10002;
+  background: rgba(250,248,244,0.90);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid transparent; transition: border-bottom-color 0.3s ease;
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 80px; max-width: 1440px; margin: 0 auto;
+}
+.nav-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; margin-left: -6px; }
+.nav-logo-img { height: 52px; width: auto; display: block; margin-top: 10px; }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-link { font-size: 14px; font-weight: 500; color: #8c8884; text-decoration: none; transition: color 0.2s; }
+.nav-link:hover { color: #5a5855; }
+.nav-link.is-active { color: #5a5855; font-weight: 600; }
+.nav-link-wrap { position: relative; display: inline-flex; align-items: center; }
+.nav-badge-new {
+  position: absolute; top: -8px; right: -22px;
+  font-size: 9px; font-weight: 700; color: #fff; letter-spacing: 0.3px;
+  background: linear-gradient(180deg, #ec7070, #f0863f);
+  border-radius: 100px; padding: 2px 5px; line-height: 1.3;
+  animation: badge-bounce 1.2s ease-in-out infinite;
+}
+@keyframes badge-bounce {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+.nav-actions { display: flex; align-items: center; gap: 12px; }
+.btn-demo-nav {
+  font-size: 14px; font-weight: 600; color: #5a5855;
+  background: transparent; border: 1px solid #eaeaea; border-radius: 100px; padding: 10px 20px;
+  cursor: pointer; text-decoration: none;
+}
+.btn-login-nav {
+  font-size: 14px; font-weight: 600; color: #fff;
+  background: linear-gradient(180deg, #ec7070, #f0863f);
+  border: none; border-radius: 100px; padding: 10px 20px; cursor: pointer; text-decoration: none;
+}
+.nav-burger {
+  display: none; flex-direction: column; justify-content: center;
+  gap: 5px; background: none; border: none; cursor: pointer; padding: 4px;
+}
+.nav-burger span {
+  display: block; width: 22px; height: 2px;
+  background: #5a5855; border-radius: 2px; transition: transform 0.25s, opacity 0.25s;
+}
+.nav-burger.is-active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-burger.is-active span:nth-child(2) { opacity: 0; }
+.nav-burger.is-active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav-mobile-menu {
+  display: none; flex-direction: column; gap: 10px;
+  padding: 16px 20px; border-top: 1px solid rgba(234,234,234,0.6);
+}
+.nav-mobile-menu.is-open { display: flex; }
+
+/* ── PRIMITIVES ── */
+.wrap { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 80px; }
+section { padding: 96px 0; }
+.section-label {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #ec7070, #f0863f);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 14px; display: inline-flex; align-items: center; gap: 10px;
+}
+.section-label::before {
+  content: ''; width: 24px; height: 1.5px;
+  background: linear-gradient(180deg, #ec7070, #f0863f);
+  display: inline-block;
+}
+.section-label-mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; color: #b4b0ab;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  margin-bottom: 14px; display: block;
+}
+.section-title {
+  font-size: 44px; font-weight: 600; line-height: 1.15;
+  letter-spacing: -0.5px; color: #5a5855; margin-bottom: 18px;
+}
+.grad-text {
+  background: linear-gradient(180deg, #ec7070, #f0863f);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.section-sub {
+  font-size: 16px; color: #8c8884; max-width: 640px; line-height: 1.7;
+}
+
+.btn-primary {
+  padding: 11px 24px;
+  background: linear-gradient(180deg, #ec7070, #f0863f);
+  color: #fff; font-weight: 600; font-size: 14px;
+  border-radius: 100px; border: none; cursor: pointer;
+  font-family: inherit; display: inline-flex; align-items: center; gap: 8px;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(240,134,63,0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(236,112,112,0.25); }
+.btn-ghost {
+  padding: 11px 24px; background: transparent; color: #5a5855;
+  font-weight: 600; font-size: 14px; border-radius: 100px;
+  border: 1px solid #eaeaea; cursor: pointer;
+  font-family: inherit; display: inline-flex; align-items: center; gap: 6px;
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.btn-ghost:hover { border-color: #c9c9c9; background: rgba(0,0,0,0.02); }
+
+/* ── HERO ── */
+.hero { padding: 150px 0 64px; position: relative; overflow: hidden; }
+.hero::before {
+  content: ''; position: absolute; top: -220px; right: -140px;
+  width: 640px; height: 640px;
+  background: radial-gradient(circle, rgba(236,112,112,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1.05fr 1fr;
+  gap: 56px; align-items: start;
+}
+.hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: #b4b0ab;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.hero h1 {
+  font-size: 44px; font-weight: 600;
+  line-height: 1.15; letter-spacing: -0.5px;
+  color: #5a5855; margin-bottom: 20px;
+}
+.hero-sub {
+  font-size: 16px; color: #8c8884; max-width: 540px;
+  margin-bottom: 28px; line-height: 1.65;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* Agent trace console (dark card) */
+.console {
+  background: #0a0a0a; color: rgba(255,255,255,0.9);
+  border-radius: 18px; padding: 24px;
+  box-shadow: 0 30px 70px -30px rgba(0,0,0,0.45);
+  position: relative; overflow: hidden;
+}
+.console::before {
+  content: ''; position: absolute; inset: 0 0 auto 0; height: 2px;
+  background: linear-gradient(90deg, #ec7070, #f0863f, #e8b14a);
+  border-radius: 18px 18px 0 0;
+}
+.console-head {
+  display: flex; align-items: center; gap: 8px;
+  padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+}
+.console-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; }
+.console-head .addr { color: #fff; }
+.console-head .meta { margin-left: auto; color: rgba(255,255,255,0.45); }
+.console-body {
+  padding: 18px 0 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px; line-height: 1.65;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.trace-step { }
+.trace-label { color: rgba(255,255,255,0.45); }
+.trace-label .tok { color: #fff; }
+.trace-label .t { color: rgba(255,255,255,0.4); font-size: 11px; }
+.trace-text { padding-left: 20px; margin-top: 2px; color: rgba(255,255,255,0.85); }
+.trace-text.dim { color: rgba(255,255,255,0.65); }
+.trace-text .kk { color: rgba(255,255,255,0.9); }
+.trace-result { padding-left: 20px; margin-top: 2px; color: #6ee7b7; }
+.trace-result.warn { color: #fcd34d; }
+.trace-result .acc { color: #fff; }
+.beta-tag {
+  display: inline-block; margin-left: 4px;
+  background: #fff; color: #000;
+  font-size: 9px; font-weight: 700;
+  padding: 2px 6px; border-radius: 3px;
+  letter-spacing: 0.04em;
+}
+.console-tools {
+  padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.1);
+}
+.console-tools-label {
+  font-size: 10px; color: rgba(255,255,255,0.4);
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+.tool-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.tool-chip {
+  padding: 3px 9px; border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+}
+.tool-chip.solid { background: #fff; color: #000; font-weight: 600; }
+.tool-chip.ghost {
+  background: transparent; color: rgba(255,255,255,0.75);
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+/* Stats strip */
+.hero-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; margin-top: 56px;
+  background: #eaeaea;
+  border: 1px solid #eaeaea; border-radius: 2px;
+}
+.hero-stat { background: #fff; padding: 20px 22px; }
+.hero-stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: #b4b0ab;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.hero-stat-num {
+  margin-top: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px; color: #5a5855; font-weight: 600;
+}
+
+/* ── PROBLEM ── */
+.problem { background: #fff; border-top: 1px solid #eaeaea; border-bottom: 1px solid #eaeaea; }
+.prob-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+.prob-card {
+  background: #faf8f4; border: 1px solid #eaeaea;
+  border-radius: 16px; padding: 24px;
+}
+.prob-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: #b4b0ab;
+}
+.prob-title { margin-top: 10px; font-size: 16px; font-weight: 600; color: #5a5855; }
+.prob-desc { margin-top: 10px; font-size: 14px; color: #8c8884; line-height: 1.7; }
+
+/* ── CAPABILITIES TABLE ── */
+.cap-table {
+  margin-top: 40px;
+  border: 1px solid #eaeaea; border-radius: 16px;
+  background: #fff; overflow: hidden;
+  font-family: 'JetBrains Mono', monospace;
+}
+.cap-row {
+  display: grid; grid-template-columns: 140px 1fr auto;
+  align-items: center; padding: 18px 20px; gap: 20px;
+  border-bottom: 1px solid #eef0f1;
+  transition: background 0.15s;
+}
+.cap-row:last-child { border-bottom: none; }
+.cap-row:hover { background: rgba(0,0,0,0.015); }
+.cap-row.highlight { background: rgba(236,112,112,0.04); }
+.cap-name { font-size: 13px; font-weight: 600; color: #5a5855; }
+.cap-desc { font-size: 13.5px; color: #6e6a66; font-family: 'JetBrains Mono', monospace; line-height: 1.55; }
+.cap-latency { font-size: 11px; color: #b4b0ab; white-space: nowrap; }
+.cap-beta {
+  display: inline-block; margin-left: 6px;
+  font-size: 9px; font-weight: 700;
+  color: #fff; padding: 2px 6px; border-radius: 3px;
+  background: linear-gradient(135deg, #ec7070, #f0863f);
+  letter-spacing: 0.04em;
+}
+
+/* ── PLAYGROUND ── */
+.playground { background: #fff; border-top: 1px solid #eaeaea; border-bottom: 1px solid #eaeaea; }
+.pg-card {
+  margin-top: 40px; max-width: 900px;
+  border: 1px solid #eaeaea; border-radius: 16px;
+  background: #fff; overflow: hidden;
+  box-shadow: 0 20px 60px -30px rgba(30,41,57,0.15);
+}
+.pg-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 16px; border-bottom: 1px solid #eef0f1;
+  font-family: 'JetBrains Mono', monospace; font-size: 13px;
+}
+.pg-method {
+  padding: 4px 10px; border-radius: 4px;
+  background: #5a5855; color: #fff;
+  font-weight: 700; font-size: 11px;
+}
+.pg-path { color: #6e6a66; }
+.pg-meta { margin-left: auto; font-size: 11px; color: #b4b0ab; }
+.pg-body { padding: 20px; }
+.pg-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: #b4b0ab;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.pg-input-row { margin-top: 8px; display: flex; gap: 10px; }
+.pg-input {
+  flex: 1; border: 1px solid #eaeaea; border-radius: 10px;
+  padding: 12px 16px; font-family: 'JetBrains Mono', monospace;
+  font-size: 14px; color: #5a5855; background: #fff;
+  outline: none; transition: border-color 0.2s;
+}
+.pg-input:focus { border-color: #ec7070; }
+.pg-run {
+  padding: 10px 22px;
+  background: linear-gradient(180deg, #ec7070, #f0863f);
+  color: #fff; font-weight: 600; font-size: 13px;
+  border: none; border-radius: 10px; cursor: pointer;
+  font-family: inherit; white-space: nowrap;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.pg-run:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(236,112,112,0.3); }
+.pg-samples {
+  margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #b4b0ab;
+}
+.pg-sample {
+  background: none; border: none; padding: 0;
+  color: #8c8884; cursor: pointer;
+  text-decoration: underline; text-decoration-color: rgba(140,136,132,0.3);
+  font: inherit;
+}
+.pg-sample:hover { color: #ec7070; }
+.pg-response-wrap {
+  background: #0a0a0a; padding: 20px;
+  border-top: 1px solid #eef0f1;
+}
+.pg-response-head {
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: rgba(255,255,255,0.5); margin-bottom: 12px;
+}
+.pg-response-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.3); }
+.pg-response {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px; line-height: 1.65;
+  color: rgba(255,255,255,0.85);
+  min-height: 180px; overflow-x: auto; white-space: pre;
+}
+.pg-response .c { color: rgba(255,255,255,0.4); }
+.pg-response .k { color: rgba(255,255,255,0.7); }
+.pg-note { margin-top: 12px; font-size: 11px; color: #b4b0ab; font-family: 'JetBrains Mono', monospace; }
+
+/* ── CODE TABS ── */
+.code-card {
+  margin-top: 40px;
+  border: 1px solid #eaeaea; border-radius: 16px;
+  background: #fff; overflow: hidden;
+}
+.code-tabs {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 10px; border-bottom: 1px solid #eef0f1;
+}
+.code-tab {
+  font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  padding: 6px 12px; border-radius: 8px;
+  background: transparent; color: #8c8884;
+  border: 1px solid transparent; cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.code-tab.is-active { background: #5a5855; color: #fff; border-color: #5a5855; }
+.code-panes { background: #0a0a0a; }
+.code-pane {
+  display: none;
+  padding: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; line-height: 1.75;
+  color: rgba(255,255,255,0.88); white-space: pre;
+  overflow-x: auto;
+}
+.code-pane.is-active { display: block; }
+.code-pane .c { color: rgba(255,255,255,0.4); }
+.code-pane .s { color: rgba(255,255,255,0.7); }
+.code-pane .k { color: #ec7070; }
+
+/* ── RUNTIMES ── */
+.runtimes { background: #fff; border-top: 1px solid #eaeaea; border-bottom: 1px solid #eaeaea; }
+.rt-grid {
+  margin-top: 32px;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+}
+.rt-tile {
+  border: 1px solid #eaeaea; border-radius: 12px;
+  height: 76px; display: flex; align-items: center; justify-content: center;
+  color: #6e6a66; font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  background: #faf8f4;
+}
+
+/* ── CTA ── */
+.cta { text-align: center; padding: 120px 0; }
+.cta h2 { font-size: clamp(32px, 4.5vw, 48px); font-weight: 600; color: #5a5855; letter-spacing: -0.5px; line-height: 1.1; }
+.cta p { margin-top: 16px; font-size: 16px; color: #8c8884; }
+.cta-actions { margin-top: 32px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+/* ── FOOTER (copied from index) ── */
+footer { background: linear-gradient(180deg, #1e2939, #101828); color: #fff; padding: 0; position: relative; z-index: 10000; }
+.footer-inner { max-width: 1440px; width: 100%; margin: 0 auto; padding: 54px 80px 0; }
+.footer-top { display: flex; justify-content: space-between; gap: 32px; padding-bottom: 32px; }
+.footer-brand { display: flex; flex-direction: column; gap: 16px; max-width: 500px; }
+.footer-logo { display: flex; align-items: center; gap: 8px; margin-left: -6px; }
+.footer-desc { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.75; }
+.footer-socials { display: flex; gap: 10px; }
+.social-icon { width: 34px; height: 34px; background: rgba(255,255,255,0.08); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+.footer-cols { display: flex; gap: 72px; }
+.footer-col { display: flex; flex-direction: column; gap: 12px; }
+.footer-col-title { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+.footer-col-body { display: flex; flex-direction: column; gap: 12px; }
+.footer-col a { font-size: 14px; color: rgba(255,255,255,0.5); }
+.footer-col a:hover { color: #fff; }
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 32px; }
+.footer-copy { font-size: 13px; color: rgba(255,255,255,0.35); }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { font-size: 13px; color: rgba(255,255,255,0.35); }
+
+/* ── PAGE FRAME (fixed vertical border lines) ── */
+.page-frame {
+  position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 1440px; height: 100vh;
+  border-left: 1px solid #e8e4de; border-right: 1px solid #e8e4de;
+  pointer-events: none; z-index: 9999;
+}
+.banner-mask {
+  position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 1440px; height: 40px;
+  border-left: 2px solid #faf8f4; border-right: 2px solid #faf8f4;
+  pointer-events: none; z-index: 10000;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .nav-inner { padding: 16px 40px; }
+  .footer-inner { padding: 54px 40px 0; }
+  .rt-grid { grid-template-columns: repeat(4, 1fr); }
+  .section-title { font-size: 36px; }
+  .page-frame, .banner-mask { display: none; }
+}
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .prob-grid { grid-template-columns: 1fr; }
+  .rt-grid { grid-template-columns: repeat(3, 1fr); }
+  .section-title { font-size: 28px; }
+}
+@media (max-width: 767px) {
+  .nav-inner { padding: 14px 20px; }
+  .nav-actions { display: none; }
+  .nav-burger { display: flex; }
+  section { padding: 72px 0; }
+  .wrap { padding: 0 24px; }
+  .hero { padding: 120px 0 40px; }
+  .cap-row { grid-template-columns: 100px 1fr; row-gap: 4px; }
+  .cap-latency { grid-column: 1 / -1; padding-left: 0; }
+  .pg-input-row { flex-direction: column; }
+  .pg-run { width: 100%; }
+  .rt-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-inner { padding: 40px 20px 0; }
+  .footer-top { flex-direction: column; gap: 28px; }
+  .footer-cols { flex-direction: column; gap: 28px; }
+  .footer-bottom { flex-direction: column; gap: 10px; }
+  .hero h1 { font-size: 30px; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-frame"></div>
+<div class="banner-mask"></div>
+
+<!-- ── NAV ── -->
+<div id="nav-placeholder"></div>
+<script src="nav.js"></script>
+
+<div class="page-wrapper">
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">// For Agents &amp; Agent Builders</div>
+        <h1>Give Your Agent a <span class="grad-text">Real Commerce Layer.</span></h1>
+        <p class="hero-sub">Shopping is the killer use case for autonomous agents — and the one most broken today. LumenShop exposes one MCP or REST endpoint your agent plugs into once, then discovers, compares, and (beta) checks out across hundreds of merchants in a single reasoning loop.</p>
+        <div class="hero-actions">
+          <a href="#cta" class="btn-primary">Get API key · Free $5 credit →</a>
+          <a href="#playground" class="btn-ghost">Try the Agent API →</a>
+        </div>
+      </div>
+      <!-- Agent trace console -->
+      <div class="console">
+        <div class="console-head">
+          <span class="console-dot"></span>
+          <span class="addr">mcp://lumenshop</span>
+          <span class="meta">agent trace · 47ms</span>
+        </div>
+        <div class="console-body">
+          <div class="trace-step">
+            <div class="trace-label">→ user intent</div>
+            <div class="trace-text">"walnut desk lamp under $150"</div>
+          </div>
+          <div class="trace-step">
+            <div class="trace-label"><span class="tok">↓</span> tool.<span class="tok">search</span> <span class="t">· 37ms</span></div>
+            <div class="trace-text dim">{ <span class="kk">q</span>, <span class="kk">max_price</span>: 150, <span class="kk">limit</span>: 10 }</div>
+            <div class="trace-result">▼ 3 products across 2 merchants</div>
+          </div>
+          <div class="trace-step">
+            <div class="trace-label"><span class="tok">↓</span> tool.<span class="tok">resolve</span> <span class="t">· 220ms</span></div>
+            <div class="trace-text dim">{ <span class="kk">product</span>: "arc_walnut", <span class="kk">dest</span>: "10013" }</div>
+            <div class="trace-result">▼ landed <span class="acc">$139</span> · tax $12.34 · 2-day</div>
+          </div>
+          <div class="trace-step">
+            <div class="trace-label"><span class="tok">↓</span> tool.<span class="tok">checkout.create</span> <span class="beta-tag">BETA</span></div>
+            <div class="trace-text dim">{ <span class="kk">product</span>: "arc_walnut", <span class="kk">token</span>: "tok_…" }</div>
+            <div class="trace-result warn">◆ awaiting_user_confirm</div>
+          </div>
+        </div>
+        <div class="console-tools">
+          <div class="console-tools-label">tools available</div>
+          <div class="tool-chips">
+            <span class="tool-chip solid">search</span>
+            <span class="tool-chip solid">resolve</span>
+            <span class="tool-chip solid">checkout</span>
+            <span class="tool-chip ghost">compare</span>
+            <span class="tool-chip ghost">watch</span>
+            <span class="tool-chip ghost">auth</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-label">agent loop</div>
+        <div class="hero-stat-num">&lt;50ms</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-label">protocols</div>
+        <div class="hero-stat-num">MCP · REST</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-label">SDKs</div>
+        <div class="hero-stat-num">Py · TS</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-label">uptime target</div>
+        <div class="hero-stat-num">99.9%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHY AGENTS NEED THIS ── -->
+<section class="problem">
+  <div class="wrap">
+    <span class="section-label-mono">// the problem</span>
+    <div class="section-title" style="max-width:640px;">Why agents stall the moment <span class="grad-text">shopping starts.</span></div>
+    <div class="prob-grid">
+      <div class="prob-card">
+        <div class="prob-num">01 · Fragmented data</div>
+        <div class="prob-title">Every merchant is its own schema</div>
+        <p class="prob-desc">Scraping HTML per store means every agent prompt reinvents fields, breaks on layout change, and wastes tokens on noise.</p>
+      </div>
+      <div class="prob-card">
+        <div class="prob-num">02 · No closing mechanism</div>
+        <div class="prob-title">Agents stop at a product page</div>
+        <p class="prob-desc">Without a checkout abstraction, the agent hands control back to the user at the worst possible moment — the moment of intent.</p>
+      </div>
+      <div class="prob-card">
+        <div class="prob-num">03 · Invisible performance</div>
+        <div class="prob-title">No attribution, no feedback loop</div>
+        <p class="prob-desc">You cannot improve what you cannot measure. Per-agent, per-query, per-product telemetry must be first-class, not bolted on.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CAPABILITIES ── -->
+<section>
+  <div class="wrap">
+    <span class="section-label-mono">// capabilities</span>
+    <div class="section-title">Everything an agent needs, <span class="grad-text">one contract.</span></div>
+    <div class="cap-table">
+      <div class="cap-row">
+        <div class="cap-name">search</div>
+        <div class="cap-desc">Search &amp; normalize products across the merchant graph · LLM-ready JSON</div>
+        <div class="cap-latency">&lt;50ms</div>
+      </div>
+      <div class="cap-row">
+        <div class="cap-name">compare</div>
+        <div class="cap-desc">Cross-merchant price intelligence · best value, anomalies, trend windows</div>
+        <div class="cap-latency">&lt;50ms</div>
+      </div>
+      <div class="cap-row">
+        <div class="cap-name">resolve</div>
+        <div class="cap-desc">Landed cost · tax · shipping · inventory per merchant, per destination</div>
+        <div class="cap-latency">~220ms</div>
+      </div>
+      <div class="cap-row highlight">
+        <div class="cap-name">checkout <span class="cap-beta">BETA</span></div>
+        <div class="cap-desc">Place the order · tokenized payment · merchant of record preserved</div>
+        <div class="cap-latency">&lt;35s e2e</div>
+      </div>
+      <div class="cap-row">
+        <div class="cap-name">watch</div>
+        <div class="cap-desc">Webhook price &amp; inventory alerts · per agent · per product</div>
+        <div class="cap-latency">stream</div>
+      </div>
+      <div class="cap-row">
+        <div class="cap-name">auth</div>
+        <div class="cap-desc">Per-agent scoped keys · rate limits · telemetry · audit · every call attributable</div>
+        <div class="cap-latency">—</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PLAYGROUND ── -->
+<section class="playground" id="playground">
+  <div class="wrap">
+    <span class="section-label-mono">// playground</span>
+    <div class="section-title">Try the <span class="grad-text">Agent API.</span></div>
+    <p class="section-sub">Fire a raw query at the same endpoint your agent calls. Results from the live index in &lt;50ms — no signup required.</p>
+    <div class="pg-card">
+      <div class="pg-head">
+        <span class="pg-method">POST</span>
+        <span class="pg-path">/api/search</span>
+        <span class="pg-meta">live · latency <span id="pgLatency">—</span></span>
+      </div>
+      <div class="pg-body">
+        <div class="pg-label">query</div>
+        <div class="pg-input-row">
+          <input id="pgQuery" class="pg-input" type="text"
+                 value="minimalist walnut desk lamp under $150"
+                 placeholder="Enter a query and fire the request" />
+          <button id="pgRun" class="pg-run">Run Query →</button>
+        </div>
+        <div class="pg-samples">
+          <span>try:</span>
+          <button class="pg-sample" data-sample="walnut desk under 400 ships NYC">walnut desk under 400 ships NYC</button>
+          <span>·</span>
+          <button class="pg-sample" data-sample="best value 2700k warm task lamp">best value 2700k warm task lamp</button>
+          <span>·</span>
+          <button class="pg-sample" data-sample="carry-on luggage 40L aluminum">carry-on luggage 40L aluminum</button>
+        </div>
+      </div>
+      <div class="pg-response-wrap">
+        <div class="pg-response-head">
+          <span>response · application/json</span>
+          <span class="pg-response-dot"></span>
+          <span id="pgMeta">idle</span>
+        </div>
+<pre id="pgResponse" class="pg-response"><span class="c">// Click "Run Query" to see sample results from the live index.</span>
+{
+  <span class="k">"status"</span>: <span class="k">"idle"</span>,
+  <span class="k">"hint"</span>: <span class="k">"press ⏎ or click Run Query"</span>
+}</pre>
+      </div>
+    </div>
+    <p class="pg-note">Note: demo returns cached sample payloads. For live access, grab an API key in <a href="#cta" style="color:#ec7070;text-decoration:underline;">Get API key</a>.</p>
+  </div>
+</section>
+
+<!-- ── CODE TABS ── -->
+<section>
+  <div class="wrap">
+    <span class="section-label-mono">// your first call</span>
+    <div class="section-title">Ship in five minutes. <span class="grad-text">Pick your stack.</span></div>
+    <div class="code-card">
+      <div class="code-tabs" id="codeTabs">
+        <button class="code-tab is-active" data-tab="curl">cURL</button>
+        <button class="code-tab" data-tab="mcp">MCP config</button>
+        <button class="code-tab" data-tab="py">Python</button>
+        <button class="code-tab" data-tab="ts">TypeScript</button>
+      </div>
+      <div class="code-panes">
+<pre class="code-pane is-active" data-pane="curl"><span class="c"># Search the merchant graph</span>
+<span class="k">curl</span> https://api.lumenshop.io/v1/search \
+  -H <span class="s">"Authorization: Bearer $LUMEN_KEY"</span> \
+  -d <span class="s">'{"q":"walnut desk lamp","max_price":150}'</span></pre>
+<pre class="code-pane" data-pane="mcp"><span class="c">// ~/.config/claude/mcp.json</span>
+{
+  <span class="s">"mcpServers"</span>: {
+    <span class="s">"lumenshop"</span>: {
+      <span class="s">"url"</span>: <span class="s">"mcp://lumenshop.io"</span>,
+      <span class="s">"auth"</span>: { <span class="s">"bearer"</span>: <span class="s">"sk_live_..."</span> }
+    }
+  }
+}</pre>
+<pre class="code-pane" data-pane="py"><span class="k">from</span> lumenshop <span class="k">import</span> Client
+
+ls = Client(api_key=<span class="s">"sk_live_..."</span>)
+results = ls.search(<span class="s">"walnut desk lamp"</span>, max_price=150)
+order   = ls.checkout.create(product=results[0].id)  <span class="c"># beta</span></pre>
+<pre class="code-pane" data-pane="ts"><span class="k">import</span> { LumenShop } <span class="k">from</span> <span class="s">"@lumenshop/sdk"</span>;
+<span class="k">const</span> ls = <span class="k">new</span> LumenShop({ apiKey: process.env.LUMEN_KEY! });
+<span class="k">const</span> hits  = <span class="k">await</span> ls.search({ q: <span class="s">"walnut desk lamp"</span>, maxPrice: 150 });
+<span class="k">const</span> order = <span class="k">await</span> ls.checkout.create({ product: hits[0].id });</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RUNTIMES ── -->
+<section class="runtimes">
+  <div class="wrap">
+    <span class="section-label-mono">// runtimes &amp; surfaces</span>
+    <div class="section-title">Every agent runtime. Every AI surface.</div>
+    <div class="rt-grid">
+      <div class="rt-tile">Claude (MCP)</div>
+      <div class="rt-tile">OpenAI Tools</div>
+      <div class="rt-tile">LangChain</div>
+      <div class="rt-tile">LlamaIndex</div>
+      <div class="rt-tile">AutoGen</div>
+      <div class="rt-tile">CrewAI</div>
+      <div class="rt-tile">ChatGPT Shopping</div>
+      <div class="rt-tile">Perplexity</div>
+      <div class="rt-tile">Google AI Mode</div>
+      <div class="rt-tile">Gemini</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta" id="cta">
+  <div class="wrap">
+    <h2>Your first agent order is a <span class="grad-text">curl away.</span></h2>
+    <p>$5 credit on signup. No card. MCP live in &lt;5 min.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn-primary">Get API key</a>
+      <a href="#" class="btn-ghost">Read API docs →</a>
+    </div>
+  </div>
+</section>
+
+</div><!-- /.page-wrapper -->
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">
+          <img src="logo/logosvg.svg" alt="deeplumen" style="height:40px;width:auto;display:block;filter:brightness(0) invert(1);">
+        </a>
+        <p class="footer-desc">Deeplumen is an AI-first technology company focused on the intersection of AI agents and global commerce. As the pioneers of the M2AI (Marketing to AI) framework, Deeplumen builds the protocols, infrastructure, and connectors that allow brands to thrive in an era where machines represent the consumer.</p>
+        <div class="footer-socials">
+          <a href="https://x.com/Deeplumen0922" target="_blank" class="social-icon" aria-label="X / Twitter">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M9.16 6.77 14.08 1H12.9L8.62 6.01 5.22 1H1.5l5.17 7.52L1.5 15h1.18l4.52-5.25L10.78 15H14.5L9.16 6.77ZM7.79 9.09l-.52-.75L3.1 1.87h1.8l3.37 4.82.52.75 4.37 6.24h-1.8L7.79 9.09Z" fill="rgba(255,255,255,0.6)"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/company/deeplumen/posts/?feedView=all" target="_blank" class="social-icon" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.5 5.5H5V14H2.5V5.5ZM3.75 4.5A1.25 1.25 0 1 1 3.75 2 1.25 1.25 0 0 1 3.75 4.5Z" fill="rgba(255,255,255,0.6)"/><path d="M6.5 5.5H9V6.7C9.4 6 10.3 5.3 11.6 5.3 14.4 5.3 14.5 7.1 14.5 9.5V14H12V10C12 9 11.9 7.8 10.4 7.8 8.9 7.8 8.5 8.8 8.5 9.8V14H6.5V5.5Z" fill="rgba(255,255,255,0.6)"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <div class="footer-col-body">
+            <a href="About Us_page.html">About Us</a>
+            <a href="Contact_page.html">Contact</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Product</div>
+          <div class="footer-col-body">
+            <a href="shopify-app.html">Shopify APP</a>
+            <a href="lumenshop.html">LumenShop</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 DeepLumen. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Code tabs */
+(function () {
+  var tabs = document.querySelectorAll('#codeTabs .code-tab');
+  var panes = document.querySelectorAll('.code-pane');
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var name = tab.getAttribute('data-tab');
+      tabs.forEach(function (t) { t.classList.toggle('is-active', t === tab); });
+      panes.forEach(function (p) { p.classList.toggle('is-active', p.getAttribute('data-pane') === name); });
+    });
+  });
+})();
+
+/* Playground (mock response) */
+(function () {
+  var input = document.getElementById('pgQuery');
+  var runBtn = document.getElementById('pgRun');
+  var resp = document.getElementById('pgResponse');
+  var meta = document.getElementById('pgMeta');
+  var latency = document.getElementById('pgLatency');
+  var samples = document.querySelectorAll('.pg-sample');
+
+  samples.forEach(function (b) {
+    b.addEventListener('click', function () {
+      input.value = b.getAttribute('data-sample');
+      input.focus();
+    });
+  });
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') run();
+  });
+  runBtn.addEventListener('click', run);
+
+  function run() {
+    var q = (input.value || '').trim();
+    if (!q) return;
+    meta.textContent = 'running…';
+    latency.textContent = '—';
+    resp.innerHTML = '<span class="c">// dispatching query…</span>';
+    var start = Date.now();
+    setTimeout(function () {
+      var ms = 40 + Math.floor(Math.random() * 18);
+      latency.textContent = ms + 'ms';
+      meta.textContent = '200 OK · ' + ms + 'ms';
+      var payload = {
+        status: 'ok',
+        query: q,
+        latency_ms: ms,
+        results: [
+          { id: 'arc_walnut', title: 'Arc Walnut Desk Lamp', merchant: 'northfield', price: 139.00, currency: 'USD', ships_to: 'US', score: 0.94 },
+          { id: 'mns_brass',  title: 'Mn.S Brass Task Lamp', merchant: 'monastics',  price: 128.50, currency: 'USD', ships_to: 'US', score: 0.88 },
+          { id: 'hm_stem',    title: 'Hemlock Stem Lamp',    merchant: 'hemlock-co', price: 146.00, currency: 'USD', ships_to: 'US', score: 0.82 }
+        ]
+      };
+      resp.textContent = JSON.stringify(payload, null, 2);
+    }, 380);
+  }
+})();
+</script>
+
+</body>
+</html>

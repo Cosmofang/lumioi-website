@@ -1,2 +1,2 @@
-/                /2026_deeplumen/  301
-/index.html      /2026_deeplumen/  301
+# Backward-compat: old /2026_deeplumen/* URLs still work
+/2026_deeplumen/*  /:splat  301
