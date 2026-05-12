@@ -4837,4 +4837,12 @@ function submitCTA() {
     ny = Math.max(-1, Math.min(1, ny));
     // Tilt to "look at" the cursor (right-side / top forward when cursor goes there)
     targetMx = -nx * MAX_Y;
-</body></html>
+    targetMy = -ny * MAX_X;
+    ensureLoop();
+  });
+
+})();
+
+</script>
+</body>
+</html>
