@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Demo — DeepLumen</title>
+  <meta name="description" content="Book a live DeepLumen demo. Tell us about your brand and we'll show you how we can amplify your AI visibility." />
+
+  <link rel="icon" type="image/svg+xml" href="../logo/deeplumen01.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ============================================================
+       1. DESIGN TOKENS
+       ============================================================ */
+    :root {
+      --bg:           #fefaf3;
+      --bg-2:         #f5f0e8;
+      --surface-card: #ffffff;
+      --surface-tag:  #f5f1ea;
+
+      --text-dark:    #211e1d;
+      --text-dark-2:  #2c2c2c;
+      --text-body:    #585858;
+      --text-muted:   #8c8884;
+      --text-faint:   #b8b4b0;
+
+      --stroke:       #d9d9d9;
+      --stroke-soft:  #211d1d1a;
+      --stroke-cream: #e8e4de;
+
+      --accent:       #be8e3e;
+      --accent-soft:  #ebe1ce;
+      --accent-warm:  #836431;
+
+      --brand-1:      #ec7070;
+      --brand-2:      #f0863f;
+      --brand-grad:   linear-gradient(180deg, #ec7070, #f0863f);
+
+      --font-heading: 'Playfair Display', Georgia, serif;
+      --font-body:    'Inter', Arial, sans-serif;
+      --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+    }
+
+    /* ============================================================
+       2. BASE
+       ============================================================ */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-body);
+      background:
+        url('../neura-nova-assets/Hero_Bg_01.webp'), var(--bg);
+      background-attachment: fixed, fixed;
+      background-size: cover, auto;
+      background-position: center top, center top;
+      background-repeat: no-repeat, no-repeat;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
+
+    /* ============================================================
+       3. PAGE FRAME
+       ============================================================ */
+    .page-frame {
+      position: fixed; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100%; max-width: 1440px; height: 100vh;
+      border-left: 1px solid var(--stroke-cream); border-right: 1px solid var(--stroke-cream);
+      pointer-events: none; z-index: 9999;
+    }
+    .banner-mask {
+      position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 1440px; height: 40px;
+      border-left: 2px solid var(--bg); border-right: 2px solid var(--bg);
+      pointer-events: none; z-index: 10000;
+    }
+
+    .page-wrapper {
+      width: 100%; max-width: 1440px;
+      margin: 0 auto;
+      position: relative;
+      isolation: isolate;
+      z-index: 1;
+    }
+
+    /* ============================================================
+       4. NAVIGATION
+       ============================================================ */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 10002;
+      background: rgba(254,250,243,0.85);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-bottom-color 0.3s ease;
+    }
+    nav.scrolled { border-bottom-color: var(--stroke-cream); }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 80px; max-width: 1440px; margin: 0 auto;
+    }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo-img { height: 44px; width: auto; display: block; }
+    .nav-links { display: flex; align-items: center; gap: 24px; }
+    .nav-link {
+      font-size: 14px; font-weight: 500; color: var(--text-body); text-decoration: none;
+      transition: color 0.3s ease; position: relative; cursor: pointer;
+    }
+    .nav-link:hover { color: var(--accent); }
+    .nav-link.has-new-badge { position: relative; }
+    .nav-badge-new {
+      position: absolute; top: -10px; right: -26px;
+      font-size: 9px; font-weight: 700; color: #fff;
+      letter-spacing: 0.04em; line-height: 1.3;
+      background: linear-gradient(180deg, var(--accent), var(--accent-warm));
+      border-radius: 100px; padding: 2px 6px;
+      box-shadow: 0 2px 6px rgba(190,142,62,0.40);
+      animation: nav-badge-bounce 1.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes nav-badge-bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-4px); }
+    }
+    @media (prefers-reduced-motion: reduce) { .nav-badge-new { animation: none; } }
+
+    .nav-dropdown { position: relative; cursor: pointer; }
+    .nav-dropdown-menu {
+      position: absolute; top: calc(100% + 12px); left: -12px;
+      min-width: 180px; background: #fff; border: 1px solid var(--stroke-soft);
+      border-radius: 12px; padding: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      opacity: 0; visibility: hidden; transform: translateY(6px);
+      transition: all 0.2s; z-index: 200;
+    }
+    .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-dropdown-menu a {
+      display: block; padding: 8px 14px; color: var(--text-body); font-size: 13px;
+      border-radius: 8px; transition: all 0.15s;
+    }
+    .nav-dropdown-menu a:hover { color: var(--accent); background: var(--bg-2); }
+
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .btn-demo-nav {
+      font-size: 14px; font-weight: 600; color: var(--text-dark);
+      background: var(--surface-card); border: 1px solid var(--stroke);
+      border-radius: 12px; padding: 10px 18px;
+      cursor: pointer; text-decoration: none;
+      transition: color 0.3s ease, border-color 0.3s ease;
+    }
+    .btn-demo-nav:hover { color: var(--accent); border-color: var(--accent); }
+    .btn-login-nav {
+      font-size: 14px; font-weight: 600; color: #fff;
+      background: var(--text-dark-2);
+      border: none; border-radius: 12px; padding: 10px 18px;
+      cursor: pointer; text-decoration: none;
+      transition: background-color 0.3s ease;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-login-nav:hover { background: var(--text-dark); }
+    .btn-arrow-wrap {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 18px; height: 18px;
+    }
+
+    /* Mobile nav */
+    .nav-burger {
+      display: none; flex-direction: column; justify-content: center; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .nav-burger span { display: block; width: 22px; height: 2px; background: var(--text-dark); border-radius: 2px; transition: transform 0.25s, opacity 0.25s; }
+    .nav-burger.is-active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.is-active span:nth-child(2) { opacity: 0; }
+    .nav-burger.is-active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-mobile-menu {
+      display: none; flex-direction: column; gap: 10px; padding: 16px 20px;
+      border-top: 1px solid rgba(234,234,234,0.6);
+    }
+    .nav-mobile-menu.is-open { display: flex; }
+    .nav-mobile-group { display: flex; flex-direction: column; padding: 8px 0; border-bottom: 1px solid var(--stroke-soft); }
+    .nav-mobile-group-title { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; padding: 4px 0 8px; }
+    .nav-mobile-sub { display: flex; flex-direction: column; gap: 2px; padding-left: 12px; }
+    .nav-mobile-sub a { font-size: 14px; color: var(--text-body); padding: 6px 0; text-decoration: none; }
+    .nav-mobile-sub a:hover { color: var(--accent); }
+    .nav-mobile-actions { display: flex; flex-direction: column; gap: 8px; padding-top: 8px; }
+    .nav-mobile-actions .btn-demo-nav,
+    .nav-mobile-actions .btn-login-nav { text-align: center; justify-content: center; }
+
+    /* ============================================================
+       5. HERO SECTION — Two-column layout
+       ============================================================ */
+    .demo-hero {
+      padding: 160px 80px 100px;
+      display: grid;
+      grid-template-columns: 1fr 46%;
+      gap: 64px;
+      align-items: start;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* LEFT COLUMN */
+    .demo-left {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .demo-left.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Badge */
+    .badge-orange {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: var(--brand-grad);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #fff;
+      width: fit-content;
+    }
+
+    /* H1 */
+    .demo-h1 {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .hero-h1-dark {
+      font-family: var(--font-heading);
+      font-size: 64px;
+      font-weight: 500;
+      color: var(--text-dark);
+      letter-spacing: -0.8px;
+      line-height: 1.1;
+      display: block;
+    }
+    .hero-h1-gradient {
+      font-family: var(--font-heading);
+      font-size: 64px;
+      font-weight: 500;
+      font-style: italic;
+      color: var(--accent);
+      letter-spacing: -0.8px;
+      line-height: 1.1;
+      display: block;
+    }
+
+    /* Subtitle */
+    .demo-subtitle {
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--text-body);
+      max-width: 480px;
+    }
+
+    /* Value points */
+    .demo-value-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .demo-value-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .demo-value-check {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .demo-value-check svg {
+      width: 10px;
+      height: 10px;
+    }
+    .demo-value-text {
+      font-size: 15px;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    /* Company description */
+    .demo-company-desc {
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--text-muted);
+      max-width: 440px;
+      padding-top: 8px;
+      border-top: 1px solid var(--stroke-soft);
+    }
+
+    /* AI Platform logos */
+    .demo-ai-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-top: 4px;
+    }
+    .demo-ai-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--stroke-cream);
+      border-radius: 100px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: border-color 0.2s ease;
+    }
+    .demo-ai-pill:hover { border-color: var(--accent); }
+    .demo-ai-pill img,
+    .demo-ai-pill svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .demo-ai-pill-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-dark);
+    }
+
+    /* RIGHT COLUMN — Glass form card */
+    .demo-right {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
+    }
+    .demo-right.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .demo-form-card {
+      background: rgba(255,252,246,0.62);
+      backdrop-filter: blur(28px) saturate(160%);
+      -webkit-backdrop-filter: blur(28px) saturate(160%);
+      border: 1px solid rgba(255,255,255,0.72);
+      border-radius: 24px;
+      padding: 48px 44px;
+      box-shadow:
+        0 24px 64px rgba(33,29,29,0.08),
+        0 4px 16px rgba(33,29,29,0.04),
+        inset 0 1px 0 rgba(255,255,255,0.90);
+    }
+
+    .form-card-title {
+      font-family: var(--font-heading);
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--text-dark);
+      letter-spacing: -0.2px;
+      margin-bottom: 32px;
+    }
+
+    .demo-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-label {
+      font-size: 13px;
+      font-weight: 500;
+      font-family: var(--font-body);
+      color: var(--text-muted);
+      letter-spacing: 0.01em;
+    }
+    .form-input,
+    .form-select {
+      height: 48px;
+      padding: 0 16px;
+      border: 1px solid var(--stroke-cream);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.80);
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--text-dark);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .form-input::placeholder { color: var(--text-faint); }
+    .form-input:focus,
+    .form-select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(190,142,62,0.12);
+    }
+    .form-select-wrap {
+      position: relative;
+    }
+    .form-select-wrap::after {
+      content: '';
+      position: absolute; right: 16px; top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-left: 4.5px solid transparent;
+      border-right: 4.5px solid transparent;
+      border-top: 5px solid var(--text-muted);
+      pointer-events: none;
+    }
+    .form-select { padding-right: 40px; cursor: pointer; }
+    .form-select option { background: #fff; color: var(--text-dark); }
+
+    /* Date input */
+    input[type="date"] {
+      cursor: pointer;
+    }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      opacity: 0.5;
+      cursor: pointer;
+    }
+
+    /* Checkbox row */
+    .form-checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 2px 0;
+    }
+    .form-checkbox-input {
+      width: 18px; height: 18px;
+      border: 1.5px solid var(--stroke-cream);
+      border-radius: 5px;
+      background: rgba(255,255,255,0.80);
+      cursor: pointer;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+    }
+    .form-checkbox-label {
+      font-size: 14px;
+      color: var(--text-body);
+      cursor: pointer;
+    }
+
+    /* Submit button */
+    .btn-continue {
+      width: 100%;
+      height: 48px;
+      background: var(--text-dark-2);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+      transition: background-color 0.25s ease;
+      margin-top: 4px;
+    }
+    .btn-continue:hover { background: var(--text-dark); }
+    .btn-continue:active { transform: scale(0.99); }
+
+    /* ============================================================
+       6. FOOTER
+       ============================================================ */
+    footer {
+      background: #48443d;
+      padding: 80px 80px 40px;
+    }
+    .footer-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      padding-bottom: 64px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .footer-logo {
+      height: 40px;
+      width: auto;
+      filter: brightness(0) invert(1);
+      display: block;
+    }
+    .footer-desc {
+      font-size: 14px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.55);
+      max-width: 320px;
+    }
+    .footer-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .footer-social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      color: rgba(255,255,255,0.55);
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+    .footer-social-link:hover {
+      border-color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.9);
+    }
+    .footer-social-link svg { width: 16px; height: 16px; }
+
+    .footer-links {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+    .footer-col-title {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 16px;
+    }
+    .footer-col-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-col-links a {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .footer-col-links a:hover { color: rgba(255,255,255,0.95); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 32px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copyright {
+      font-size: 13px;
+      color: rgba(255,255,255,0.35);
+    }
+    .footer-legal {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-legal a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .footer-legal a:hover { color: rgba(255,255,255,0.65); }
+
+    /* ============================================================
+       7. RESPONSIVE
+       ============================================================ */
+    @media (max-width: 1099px) {
+      .demo-hero {
+        grid-template-columns: 1fr;
+        padding: 140px 40px 80px;
+        gap: 48px;
+      }
+      .demo-left { max-width: 640px; }
+      .demo-right { max-width: 560px; }
+      .hero-h1-dark,
+      .hero-h1-gradient { font-size: 52px; }
+      .nav-inner { padding: 16px 40px; }
+      footer { padding: 64px 40px 32px; }
+    }
+
+    @media (max-width: 767px) {
+      .demo-hero {
+        padding: 120px 20px 60px;
+        gap: 40px;
+      }
+      .hero-h1-dark,
+      .hero-h1-gradient { font-size: 40px; }
+      .demo-subtitle { font-size: 16px; }
+      .nav-inner { padding: 14px 20px; }
+      .nav-links, .nav-actions { display: none; }
+      .nav-burger { display: flex; }
+      footer { padding: 48px 20px 28px; }
+      .footer-top { grid-template-columns: 1fr; gap: 48px; }
+      .footer-links { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .demo-form-card { padding: 32px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .demo-hero { padding: 110px 14px 48px; }
+      .hero-h1-dark,
+      .hero-h1-gradient { font-size: 34px; }
+      .demo-subtitle { font-size: 15px; }
+      footer { padding: 40px 14px 24px; }
+      .footer-links { grid-template-columns: 1fr; }
+      .demo-form-card { padding: 24px 16px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PAGE FRAME -->
+  <div class="page-frame"></div>
+  <div class="banner-mask"></div>
+
+  <!-- ============================================================
+       NAVIGATION
+       ============================================================ -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <!-- Logo -->
+      <a href="../index.html" class="nav-logo" aria-label="DeepLumen Home">
+        <img src="../logo/logocis001.svg" alt="DeepLumen" class="nav-logo-img" />
+      </a>
+
+      <!-- Desktop nav links -->
+      <div class="nav-links">
+        <!-- Shopify App with NEW badge -->
+        <a href="../shopify-app(new).html" class="nav-link has-new-badge">
+          Shopify App
+          <span class="nav-badge-new">NEW</span>
+        </a>
+
+        <!-- Product dropdown -->
+        <div class="nav-dropdown">
+          <span class="nav-link">Product</span>
+          <div class="nav-dropdown-menu">
+            <a href="../shopify-app(new).html">Agentic Page</a>
+            <a href="https://deeplumen.io/" target="_blank" rel="noopener">UCP Java</a>
+          </div>
+        </div>
+
+        <!-- Cases dropdown -->
+        <div class="nav-dropdown">
+          <span class="nav-link">Cases</span>
+          <div class="nav-dropdown-menu">
+            <a href="industries-cases%20home%26living.html">Home &amp; Living</a>
+            <a href="industries-cases%20electronics.html">Electronics</a>
+            <a href="industries-cases%20health%26beauty.html">Health &amp; Beauty</a>
+            <a href="industries-cases%20fashion%26apparel.html">Fashion &amp; Apparel</a>
+          </div>
+        </div>
+
+        <!-- Resources dropdown -->
+        <div class="nav-dropdown">
+          <span class="nav-link">Resources</span>
+          <div class="nav-dropdown-menu">
+            <a href="https://lumioi.com/blog" target="_blank" rel="noopener">Blog</a>
+            <a href="SEOWeek_agenda.html">SEOWeek</a>
+            <a href="#">PR URL</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop CTA buttons -->
+      <div class="nav-actions">
+        <a href="#" class="btn-demo-nav">Book a Demo</a>
+        <a href="#" target="_blank" rel="noopener" class="btn-login-nav">
+          Get Started
+          <span class="btn-arrow-wrap">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.917 7h8.166M7.583 4.083 10.5 7l-2.917 2.917" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+
+      <!-- Mobile burger -->
+      <button class="nav-burger" id="nav-burger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="nav-mobile-menu" id="nav-mobile-menu">
+      <div class="nav-mobile-group">
+        <div class="nav-mobile-group-title">Product</div>
+        <div class="nav-mobile-sub">
+          <a href="../shopify-app(new).html">Shopify App (NEW)</a>
+          <a href="../shopify-app(new).html">Agentic Page</a>
+          <a href="https://deeplumen.io/" target="_blank" rel="noopener">UCP Java</a>
+        </div>
+      </div>
+      <div class="nav-mobile-group">
+        <div class="nav-mobile-group-title">Cases</div>
+        <div class="nav-mobile-sub">
+          <a href="industries-cases%20home%26living.html">Home &amp; Living</a>
+          <a href="industries-cases%20electronics.html">Electronics</a>
+          <a href="industries-cases%20health%26beauty.html">Health &amp; Beauty</a>
+          <a href="industries-cases%20fashion%26apparel.html">Fashion &amp; Apparel</a>
+        </div>
+      </div>
+      <div class="nav-mobile-group">
+        <div class="nav-mobile-group-title">Resources</div>
+        <div class="nav-mobile-sub">
+          <a href="https://lumioi.com/blog" target="_blank" rel="noopener">Blog</a>
+          <a href="SEOWeek_agenda.html">SEOWeek</a>
+          <a href="#">PR URL</a>
+        </div>
+      </div>
+      <div class="nav-mobile-actions">
+        <a href="#" class="btn-demo-nav">Book a Demo</a>
+        <a href="#" target="_blank" rel="noopener" class="btn-login-nav">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       MAIN CONTENT
+       ============================================================ -->
+  <div class="page-wrapper">
+    <section class="demo-hero" id="demo-hero">
+
+      <!-- LEFT: Intro & copy -->
+      <div class="demo-left" id="demo-left">
+
+        <!-- Orange badge -->
+        <div class="badge-orange">Book a Demo</div>
+
+        <!-- H1 -->
+        <h1 class="demo-h1">
+          <span class="hero-h1-dark">See DeepLumen</span>
+          <span class="hero-h1-gradient">in Action.</span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="demo-subtitle">
+          Tell us about your brand and we'll show you how we can amplify your AI visibility.
+        </p>
+
+        <!-- Value points -->
+        <ul class="demo-value-list" role="list">
+          <li class="demo-value-item">
+            <span class="demo-value-check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.75 5.5 3.833 7.75 8.25 2.25" stroke="#be8e3e" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="demo-value-text">Live product walkthrough with your Shopify data</span>
+          </li>
+          <li class="demo-value-item">
+            <span class="demo-value-check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.75 5.5 3.833 7.75 8.25 2.25" stroke="#be8e3e" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="demo-value-text">Personalized AI visibility audit for your store</span>
+          </li>
+          <li class="demo-value-item">
+            <span class="demo-value-check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.75 5.5 3.833 7.75 8.25 2.25" stroke="#be8e3e" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="demo-value-text">Q&amp;A with a DeepLumen specialist</span>
+          </li>
+        </ul>
+
+        <!-- Company description -->
+        <p class="demo-company-desc">
+          Deeplumen is an AI-first technology company focused on the intersection of AI agents and agentic commerce. As the pioneers of the M2AI framework, Deeplumen builds the protocols and infrastructure that allow brands to thrive in the agentic economy.
+        </p>
+
+        <!-- AI Platform logos row -->
+        <div class="demo-ai-row" role="list" aria-label="Supported AI platforms">
+          <!-- ChatGPT -->
+          <div class="demo-ai-pill" role="listitem">
+            <img src="../logo/FChatGPT.svg" alt="ChatGPT logo" />
+            <span class="demo-ai-pill-name">ChatGPT</span>
+          </div>
+          <!-- Gemini -->
+          <div class="demo-ai-pill" role="listitem">
+            <img src="../logo/Gemini.svg" alt="Gemini logo" />
+            <span class="demo-ai-pill-name">Gemini</span>
+          </div>
+          <!-- Claude -->
+          <div class="demo-ai-pill" role="listitem">
+            <img src="../logo/Claude.svg" alt="Claude logo" />
+            <span class="demo-ai-pill-name">Claude</span>
+          </div>
+          <!-- Perplexity — inline SVG -->
+          <div class="demo-ai-pill" role="listitem">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Perplexity logo">
+              <rect width="16" height="16" rx="4" fill="#1C1C1C"/>
+              <path d="M8 3 L12 6.5 V9.5 L8 13 L4 9.5 V6.5 Z" fill="none" stroke="#20B2AA" stroke-width="1.1" stroke-linejoin="round"/>
+              <line x1="8" y1="3" x2="8" y2="13" stroke="#20B2AA" stroke-width="1.1"/>
+              <line x1="4" y1="6.5" x2="12" y2="6.5" stroke="#20B2AA" stroke-width="1.1"/>
+              <line x1="4" y1="9.5" x2="12" y2="9.5" stroke="#20B2AA" stroke-width="1.1"/>
+            </svg>
+            <span class="demo-ai-pill-name">Perplexity</span>
+          </div>
+        </div>
+
+      </div>
+      <!-- /demo-left -->
+
+      <!-- RIGHT: Form card -->
+      <div class="demo-right" id="demo-right">
+        <div class="demo-form-card">
+          <h2 class="form-card-title">Schedule your demo</h2>
+
+          <form class="demo-form" id="demo-form" novalidate>
+
+            <!-- Full name -->
+            <div class="form-field">
+              <label class="form-label" for="field-name">Full name</label>
+              <input
+                class="form-input"
+                type="text"
+                id="field-name"
+                name="full_name"
+                placeholder="Jane Smith"
+                autocomplete="name"
+                required
+              />
+            </div>
+
+            <!-- Work email -->
+            <div class="form-field">
+              <label class="form-label" for="field-email">Work email</label>
+              <input
+                class="form-input"
+                type="email"
+                id="field-email"
+                name="email"
+                placeholder="jane@company.com"
+                autocomplete="email"
+                required
+              />
+            </div>
+
+            <!-- Company -->
+            <div class="form-field">
+              <label class="form-label" for="field-company">Company</label>
+              <input
+                class="form-input"
+                type="text"
+                id="field-company"
+                name="company"
+                placeholder="Your company name"
+                autocomplete="organization"
+                required
+              />
+            </div>
+
+            <!-- Company size -->
+            <div class="form-field">
+              <label class="form-label" for="field-size">Company size</label>
+              <div class="form-select-wrap">
+                <select class="form-select" id="field-size" name="company_size" required>
+                  <option value="" disabled selected>Select company size</option>
+                  <option value="1-10">1–10</option>
+                  <option value="11-50">11–50</option>
+                  <option value="51-200">51–200</option>
+                  <option value="200+">200+</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Preferred demo date -->
+            <div class="form-field">
+              <label class="form-label" for="field-date">Preferred demo date</label>
+              <input
+                class="form-input"
+                type="date"
+                id="field-date"
+                name="demo_date"
+              />
+            </div>
+
+            <!-- Agency checkbox -->
+            <label class="form-checkbox-row" for="field-agency">
+              <input
+                class="form-checkbox-input"
+                type="checkbox"
+                id="field-agency"
+                name="is_agency"
+              />
+              <span class="form-checkbox-label">We're an agency</span>
+            </label>
+
+            <!-- Submit -->
+            <button type="submit" class="btn-continue">Continue</button>
+
+          </form>
+        </div>
+      </div>
+      <!-- /demo-right -->
+
+    </section>
+  </div>
+  <!-- /page-wrapper -->
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+
+        <!-- Brand column -->
+        <div class="footer-brand">
+          <img src="../logo/logocis001.svg" alt="DeepLumen" class="footer-logo" />
+          <p class="footer-desc">
+            Deeplumen is an AI-first technology company focused on the intersection of AI agents and agentic commerce. Building the protocols and infrastructure for brands to thrive in the agentic economy.
+          </p>
+          <div class="footer-social">
+            <!-- X (Twitter) -->
+            <a href="#" class="footer-social-link" aria-label="DeepLumen on X">
+              <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.6 1.4h2.2L9.9 7.3 15.4 15H11L7.4 10.3 3.2 15H1l5.2-6.3L.6 1.4h4.6l3.3 4.4L12.6 1.4Zm-.8 12.2h1.2L4.4 2.7H3.1l8.7 10.9Z"/>
+              </svg>
+            </a>
+            <!-- LinkedIn -->
+            <a href="#" class="footer-social-link" aria-label="DeepLumen on LinkedIn">
+              <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.56 5.32H1.1V15h2.46V5.32ZM2.33 4.3a1.43 1.43 0 1 0 0-2.86 1.43 1.43 0 0 0 0 2.86ZM14.9 9.49c0-2.4-.52-4.17-3.26-4.17-1.33 0-2.22.73-2.58 1.42h-.04V5.32H6.6V15h2.44V9.93c0-1.16.22-2.29 1.66-2.29 1.43 0 1.45 1.33 1.45 2.36V15H14.9V9.49Z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Link columns -->
+        <div class="footer-links">
+          <!-- Product -->
+          <div>
+            <div class="footer-col-title">Product</div>
+            <div class="footer-col-links">
+              <a href="../shopify-app(new).html">Shopify App</a>
+              <a href="../shopify-app(new).html">Agentic Page</a>
+              <a href="https://deeplumen.io/" target="_blank" rel="noopener">UCP Java</a>
+            </div>
+          </div>
+          <!-- Cases -->
+          <div>
+            <div class="footer-col-title">Cases</div>
+            <div class="footer-col-links">
+              <a href="industries-cases%20home%26living.html">Home &amp; Living</a>
+              <a href="industries-cases%20electronics.html">Electronics</a>
+              <a href="industries-cases%20health%26beauty.html">Health &amp; Beauty</a>
+              <a href="industries-cases%20fashion%26apparel.html">Fashion &amp; Apparel</a>
+            </div>
+          </div>
+          <!-- Resources -->
+          <div>
+            <div class="footer-col-title">Resources</div>
+            <div class="footer-col-links">
+              <a href="https://lumioi.com/blog" target="_blank" rel="noopener">Blog</a>
+              <a href="SEOWeek_agenda.html">SEOWeek</a>
+              <a href="#">PR URL</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer bottom bar -->
+      <div class="footer-bottom">
+        <span class="footer-copyright">© 2026 DeepLumen. All rights reserved.</span>
+        <nav class="footer-legal" aria-label="Legal links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+  <script>
+    // ── Nav: scroll border ──
+    const mainNav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        mainNav.classList.add('scrolled');
+      } else {
+        mainNav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // ── Nav: mobile burger toggle ──
+    const burger = document.getElementById('nav-burger');
+    const mobileMenu = document.getElementById('nav-mobile-menu');
+    burger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('is-open');
+      burger.classList.toggle('is-active', isOpen);
+      burger.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // ── Fade-up entrance via IntersectionObserver ──
+    const fadeTargets = [
+      document.getElementById('demo-left'),
+      document.getElementById('demo-right')
+    ];
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.08 }
+      );
+      fadeTargets.forEach((el) => { if (el) observer.observe(el); });
+    } else {
+      // Fallback: show immediately
+      fadeTargets.forEach((el) => { if (el) el.classList.add('visible'); });
+    }
+
+    // ── Form: set min date to today ──
+    const dateInput = document.getElementById('field-date');
+    if (dateInput) {
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm   = String(today.getMonth() + 1).padStart(2, '0');
+      const dd   = String(today.getDate()).padStart(2, '0');
+      dateInput.min = `${yyyy}-${mm}-${dd}`;
+    }
+
+    // ── Form: basic client-side submit ──
+    const form = document.getElementById('demo-form');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('.btn-continue');
+      btn.textContent = 'Submitting…';
+      btn.disabled = true;
+
+      // Simulate async submission
+      setTimeout(() => {
+        btn.textContent = 'Request received!';
+        btn.style.background = 'var(--accent)';
+      }, 1200);
+    });
+  </script>
+</body>
+</html>
