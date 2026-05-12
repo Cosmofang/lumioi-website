@@ -1287,53 +1287,6 @@
   <!-- ============================================================
        JS
        ============================================================ -->
-  <script>
-    // Nav scroll border (mirrors reference index.html)
-    (function () {
-      var nav = document.querySelector('nav');
-      if (!nav) return;
-      function updateBorder() {
-        nav.style.borderBottomColor = window.scrollY > 10 ? 'rgba(234,234,234,0.6)' : 'transparent';
-      }
-      window.addEventListener('scroll', updateBorder, { passive: true });
-      updateBorder();
-    })();
-
-    // fade-up on entry
-    (function () {
-      var els = document.querySelectorAll('.fade-up');
-      if (!('IntersectionObserver' in window)) {
-        els.forEach(function (el) { el.classList.add('is-visible'); });
-        return;
-      }
-      var obs = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) {
-            e.target.classList.add('is-visible');
-            obs.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.15 });
-      els.forEach(function (el) { obs.observe(el); });
-    })();
-
-    // trend-line draw-on (per .ic-case)
-    (function () {
-      var cases = document.querySelectorAll('.ic-case');
-      if (!('IntersectionObserver' in window)) {
-        cases.forEach(function (c) { c.classList.add('ic-case-trend-go'); });
-        return;
-      }
-      var obs = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) {
-            e.target.classList.add('ic-case-trend-go');
-            obs.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.35 });
-      cases.forEach(function (c) { obs.observe(c); });
-    })();
-  </script>
+  <script></script>
 </body>
 </html>
