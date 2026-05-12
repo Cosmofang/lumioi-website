@@ -4792,4 +4792,34 @@ function submitCTA() {
   // Skip on touch-primary devices and reduced motion
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (window.matchMedia && window.matchMedia('(hover: none)').matches) return;
+
+  var MAX_Y =  10;   // degrees of horizontal tilt at edge
+  var MAX_X =   8;   // degrees of vertical tilt at edge
+  var EASE  = 0.14;  // 0..1; smaller = smoother / lazier
+
+  var targetMx = 0, targetMy = 0;
+  var curMx    = 0, curMy    = 0;
+  var raf = null;
+  var inside = false;
+
+  function tick() {
+    curMx += (targetMx - curMx) * EASE;
+    curMy += (targetMy - curMy) * EASE;
+    stage.style.setProperty('--mx', curMx.toFixed(2) + 'deg');
+    stage.style.setProperty('--my', curMy.toFixed(2) + 'deg');
+
+    var dxLeft = Math.abs(targetMx - curMx);
+    var dyLeft = Math.abs(targetMy - curMy);
+    if (dxLeft > 0.04 || dyLeft > 0.04) {
+      raf = requestAnimationFrame(tick);
+    } else {
+      // Snap to target and stop
+      stage.style.setProperty('--mx', targetMx.toFixed(2) + 'deg');
+      stage.style.setProperty('--my', targetMy.toFixed(2) + 'deg');
+      raf = null;
+    }
+  }
+
+  function ensureLoop() { if (!raf) raf = requestAnimationFrame(tick); }
+
 </body></html>
