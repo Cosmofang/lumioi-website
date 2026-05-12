@@ -4379,4 +4379,240 @@ function submitCTA() {
     if (pref) return;
 
     var states = [];
+    Array.prototype.forEach.call(stacks, function(stack) {
+      var leaves = Array.prototype.slice.call(stack.querySelectorAll('.flip-leaf'));
+      if (leaves.length >= 2) states.push({ leaves: leaves, cur: 0 });
+    });
+    if (!states.length) return;
+
+    function flipOne(s) {
+      var nxt = (s.cur + 1) % s.leaves.length;
+      var leaving = s.leaves[s.cur];
+      var arriving = s.leaves[nxt];
+      leaving.classList.remove('is-current');
+      leaving.classList.add('is-prev');
+      arriving.classList.remove('is-next');
+      arriving.classList.add('is-current');
+      setTimeout(function() {
+        leaving.style.transition = 'none';
+        leaving.classList.remove('is-prev');
+        leaving.classList.add('is-next');
+        void leaving.offsetHeight;
+        leaving.style.transition = '';
+      }, 650);
+      s.cur = nxt;
+    }
+
+    var rowGap   = 750;   // delay from one row's flip to the next (must exceed 0.55s flip)
+    var cycleEnd = 2400;  // pause after the last row before restarting the wave
+    var i = 0;
+
+    function tick() {
+      flipOne(states[i]);
+      i = (i + 1) % states.length;
+      setTimeout(tick, i === 0 ? cycleEnd : rowGap);
+    }
+
+    setTimeout(tick, 2200); // initial delay so users see the original wording first
+  } catch(e) {}
+})();
+
+// Products carousel — floating card switcher + 10s auto-advance with progress bar
+(function () {
+  var tabs   = document.querySelectorAll('.prod-tab');
+  var slides = document.querySelectorAll('.prod-slide');
+  if (!tabs.length || !slides.length) return;
+
+  var current  = 0;
+  var autoTimer = null;
+  var INTERVAL  = 10000;
+
+  function switchTo(idx) {
+    tabs.forEach(function (t) { t.classList.remove('is-active'); });
+    slides.forEach(function (s) {
+      s.classList.remove('is-active');
+      s.setAttribute('aria-hidden', 'true');
+    });
+    // Force reflow on target slide so card-bar animation always restarts
+    void slides[idx].offsetWidth;
+    tabs[idx].classList.add('is-active');
+    slides[idx].classList.add('is-active');
+    slides[idx].setAttribute('aria-hidden', 'false');
+    current = idx;
+  }
+
+  function advance() {
+    switchTo((current + 1) % tabs.length);
+  }
+
+  function resetTimer() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(advance, INTERVAL);
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var idx = parseInt(this.dataset.tab, 10);
+      if (idx === current) return;
+      switchTo(idx);
+      resetTimer();
+    });
+  });
+
+  // Set initial aria-hidden
+  slides.forEach(function (s, i) {
+    s.setAttribute('aria-hidden', i === 0 ? 'false' : 'true');
+  });
+
+  // Kick off auto-advance
+  resetTimer();
+})();
+
+// Feature cards carousel (install card ↔ dashboard card)
+// Feature cards sticky stack
+(function () {
+  // Card 1 install sequence
+  (function () {
+    var btn  = document.getElementById('fc1Btn');
+    var rows = [document.getElementById('fc1R0'), document.getElementById('fc1R1'), document.getElementById('fc1R2'), document.getElementById('fc1R3')];
+    if (!btn || !rows[0]) return;
+
+    var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var pulseTimer = null;
+    var pulseStart = null;
+
+    function clearPulse() {
+      if (pulseTimer) { clearInterval(pulseTimer); pulseTimer = null; }
+      if (pulseStart) { clearTimeout(pulseStart); pulseStart = null; }
+      rows.forEach(function(r){ if (r) r.classList.remove('fc1-pulse'); });
+    }
+
+    function startPulseCycle() {
+      if (prefersReduced) return;
+      clearPulse();
+      var idx = 0;
+      function tick() {
+        rows.forEach(function(r){ r.classList.remove('fc1-pulse'); });
+        var row = rows[idx];
+        if (row) row.classList.add('fc1-pulse');
+        idx = (idx + 1) % rows.length;
+      }
+      tick();
+      pulseTimer = setInterval(tick, 700);
+    }
+
+    function reset() {
+      clearPulse();
+      btn.className = 'fc1-btn';
+      btn.textContent = 'Add to Shopify';
+      rows.forEach(function(r){ r.className='fc1-row'; });
+    }
+
+    function addRipple() {
+      var r = document.createElement('div');
+      r.className = 'fc1-ripple';
+      r.style.left = '50%'; r.style.top = '50%';
+      btn.appendChild(r);
+      setTimeout(function(){ r.remove(); }, 600);
+    }
+
+    function runSequence() {
+      reset();
+      setTimeout(function() { btn.classList.add('s-click'); addRipple(); setTimeout(function(){ btn.classList.remove('s-click'); }, 200); }, 1800);
+      setTimeout(function() { btn.className = 'fc1-btn s-loading'; btn.textContent = 'Installing…'; }, 2200);
+      setTimeout(function(){ rows[0].className='fc1-row fc1-vis fc1-active'; }, 3200);
+      setTimeout(function(){ rows[1].className='fc1-row fc1-vis fc1-active'; }, 4800);
+      setTimeout(function(){ rows[2].className='fc1-row fc1-vis fc1-active'; }, 6400);
+      setTimeout(function(){ rows[3].className='fc1-row fc1-vis fc1-active'; }, 7800);
+      setTimeout(function() { btn.className = 'fc1-btn s-done'; btn.textContent = '✓ Installed'; }, 9200);
+      pulseStart = setTimeout(startPulseCycle, 8600);
+      setTimeout(runSequence, 14000);
+    }
+    setTimeout(runSequence, 600);
+  })();
+
+  // Card 2 — trigger animations when scrolled into view
+  (function () {
+    var card2 = document.getElementById('fcCard1');
+    if (!card2) return;
+    var triggered = false;
+    function triggerCard2() {
+      if (triggered) return;
+      triggered = true;
+      var bw = card2.querySelector('.fc2-bars-wrap');
+      if (bw) { bw.classList.remove('fc2-animate'); void bw.offsetWidth; bw.classList.add('fc2-animate'); }
+      var arc = card2.querySelector('.fc2-arc');
+      if (arc) { arc.style.animation = 'none'; void arc.offsetWidth; arc.style.animation = ''; }
+    }
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) { triggerCard2(); obs.disconnect(); } });
+    }, { threshold: 0.3 });
+    obs.observe(card2);
+  })();
+})();
+
+// Features step sequence animation
+(function () {
+  var DUR = 2800; // ms per step
+  var n = 4;
+  var cur = 0;
+  var timer = null;
+
+  function el(id) { return document.getElementById(id); }
+
+  function resetAll() {
+    for (var i = 0; i < n; i++) {
+      var card = el('fsc' + i), bar = el('fb' + i);
+      if (!card) return;
+      card.classList.remove('fsc-active', 'fsc-done');
+      bar.style.transition = 'none';
+      bar.style.width = '0%';
+    }
+  }
+
+  function activate(i) {
+    var card = el('fsc' + i), bar = el('fb' + i);
+    if (!card) return;
+    card.classList.add('fsc-active');
+    // tiny delay to let transition:none apply before re-enabling
+    setTimeout(function () {
+      bar.style.transition = 'width ' + DUR + 'ms linear';
+      bar.style.width = '100%';
+    }, 30);
+
+    timer = setTimeout(function () {
+      card.classList.remove('fsc-active');
+      card.classList.add('fsc-done');
+      cur = (cur + 1) % n;
+      if (cur === 0) {
+        setTimeout(function () {
+          resetAll();
+          setTimeout(function () { activate(0); }, 60);
+        }, 700);
+      } else {
+        activate(cur);
+      }
+    }, DUR + 80);
+  }
+
+  if (el('fsc0')) { resetAll(); setTimeout(function () { activate(0); }, 600); }
+})();
+
+// Hero button letter-split roll-up (Neura Nova style)
+(function () {
+  document.querySelectorAll('.btn-letter-anim').forEach(function (btn) {
+    var textNode = null;
+    for (var i = 0; i < btn.childNodes.length; i++) {
+      var n = btn.childNodes[i];
+      if (n.nodeType === 3 && n.textContent.trim()) { textNode = n; break; }
+    }
+    if (!textNode) return;
+    var text = textNode.textContent;
+    function makeRow(cls) {
+      var row = document.createElement('span');
+      row.className = 'blt-row ' + cls;
+      text.split('').forEach(function (ch, idx) {
+        var s = document.createElement('span');
+        s.className = 'blt';
+        s.style.setProperty('--i', idx);
 </body></html>
