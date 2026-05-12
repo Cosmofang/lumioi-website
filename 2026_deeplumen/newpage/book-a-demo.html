@@ -1052,6 +1052,15 @@
       fadeTargets.forEach((el) => { if (el) el.classList.add('visible'); });
     }
 
+    // ── Form: set min date to today ──
+    const dateInput = document.getElementById('field-date');
+    if (dateInput) {
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm   = String(today.getMonth() + 1).padStart(2, '0');
+      const dd   = String(today.getDate()).padStart(2, '0');
+      dateInput.min = yyyy + '-' + mm + '-' + dd;
+    }
 
     // ── Form: basic client-side submit ──
     const form = document.getElementById('demo-form');
