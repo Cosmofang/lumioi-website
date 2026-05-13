@@ -1,2 +1,6 @@
-# Backward-compat: old /2026_deeplumen/* URLs still work
-/2026_deeplumen/*  /:splat  301
+# Backward-compat redirects
+/2026_deeplumen/*           /:splat                    301
+/shopify-app(new)           /shopify_app_new           301
+/shopify-app(new).html      /shopify_app_new.html      301
+/shopify-app%28new%29       /shopify_app_new           301
+/shopify-app%28new%29.html  /shopify_app_new.html      301
