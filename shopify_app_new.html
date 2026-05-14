@@ -1467,14 +1467,14 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; color: var(--te
 /* ── PRICING MODEL ── */
 .model { background: transparent; border-top: 1px solid var(--stroke-cream); border-bottom: 1px solid var(--stroke-cream); }
 .pricing-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
-  max-width: 1240px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  max-width: 1280px; margin: 0 auto;
   align-items: stretch;
 }
 .pricing-card {
   background: var(--surface-card); border: 1px solid var(--stroke-soft);
-  border-radius: 24px; padding: 32px 28px;
-  display: flex; flex-direction: column; gap: 18px;
+  border-radius: 24px; padding: 28px 22px;
+  display: flex; flex-direction: column; gap: 16px;
   position: relative;
   transition: border-color 0.3s, transform 0.3s;
 }
@@ -1487,7 +1487,7 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; color: var(--te
   box-shadow: 0 16px 48px rgba(190,142,62,0.10);
 }
 .pricing-popular {
-  position: absolute; top: -12px; left: 32px;
+  position: absolute; top: -12px; left: 24px;
   font-family: var(--font-body);
   font-size: 11px; font-weight: 600;
   letter-spacing: 0.1em; text-transform: uppercase;
@@ -1506,7 +1506,7 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; color: var(--te
 }
 .pricing-price {
   font-family: var(--font-heading); font-style: italic; font-weight: 500;
-  font-size: 48px; line-height: 1; letter-spacing: -0.5px;
+  font-size: 42px; line-height: 1; letter-spacing: -0.5px;
   color: var(--text-dark);
 }
 .pricing-period {
@@ -2154,7 +2154,7 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
   .views-grid { grid-template-columns: 1fr; }
   .pipe-grid { grid-template-columns: 1fr; }
   .engine-grid { grid-template-columns: 1fr; }
-  .pricing-grid { grid-template-columns: 1fr; max-width: 480px; }
+  .pricing-grid { grid-template-columns: repeat(2, 1fr); max-width: 720px; gap: 20px; }
   .why-row {
     grid-template-columns: 40px 110px 1fr 140px;
     gap: 16px; padding: 18px 20px;
@@ -2250,6 +2250,7 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
   .story-metrics { grid-template-columns: 1fr; gap: 12px; }
   .faq-q { font-size: 16px; padding: 18px 20px; }
   .faq-a-inner { padding: 0 20px 20px; font-size: 14px; }
+  .pricing-grid { grid-template-columns: 1fr; max-width: 480px; }
 }
 
 /* ── 拟态化玻璃效果 — 所有主要白色卡片 ── */
@@ -3115,34 +3116,34 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
     <!-- Tab strip -->
     <div class="story-tabs" id="storyTabs">
       <button class="story-tab is-active" data-story="0" type="button">
-        <span class="story-tab-mark">L</span>
+        <span class="story-tab-mark">Q</span>
         <span class="story-tab-meta">
-          <span class="story-tab-name">Lumé Skincare</span>
-          <span class="story-tab-cat">DTC · Clean Beauty</span>
+          <span class="story-tab-name">Qbedding</span>
+          <span class="story-tab-cat">Home &amp; Living</span>
         </span>
         <span class="story-tab-progress"></span>
       </button>
       <button class="story-tab" data-story="1" type="button">
         <span class="story-tab-mark">N</span>
         <span class="story-tab-meta">
-          <span class="story-tab-name">North Drift</span>
-          <span class="story-tab-cat">Sustainable Apparel</span>
+          <span class="story-tab-name">Nullport</span>
+          <span class="story-tab-cat">Electronics · USB-C</span>
         </span>
         <span class="story-tab-progress"></span>
       </button>
       <button class="story-tab" data-story="2" type="button">
-        <span class="story-tab-mark">A</span>
+        <span class="story-tab-mark">V</span>
         <span class="story-tab-meta">
-          <span class="story-tab-name">Atlas Coffee</span>
-          <span class="story-tab-cat">Specialty · Subscription</span>
+          <span class="story-tab-name">Vermille</span>
+          <span class="story-tab-cat">Health &amp; Beauty</span>
         </span>
         <span class="story-tab-progress"></span>
       </button>
       <button class="story-tab" data-story="3" type="button">
-        <span class="story-tab-mark">V</span>
+        <span class="story-tab-mark">A</span>
         <span class="story-tab-meta">
-          <span class="story-tab-name">Velvet &amp; Vine</span>
-          <span class="story-tab-cat">Home · Lifestyle</span>
+          <span class="story-tab-name">Atelier Vauclair</span>
+          <span class="story-tab-cat">Fashion &amp; Apparel</span>
         </span>
         <span class="story-tab-progress"></span>
       </button>
@@ -3150,18 +3151,18 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
 
     <!-- Featured panel -->
     <div class="story-panel" id="storyPanel">
-      <!-- Pane 0: Lumé -->
+      <!-- Pane 0: Qbedding -->
       <div class="story-pane is-active" data-pane="0">
         <div class="story-pane-left">
           <div class="story-day-tag">DAY 30 SNAPSHOT</div>
-          <p class="story-quote">Within 3 weeks of installing, ChatGPT and Perplexity started recommending us in 'best vitamin C serum' queries. AI now drives 18% of new customers.</p>
-          <div class="story-attrib"><strong>Maya Chen</strong> · Founder, Lumé Skincare</div>
+          <p class="story-quote">From invisible to indexed in five days. By month-end, AI systems were driving 73% of all visits across our 167 product pages.</p>
+          <div class="story-attrib"><strong>Qbedding</strong> · Home &amp; Living · 167 product pages</div>
         </div>
         <div class="story-pane-right">
           <div class="story-chart">
             <div class="story-chart-head">
-              <div class="story-chart-num">+312%</div>
-              <div class="story-chart-lbl">AI visits<br>over 30 days</div>
+              <div class="story-chart-num">+400</div>
+              <div class="story-chart-lbl">real-time AI<br>retrievals</div>
             </div>
             <svg class="story-chart-svg" viewBox="0 0 320 70" preserveAspectRatio="none" aria-hidden="true">
               <path class="story-chart-fill" d="M0,68 L0,58 C30,56 50,52 80,46 C110,40 140,32 180,22 C220,14 260,10 320,4 L320,68 Z"/>
@@ -3171,124 +3172,124 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
           </div>
           <div class="story-metrics">
             <div class="story-metric">
-              <div class="story-metric-num" data-counter data-target="24" data-suffix="%">0%</div>
-              <div class="story-metric-lbl">AI-attributed orders</div>
+              <div class="story-metric-num" data-counter data-target="5" data-suffix=" days">0 days</div>
+              <div class="story-metric-lbl">to first AI retrieval</div>
             </div>
             <div class="story-metric">
-              <div class="story-metric-num" data-counter data-target="11" data-suffix=" days">0 days</div>
-              <div class="story-metric-lbl">to first AI citation</div>
+              <div class="story-metric-num" data-counter data-target="73.1" data-decimals="1" data-suffix="%">0%</div>
+              <div class="story-metric-lbl">share of AI visits</div>
             </div>
             <div class="story-metric">
-              <div class="story-metric-num" data-counter data-target="92" data-suffix="/100">0/100</div>
-              <div class="story-metric-lbl">AI Health Score</div>
+              <div class="story-metric-num" data-counter data-target="132" data-suffix="/day">0/day</div>
+              <div class="story-metric-lbl">peak AI retrievals</div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Pane 1: North Drift -->
+      <!-- Pane 1: Nullport -->
       <div class="story-pane" data-pane="1">
         <div class="story-pane-left">
-          <div class="story-day-tag">DAY 90 SNAPSHOT</div>
-          <p class="story-quote">We were invisible in AI search compared to bigger brands. Three months in, we're cited in eco-conscious fashion roundups across all four major LLMs.</p>
-          <div class="story-attrib"><strong>James Holt</strong> · Co-founder, North Drift</div>
+          <div class="story-day-tag">DAY 30 SNAPSHOT</div>
+          <p class="story-quote">We cut token weight on our spec sheets by 80% so AI could actually parse them. Seven days later, ChatGPT started retrieving USB-C docs in real time.</p>
+          <div class="story-attrib"><strong>Nullport</strong> · Electronics · 312 SKUs</div>
         </div>
         <div class="story-pane-right">
           <div class="story-chart">
             <div class="story-chart-head">
-              <div class="story-chart-num">+1,240</div>
-              <div class="story-chart-lbl">monthly<br>LLM citations</div>
+              <div class="story-chart-num">+1,820</div>
+              <div class="story-chart-lbl">ChatGPT retrievals<br>in 30 days</div>
             </div>
             <svg class="story-chart-svg" viewBox="0 0 320 70" preserveAspectRatio="none" aria-hidden="true">
               <path class="story-chart-fill" d="M0,68 L0,62 C40,60 70,56 110,48 C150,40 190,28 230,18 C270,10 300,8 320,6 L320,68 Z"/>
               <path class="story-chart-line" pathLength="400" d="M0,62 C40,60 70,56 110,48 C150,40 190,28 230,18 C270,10 300,8 320,6"/>
             </svg>
-            <div class="story-chart-axis"><span>Day 0</span><span>Day 45</span><span>Day 90</span></div>
+            <div class="story-chart-axis"><span>Day 0</span><span>Day 15</span><span>Day 30</span></div>
           </div>
           <div class="story-metrics">
             <div class="story-metric">
-              <div class="story-metric-num" data-counter data-target="87" data-suffix="/100">0/100</div>
-              <div class="story-metric-lbl">AI Health Score</div>
+              <div class="story-metric-num" data-counter data-target="92.1" data-decimals="1" data-suffix="/100">0/100</div>
+              <div class="story-metric-lbl">AI Visibility Score</div>
             </div>
             <div class="story-metric">
-              <div class="story-metric-num" data-counter data-target="84" data-prefix="$" data-suffix="K">$0K</div>
-              <div class="story-metric-lbl">AI-attributed MRR</div>
+              <div class="story-metric-num" data-counter data-target="7" data-suffix=" days">0 days</div>
+              <div class="story-metric-lbl">to first AI session</div>
             </div>
             <div class="story-metric">
-              <div class="story-metric-num" data-counter data-target="4" data-suffix="/4 LLMs">0/4 LLMs</div>
-              <div class="story-metric-lbl">platform coverage</div>
+              <div class="story-metric-num" data-counter data-target="38.4" data-decimals="1" data-prefix="+" data-suffix="%">+0%</div>
+              <div class="story-metric-lbl">AI sessions vs control</div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Pane 2: Atlas Coffee -->
+      <!-- Pane 2: Vermille -->
       <div class="story-pane" data-pane="2">
         <div class="story-pane-left">
-          <div class="story-day-tag">DAY 60 SNAPSHOT</div>
-          <p class="story-quote">When ChatGPT users ask for 'best small-batch espresso', we're now in the top three. Subscription signups from AI sources nearly doubled.</p>
-          <div class="story-attrib"><strong>Priya Singh</strong> · Head of Growth, Atlas Coffee</div>
+          <div class="story-day-tag">DAY 90 SNAPSHOT</div>
+          <p class="story-quote">Beauty buyers read ingredients like a nutritionist reads labels. Twelve days in, ChatGPT cited our hero serums by ingredient pairing.</p>
+          <div class="story-attrib"><strong>Vermille</strong> · Health &amp; Beauty · 84 clean-skincare SKUs</div>
         </div>
         <div class="story-pane-right">
           <div class="story-chart">
             <div class="story-chart-head">
-              <div class="story-chart-num">+186%</div>
-              <div class="story-chart-lbl">AI subscription<br>signups</div>
+              <div class="story-chart-num">+4.2×</div>
+              <div class="story-chart-lbl">AI-channel traffic<br>vs control</div>
             </div>
             <svg class="story-chart-svg" viewBox="0 0 320 70" preserveAspectRatio="none" aria-hidden="true">
               <path class="story-chart-fill" d="M0,68 L0,60 C30,58 60,52 90,44 C120,36 160,28 200,22 C240,16 280,12 320,10 L320,68 Z"/>
               <path class="story-chart-line" pathLength="400" d="M0,60 C30,58 60,52 90,44 C120,36 160,28 200,22 C240,16 280,12 320,10"/>
             </svg>
-            <div class="story-chart-axis"><span>Day 0</span><span>Day 30</span><span>Day 60</span></div>
+            <div class="story-chart-axis"><span>Day 0</span><span>Day 45</span><span>Day 90</span></div>
           </div>
           <div class="story-metrics">
             <div class="story-metric">
-              <div class="story-metric-num" data-counter data-target="3" data-suffix="rd">0rd</div>
-              <div class="story-metric-lbl">avg AI ranking</div>
+              <div class="story-metric-num" data-counter data-target="84.6" data-decimals="1" data-suffix="/100">0/100</div>
+              <div class="story-metric-lbl">AI Visibility Score</div>
             </div>
             <div class="story-metric">
-              <div class="story-metric-num" data-counter data-target="194" data-suffix="%">0%</div>
-              <div class="story-metric-lbl">AI subscription lift</div>
+              <div class="story-metric-num" data-counter data-target="12" data-suffix=" days">0 days</div>
+              <div class="story-metric-lbl">to first AI citation</div>
             </div>
             <div class="story-metric">
-              <div class="story-metric-num" data-counter data-target="540" data-suffix="+">0+</div>
-              <div class="story-metric-lbl">monthly citations</div>
+              <div class="story-metric-num" data-counter data-target="2210" data-suffix="+">0+</div>
+              <div class="story-metric-lbl">AI ingestions</div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Pane 3: Velvet & Vine -->
+      <!-- Pane 3: Atelier Vauclair -->
       <div class="story-pane" data-pane="3">
         <div class="story-pane-left">
-          <div class="story-day-tag">DAY 45 SNAPSHOT</div>
-          <p class="story-quote">Customers tell us they 'found us through ChatGPT' more often than Instagram now. We didn't change our marketing — we changed who could read us.</p>
-          <div class="story-attrib"><strong>Rohan Mehta</strong> · Founder, Velvet &amp; Vine</div>
+          <div class="story-day-tag">DAY 60 SNAPSHOT</div>
+          <p class="story-quote">Nine days to first ChatGPT retrieval. By month-end, AI-channel sessions were up 51% on our seasonal outerwear collection.</p>
+          <div class="story-attrib"><strong>Atelier Vauclair</strong> · Fashion &amp; Apparel · 124 seasonal SKUs</div>
         </div>
         <div class="story-pane-right">
           <div class="story-chart">
             <div class="story-chart-head">
-              <div class="story-chart-num">+248%</div>
-              <div class="story-chart-lbl">AI-driven<br>session value</div>
+              <div class="story-chart-num">+51.2%</div>
+              <div class="story-chart-lbl">AI-channel<br>sessions</div>
             </div>
             <svg class="story-chart-svg" viewBox="0 0 320 70" preserveAspectRatio="none" aria-hidden="true">
               <path class="story-chart-fill" d="M0,68 L0,56 C40,54 80,46 120,36 C160,26 200,18 240,14 C280,10 300,8 320,7 L320,68 Z"/>
               <path class="story-chart-line" pathLength="400" d="M0,56 C40,54 80,46 120,36 C160,26 200,18 240,14 C280,10 300,8 320,7"/>
             </svg>
-            <div class="story-chart-axis"><span>Day 0</span><span>Day 22</span><span>Day 45</span></div>
+            <div class="story-chart-axis"><span>Day 0</span><span>Day 30</span><span>Day 60</span></div>
           </div>
           <div class="story-metrics">
             <div class="story-metric">
-              <div class="story-metric-num" data-counter data-target="38" data-suffix="%">0%</div>
-              <div class="story-metric-lbl">new traffic via AI</div>
+              <div class="story-metric-num" data-counter data-target="88.3" data-decimals="1" data-suffix="/100">0/100</div>
+              <div class="story-metric-lbl">AI Visibility Score</div>
             </div>
             <div class="story-metric">
-              <div class="story-metric-num" data-counter data-target="89" data-suffix="/100">0/100</div>
-              <div class="story-metric-lbl">AI Health Score</div>
+              <div class="story-metric-num" data-counter data-target="9" data-suffix=" days">0 days</div>
+              <div class="story-metric-lbl">to first AI retrieval</div>
             </div>
             <div class="story-metric">
-              <div class="story-metric-num" data-counter data-target="62" data-prefix="$" data-suffix="K">$0K</div>
-              <div class="story-metric-lbl">AI-attributed MRR</div>
+              <div class="story-metric-num" data-counter data-target="528" data-suffix="/day">0/day</div>
+              <div class="story-metric-lbl">peak AI retrievals</div>
             </div>
           </div>
         </div>
@@ -3308,7 +3309,7 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
         <span class="h2-dark">Start free. </span>
         <span class="h2-gradient">Upgrade when AI starts paying off.</span>
       </div>
-      <p class="body-text">One simple choice. No setup fees. Cancel anytime.</p>
+      <p class="body-text">Four tiers. No setup fees. Cancel anytime.</p>
     </div>
     <div class="pricing-grid">
       <!-- Free plan -->
@@ -3318,56 +3319,74 @@ footer { background: #48443d; color: #fff; padding: 0; position: relative; z-ind
           <span class="pricing-price">$0</span>
           <span class="pricing-period">/month</span>
         </div>
-        <p class="pricing-desc">Get AI-readable. Track who's visiting. Perfect for stores testing the AI traffic waters.</p>
+        <p class="pricing-desc">For new stores testing AI traffic. Get AI-readable and see who's visiting.</p>
         <div class="pricing-divider"></div>
         <ul class="pricing-feats">
           <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Up to <strong>10</strong> Agentic Pages</span></li>
           <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Basic AI Health Score</span></li>
-          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Updates your llms.txt daily</span></li>
+          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Updates your llms.txt <strong>daily</strong></span></li>
           <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Canonical-safe — zero SEO impact</span></li>
-          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Community support</span></li>
         </ul>
         <a href="https://apps.shopify.com/deeplumen-ai-seo-optimizer" target="_blank" rel="noopener" class="pricing-cta is-ghost">Install Free →</a>
       </div>
 
-      <!-- Pro plan -->
+      <!-- Mini plan -->
       <div class="pricing-card is-pro">
         <span class="pricing-popular">Most Popular</span>
-        <div class="pricing-tier">Pro</div>
+        <div class="pricing-tier">Mini</div>
         <div class="pricing-price-row">
           <span class="pricing-price">$29.9</span>
           <span class="pricing-period">/month</span>
         </div>
-        <p class="pricing-desc">For growing brands. Unlock real-time analytics, deeper diagnostics, faster support.</p>
+        <p class="pricing-desc">For small catalogs ready to scale. Real-time updates, advanced diagnostics.</p>
         <div class="pricing-divider"></div>
         <ul class="pricing-feats">
-          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Up to <strong>1,000</strong> Agentic Pages</span></li>
+          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Up to <strong>200</strong> Agentic Pages</span></li>
           <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Advanced AI Health Score</span></li>
-          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Refreshes your llms.txt automatically</span></li>
+          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span><strong>Real-time</strong> llms.txt refresh</span></li>
           <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Canonical-safe — zero SEO impact</span></li>
-          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Priority email support</span></li>
+          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span><strong>Priority email support</strong></span></li>
         </ul>
         <a href="https://apps.shopify.com/deeplumen-ai-seo-optimizer" target="_blank" rel="noopener" class="pricing-cta is-solid">Start 7-day Free Trial →</a>
       </div>
 
-      <!-- Scale plan -->
+      <!-- Pro plan -->
       <div class="pricing-card">
-        <div class="pricing-tier">Scale</div>
+        <div class="pricing-tier">Pro</div>
         <div class="pricing-price-row">
-          <span class="pricing-price">$59.9</span>
+          <span class="pricing-price">$99.9</span>
           <span class="pricing-period">/month</span>
         </div>
-        <p class="pricing-desc">For catalog-heavy brands. No page limits, dedicated specialist, founding-brand pricing lock.</p>
+        <p class="pricing-desc">For growing brands. Dedicated expert support and deeper page coverage.</p>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-feats">
+          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Up to <strong>1,000</strong> Agentic Pages</span></li>
+          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Advanced AI Health Score</span></li>
+          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span><strong>Real-time</strong> llms.txt refresh</span></li>
+          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Canonical-safe — zero SEO impact</span></li>
+          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span><strong>Dedicated Expert Support</strong></span></li>
+        </ul>
+        <a href="https://apps.shopify.com/deeplumen-ai-seo-optimizer" target="_blank" rel="noopener" class="pricing-cta is-ghost">Choose Pro →</a>
+      </div>
+
+      <!-- Pro Max plan -->
+      <div class="pricing-card">
+        <div class="pricing-tier">Pro Max</div>
+        <div class="pricing-price-row">
+          <span class="pricing-price">$249</span>
+          <span class="pricing-period">/month</span>
+        </div>
+        <p class="pricing-desc">For catalog-heavy brands. Unlimited pages, dedicated AI visibility specialist.</p>
         <div class="pricing-divider"></div>
         <ul class="pricing-feats">
           <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span><strong>Unlimited</strong> Agentic Pages</span></li>
           <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Advanced AI Health Score</span></li>
-          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Refreshes your llms.txt automatically</span></li>
+          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span><strong>Real-time</strong> llms.txt refresh</span></li>
           <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Canonical-safe — zero SEO impact</span></li>
-          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Priority email support</span></li>
-          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span>Dedicated AI visibility specialist</span></li>
+          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span><strong>Dedicated Expert Support</strong></span></li>
+          <li class="pricing-feat"><span class="pricing-feat-check">✓</span><span><strong>Dedicated AI visibility specialist</strong></span></li>
         </ul>
-        <a href="https://apps.shopify.com/deeplumen-ai-seo-optimizer" target="_blank" rel="noopener" class="pricing-cta is-ghost">Choose Scale →</a>
+        <a href="https://apps.shopify.com/deeplumen-ai-seo-optimizer" target="_blank" rel="noopener" class="pricing-cta is-ghost">Choose Pro Max →</a>
       </div>
     </div>
   </div>
