@@ -4,3 +4,14 @@
 /shopify-app(new).html      /shopify_app_new.html      301
 /shopify-app%28new%29       /shopify_app_new           301
 /shopify-app%28new%29.html  /shopify_app_new.html      301
+
+# ── Legacy site retired (2026-08) ────────────────────────────────────────────
+# /blog* was the only path the lumioi.com zone rule still let through; Pages fell
+# back to index.html and served the old homepage, which carried Qbedding branding
+# and images hotlinked from qbedding.com / the Qbedding Shopify CDN.
+# The catch-all also closes lumioi-website.pages.dev, which served the same
+# content directly. Destination matches where the zone rule already sends
+# every other lumioi.com path.
+/blog       https://darwin.lumioi.com/   302
+/blog/*     https://darwin.lumioi.com/   302
+/*          https://darwin.lumioi.com/   302
